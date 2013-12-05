@@ -22,7 +22,9 @@ public class Ship {
     private Shiptypes m_type;
     
     /**
-     * Constructor
+     * 
+     * @param Coordinates
+     * @param Stype 
      */
     public Ship(ArrayList<Point> Coordinates, Shiptypes Stype)
     {
