@@ -26,6 +26,14 @@ public class Battlefield {
         }
     }
     
+    /**
+     * Patrik
+     */
+    
+    public void EestAE() {
+        
+    }
+    
     
     
 }
