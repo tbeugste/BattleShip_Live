@@ -3,30 +3,37 @@
  * and open the template in the editor.
  */
 package battleship;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+
 /**
  *
  * @author Andreas Eugster
  */
-public class TCPServer {
+public class TCPServer implements Runnable {
+    //Flag to stop server
+    boolean running = true;
     // the IP class as such
-    InetAddress TCPServerIP;
+    InetAddress TCPServer;
     // port to talk over
     int portNumber = 9999;
     // the socket for the communication to happen on
-    ServerSocket theServerSocket;
-
+    ServerSocket serverSocket;
+    //max Connections
+    int maxServerConnections = 2;
+    //List of ClientConnections
+    ArrayList<Socket> allCommunicators = new ArrayList<Socket>();
+    //Flag if game is started
+    boolean started = false;
+    
     /* 
      * Setup the server socket communication 
      */
     public TCPServer() {
             try {
                     // create the server socket on the port number
-                    theServerSocket = new ServerSocket(portNumber);
+                    serverSocket = new ServerSocket(portNumber);
                     System.out.println("Server created on port : "+portNumber);
             } catch (IOException ExecIO)
             {
@@ -34,30 +41,47 @@ public class TCPServer {
             }
     }
 
-
-    /**
-     * Method witch listens to external connections
-     */
-    public void listenToConnection()
+    
+    @Override
+    public void run()
     {
-            try {
-                    Socket sock = theServerSocket.accept();
-                    System.out.println("Server accepted connection, send to handler");
-
-                    // print out the clients IP Address
-                    System.out.println("The client IP address is " + sock.getInetAddress());
-
-                    // send the message to the client
-                    ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
-                    System.out.println("Server socket opened");
-                    oos.writeChars("Hi from the server");
-                    oos.close();
-               
-
-            } catch  (IOException ExecIO)
+        try{
+        
+            while(running)
             {
-                    System.out.println("Error creating connection : "+ExecIO.getMessage());
+                if(allCommunicators.size()<2 && !started)
+                {
+                    Socket client = serverSocket.accept();
+                    allCommunicators.add(client);
+                    new Thread(new ClientCommunicator(allCommunicators, allCommunicators.indexOf(client), serverSocket)).start();
+                    if(allCommunicators.size()==2)
+                    {
+                        started = true;
+                        //Start initializing Game
+                        ObjectOutputStream os;
+                        
+                        for(Socket players: allCommunicators)
+                        {
+                            os = new ObjectOutputStream(players.getOutputStream());
+                            //TODO initialize Game
+                        }
+                    }
+                }
+                else if(allCommunicators.size()<2 && started)
+                {
+                    //TODO: RECONNECT
+                }
             }
+            
+        }
+        catch(IOException ex)
+        {
+            System.out.println("er1: Interrupt Network Server");
+        }
     }
-
+    
+    public void stop()
+    {
+        running = false;
+    }
 }

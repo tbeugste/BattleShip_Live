@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 package battleship;
-
+import java.io.*;
 /**
  *
  * @author Andreas Eugster
  */
-public enum Shiptypes {
+public enum Shiptypes implements Serializable{
     SUBMARINE(2), DESTROYER(3), CRUISER(4), BSHIP(5);
     
     private final int id;
