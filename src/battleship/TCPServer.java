@@ -59,11 +59,13 @@ public class TCPServer implements Runnable {
                         started = true;
                         //Start initializing Game
                         ObjectOutputStream os;
-                        
+                        CommunicationObject communicationObject = new CommunicationObject(CommunicationObjectType.INITIALIZE,false);
                         for(Socket players: allCommunicators)
                         {
                             os = new ObjectOutputStream(players.getOutputStream());
-                            //TODO initialize Game
+                            os.writeObject(communicationObject);
+                            os.flush();
+                            os.close();
                         }
                     }
                 }

@@ -33,6 +33,7 @@ public class CommunicationObject implements Serializable {
     /**
      * Constructor to create a reply Message from a shot
      * @param type
+     * @param shot
      * @param hited
      * @param destroyed 
      */
