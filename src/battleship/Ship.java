@@ -30,7 +30,6 @@ public class Ship {
     {
         m_coordinates = Coordinates;
         m_type = Stype;
-        
     }
      
     /**
