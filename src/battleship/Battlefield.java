@@ -26,10 +26,22 @@ public class Battlefield {
         }
     }
     
+
     public void TestAE()
     {
         //Andy
     }
             
+
+    /**
+     * Patrik
+     */
+    
+    public void EestAE() {
+        
+    }
+    
+    
+
     
 }
