@@ -6,8 +6,8 @@
 
 package battleship;
 import java.awt.*;
-import java.util.*;
 import java.io.*;
+import java.lang.String;
 /**
  *
  * @author Andy
@@ -20,6 +20,7 @@ public class CommunicationObject implements Serializable {
     private boolean _initialized;
     private boolean _hited;
     private boolean _destroyed;
+    private String _Message;
     
     /**
      * Constructor to create a shot - Message
@@ -65,10 +66,74 @@ public class CommunicationObject implements Serializable {
        return _shot;
     }
     
+    /**
+     * Method to set variables if a shot hit or not
+     * @param hited
+     * @param destroyed 
+     */
     public void shotAplyed(boolean hited, boolean destroyed)
     {
         _type = CommunicationObjectType.REPLY;
         _hited = hited;
         _destroyed = destroyed;
+    }
+    
+    /**
+     * Method to return hit boolean
+     * @return 
+     */
+    public boolean getHit()
+    {
+        return _hited;
+    }
+    
+    /**
+     * method to return destroyed boolean
+     * @return 
+     */
+    public boolean getDestroyed()
+    {
+        return _destroyed;
+    }
+    
+    /**
+     * Method to return Object-Type
+     * @return 
+     */
+    public CommunicationObjectType getType()
+    {
+        return _type;
+    }
+    
+    /**
+     * method to return Initialized Object
+     * @return 
+     */
+    public boolean getInitialized()
+    {
+        return _initialized;
+    }
+    
+    /**
+     * method to return Connected object
+     * @return 
+     */
+    public boolean getConnected()
+    {
+        return _connected;
+    }
+    
+    /**
+     * method to return Message
+     * @return 
+     */
+    public String getMessage()
+    {
+        return _Message;
+    }
+    
+    public void setMessage(String Message)
+    {
+        _Message = Message;
     }
 }
