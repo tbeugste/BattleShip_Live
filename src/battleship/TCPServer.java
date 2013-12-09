@@ -5,13 +5,15 @@
 package battleship;
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 
 /**
  *
  * @author Andreas Eugster
  */
-public class TCPServer implements Runnable {
+public class TCPServer extends Thread {
     //Flag to stop server
     boolean running = true;
     // the IP class as such
@@ -23,7 +25,7 @@ public class TCPServer implements Runnable {
     //max Connections
     int maxServerConnections = 2;
     //List of ClientConnections
-    ArrayList<Socket> allCommunicators = new ArrayList<Socket>();
+    private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
     //Flag if game is started
     boolean started = false;
     
@@ -39,34 +41,36 @@ public class TCPServer implements Runnable {
             {
                     System.out.println("Error creating the server socket : "+ExecIO.getMessage());
             }
+            start();
     }
 
-    
+    /**
+     * Method is started uppon calling start();
+     */
     @Override
     public void run()
     {
         try{
         
-            while(running)
+            while(true)
             {
                 if(allCommunicators.size()<2 && !started)
                 {
+                    //getClient socket
                     Socket client = serverSocket.accept();
-                    allCommunicators.add(client);
-                    new Thread(new ClientCommunicator(allCommunicators, allCommunicators.indexOf(client), serverSocket)).start();
+                    //Get ObjectOutputStream to write to the client
+                    ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
+                    //Store both informations
+                    allCommunicators.put(client, oos);
+                    //Start new Threads
+                    new ClientCommunicator(this, client);
                     if(allCommunicators.size()==2)
                     {
                         started = true;
                         //Start initializing Game
-                        ObjectOutputStream os;
-                        CommunicationObject communicationObject = new CommunicationObject(CommunicationObjectType.INITIALIZE,false);
-                        for(Socket players: allCommunicators)
-                        {
-                            os = new ObjectOutputStream(players.getOutputStream());
-                            os.writeObject(communicationObject);
-                            os.flush();
-                            os.close();
-                        }
+                        CommunicationObject communicationObject = new CommunicationObject(CommunicationObjectType.INITIALIZE);
+                        communicationObject.setConnected(true);
+                        sendToAll(communicationObject);
                     }
                 }
                 else if(allCommunicators.size()<2 && started)
@@ -82,8 +86,104 @@ public class TCPServer implements Runnable {
         }
     }
     
-    public void stop()
+    /**
+     * Create Enumeration to iterate threw all OutputStreams
+     * @return 
+     */
+    Enumeration getOutputStreams()
     {
-        running = false;
+        return allCommunicators.elements();
     }
+    
+    /**
+     * method to send a Message to all Clients
+     * @param message 
+     */
+    public void sendToAll(CommunicationObject message)
+    {
+        //lock to one access per Thread
+        synchronized(allCommunicators)
+        {
+            try{
+                //Iterate threw all Objects
+                for(Enumeration e=getOutputStreams(); e.hasMoreElements();)
+                {
+                    //get Outputstream
+                    ObjectOutputStream os = (ObjectOutputStream)e.nextElement();
+                    //send Object
+                    os.writeObject(message);
+                    //make sure it sends
+                    os.flush();
+                }
+            }
+            catch(IOException ie)
+            {
+                ie.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * method to send to oppondend
+     * @param message
+     * @param mySocket 
+     */
+    public void sendToOpponend(CommunicationObject message, Socket mySocket)
+    {
+        //make sure no problems with Multithreading
+        synchronized(allCommunicators)
+        {
+            try{
+                //Create Enumeration with keys
+                Enumeration e = allCommunicators.keys();
+                //go threw all keys
+                while(e.hasMoreElements())
+                {
+                    //if the key is not the same as the one from the sender its the opponends
+                    if(!e.nextElement().equals(mySocket))
+                    {
+                        //get opponends outputstream
+                        ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(e));
+                        //send message
+                        os.writeObject(message);
+                        //make sure its send
+                        os.flush();
+                        //stop while
+                        break;
+                    }
+                }
+            }
+            catch(IOException ie)
+            {
+                ie.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * remove a particular connection
+     * @param client 
+     */
+    public void removeConnection(Socket client)
+    {
+        //make sure there are no problems with multithreading
+        synchronized(allCommunicators)
+        {
+            System.out.println("Disconnect Client "+client);
+            //Remove from Hashtable
+            allCommunicators.remove(client);
+            
+            try{
+                //make sure connection from soket is closed and with it all ressources reliable to..
+                client.close();
+            }
+            catch(IOException ie)
+            {
+                System.out.println("Error closing connection to "+client);
+                ie.printStackTrace();
+            }
+            
+        }
+    }
+    
 }

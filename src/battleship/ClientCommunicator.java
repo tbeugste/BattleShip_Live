@@ -12,23 +12,86 @@ import java.util.*;
  *
  * @author Andy
  */
-public class ClientCommunicator implements Runnable{
-    ArrayList<Socket> _allCommunicators;
-    ServerSocket _serverSocket;
-    int _actClient;
+public class ClientCommunicator extends Thread{
+    Socket _client;
+    TCPServer _server;
     
-    public ClientCommunicator(ArrayList<Socket> allCommunicators, int actClient, ServerSocket serverSocket)
+    public ClientCommunicator(TCPServer server, Socket client)
     {
-        _allCommunicators = allCommunicators;
-        _serverSocket = serverSocket;
-        _actClient = actClient;
+        _client = client;
+        _server = server;
+        start();
     }
     
     @Override
     public void run()
     {
+        try{
+        ObjectInputStream ois = new ObjectInputStream(_client.getInputStream());
+        
+            while(true)
+            {
+                try{
+                    CommunicationObject message = (CommunicationObject)ois.readObject();
+                    if(message != null)
+                    {
+                        switch(message.getType())
+                        {
+                            case INITIALIZE:
+                                actionsOnInitializeMessage();
+                                break;
+                            case REPLY:
+                                actionsOnReplayMessage();
+                                break;
+                            case SHOT:
+                                actionsOnShotMessage();
+                                break;
+                        }
+                    }
+
+                }
+                catch(ClassNotFoundException cnfe)
+                {
+                    System.out.println("Incorect Object recived");
+                    cnfe.printStackTrace();
+                }
+            }
+        
+        }
+        catch(EOFException ie){}
+        catch(IOException ie)
+        {
+            ie.printStackTrace();
+        }
+        
+        finally
+        {
+            
+        }
+    }
+    
+    /**
+     * Method with all Actions to do if a InitializeMessage appears
+     */
+    private void actionsOnInitializeMessage()
+    {
         
     }
+    /**
+     * Method with all Actions to do if a ReplayMessage appears
+     */
+    private void actionsOnReplayMessage()
+    {
+        
+    }
+    /**
+     * Method with all Actions to do if a ShotMessage appears
+     */
+    private void actionsOnShotMessage()
+    {
+        
+    }
+    
     
     
 }
