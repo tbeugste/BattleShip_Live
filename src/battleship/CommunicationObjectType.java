@@ -11,7 +11,7 @@ package battleship;
  * @author Andy
  */
 public enum CommunicationObjectType {
-    INITIALIZE(1), SHOT(2), REPLY(3);
+    INITIALIZE(1), SHOT(2), REPLY(3), START(4);
     
     private final int id;
     CommunicationObjectType(int id) { this.id = id; }

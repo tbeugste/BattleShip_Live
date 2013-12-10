@@ -46,6 +46,9 @@ public class ClientCommunicator extends Thread{
                             case SHOT:
                                 actionsOnShotMessage();
                                 break;
+                            case START:
+                                actionsOnStartMessage();
+                                break;
                         }
                     }
 
@@ -91,7 +94,12 @@ public class ClientCommunicator extends Thread{
     {
         
     }
-    
-    
+    /**
+     * Method with all Actions to do if a StartMessage appears
+     */
+    private void actionsOnStartMessage()
+    {
+        
+    }
     
 }

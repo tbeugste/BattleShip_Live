@@ -5,8 +5,10 @@
 package battleship;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Random;
 
 
 /**
@@ -14,8 +16,6 @@ import java.util.Hashtable;
  * @author Andreas Eugster
  */
 public class TCPServer extends Thread {
-    //Flag to stop server
-    boolean running = true;
     // the IP class as such
     InetAddress TCPServer;
     // port to talk over
@@ -28,6 +28,8 @@ public class TCPServer extends Thread {
     private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
     //Flag if game is started
     boolean started = false;
+    //Counter to know it both are ready to start
+    private ArrayList<Socket> readyPlayers = new ArrayList<Socket>();
     
     /* 
      * Setup the server socket communication 
@@ -183,6 +185,42 @@ public class TCPServer extends Thread {
                 ie.printStackTrace();
             }
             
+        }
+    }
+    
+    public void initialized(Socket client)
+    {
+        synchronized(readyPlayers)
+        {
+            readyPlayers.add(client);
+            if(readyPlayers.size() == maxServerConnections)
+            {
+                Random r = new Random();
+                int starter = r.nextInt(maxServerConnections);
+                for(int i=0; i<=readyPlayers.size();i++ )
+                {
+                    ObjectOutputStream oos = (ObjectOutputStream)allCommunicators.get(readyPlayers.get(i));
+                    CommunicationObject message = new CommunicationObject(CommunicationObjectType.START);
+                    message.setInitialized(true);
+                    if(i==starter)
+                    {
+                        message.setStarted(true);
+                    }
+                    else
+                    {
+                        message.setStarted(false);
+                    }
+                    try{
+                    oos.writeObject(message);
+                    }
+                    catch(IOException ioe)
+                    {
+                        System.out.println("Error with writing START-message");
+                        ioe.printStackTrace();
+                    }
+                }
+                
+            }
         }
     }
     

@@ -23,6 +23,7 @@ public class CommunicationObject implements Serializable {
     private boolean _start = false;
     private String _Message = null;
     
+    
     /**
      * Constructor to create a shot - Message
      * @param type 
@@ -142,5 +143,15 @@ public class CommunicationObject implements Serializable {
         _type = CommunicationObjectType.REPLY;
         _hited = hited;
         _destroyed = destroyed;
+    }
+    
+    public void setStarted(boolean started)
+    {
+        _start = started;
+    }
+    
+    public boolean getStarted()
+    {
+        return _start;
     }
 }
