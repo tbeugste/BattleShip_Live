@@ -26,10 +26,9 @@ public class TCPServer extends Thread {
     int maxServerConnections = 2;
     //List of ClientConnections
     private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
-    //Flag if game is started
-    boolean started = false;
-    //Counter to know it both are ready to start
+        //Counter to know if both are ready to start
     private ArrayList<Socket> readyPlayers = new ArrayList<Socket>();
+    private int starterID = -1;
     
     /* 
      * Setup the server socket communication 
@@ -192,17 +191,36 @@ public class TCPServer extends Thread {
     {
         synchronized(readyPlayers)
         {
-            readyPlayers.add(client);
-            if(readyPlayers.size() == maxServerConnections)
+            if(!readyPlayers.contains(client))
+            {
+                readyPlayers.add(client);
+            }
+        }
+    }
+    
+    /**
+     * Method witch returns the starting Message
+     * @return 
+     */
+    public CommunicationObject getStarted(Socket client)
+    {
+        CommunicationObject message = null;
+        if(readyPlayers.size() == maxServerConnections)
+        {
+            if(starterID==-1)
             {
                 Random r = new Random();
-                int starter = r.nextInt(maxServerConnections);
-                for(int i=0; i<=readyPlayers.size();i++ )
+                starterID = r.nextInt(maxServerConnections);
+                
+            }
+            
+            for(int i=0; i<=readyPlayers.size();i++ )
+            {
+                if(readyPlayers.get(i).equals(client))
                 {
-                    ObjectOutputStream oos = (ObjectOutputStream)allCommunicators.get(readyPlayers.get(i));
-                    CommunicationObject message = new CommunicationObject(CommunicationObjectType.START);
+                    message = new CommunicationObject(CommunicationObjectType.START);
                     message.setInitialized(true);
-                    if(i==starter)
+                    if(i==starterID)
                     {
                         message.setStarted(true);
                     }
@@ -210,18 +228,16 @@ public class TCPServer extends Thread {
                     {
                         message.setStarted(false);
                     }
-                    try{
-                    oos.writeObject(message);
-                    }
-                    catch(IOException ioe)
-                    {
-                        System.out.println("Error with writing START-message");
-                        ioe.printStackTrace();
-                    }
                 }
-                
             }
+
         }
+        return message;
+    }
+    
+    public boolean isStarted()
+    {
+        return (readyPlayers.size()==maxServerConnections);
     }
     
 }

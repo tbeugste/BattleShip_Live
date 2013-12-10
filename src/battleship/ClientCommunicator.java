@@ -38,16 +38,16 @@ public class ClientCommunicator extends Thread{
                         switch(message.getType())
                         {
                             case INITIALIZE:
-                                actionsOnInitializeMessage();
+                                actionsOnInitializeMessage(message);
                                 break;
                             case REPLY:
-                                actionsOnReplayMessage();
+                                actionsOnReplayMessage(message);
                                 break;
                             case SHOT:
-                                actionsOnShotMessage();
+                                actionsOnShotMessage(message);
                                 break;
                             case START:
-                                actionsOnStartMessage();
+                                actionsOnStartMessage(message);
                                 break;
                         }
                     }
@@ -76,30 +76,52 @@ public class ClientCommunicator extends Thread{
     /**
      * Method with all Actions to do if a InitializeMessage appears
      */
-    private void actionsOnInitializeMessage()
+    private void actionsOnInitializeMessage(CommunicationObject message)
     {
-        
+        if(!_server.isStarted() && message.getInitialized())
+        {
+            _server.initialized(_client);
+
+            while(true)
+            {
+                CommunicationObject cco = _server.getStarted(_client);
+                if(cco!=null)
+                {
+                    try{
+                    ObjectOutputStream oos = new ObjectOutputStream(_client.getOutputStream());
+                    oos.writeObject(cco);
+                    oos.flush();
+                    }
+                    catch(IOException ie)
+                    {
+                        System.out.println("Error with sending Start Object");
+                        ie.printStackTrace();
+                    }
+                    break;
+                }
+            }
+        }
     }
     /**
      * Method with all Actions to do if a ReplayMessage appears
      */
-    private void actionsOnReplayMessage()
+    private void actionsOnReplayMessage(CommunicationObject message)
     {
-        
+        _server.sendToOpponend(message, _client);
     }
     /**
      * Method with all Actions to do if a ShotMessage appears
      */
-    private void actionsOnShotMessage()
+    private void actionsOnShotMessage(CommunicationObject message)
     {
-        
+        _server.sendToOpponend(message, _client);
     }
     /**
      * Method with all Actions to do if a StartMessage appears
      */
-    private void actionsOnStartMessage()
+    private void actionsOnStartMessage(CommunicationObject message)
     {
-        
+      //at the moment wount be send from a client   
     }
     
 }
