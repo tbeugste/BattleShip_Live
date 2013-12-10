@@ -29,7 +29,7 @@ public class TCPServer extends Thread {
         //Counter to know if both are ready to start
     private ArrayList<Socket> readyPlayers = new ArrayList<Socket>();
     private int starterID = -1;
-    
+    private boolean started= false;
     /* 
      * Setup the server socket communication 
      */
