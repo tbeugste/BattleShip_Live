@@ -13,30 +13,45 @@ import java.net.UnknownHostException;
  *
  * @author Andreas Eugster
  */
-public class TCPClient {
+public class TCPClient implements Runnable{
+    //Server Connection
+    private Socket socket;
     
-    public void establishConnection()throws UnknownHostException, IOException, ClassNotFoundException, InterruptedException
+    //Streams to and from the server
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
+    
+    public TCPClient(String host, int port)
     {
-         InetAddress host = InetAddress.getLocalHost();
-        Socket socket = null;
-        ObjectOutputStream oos = null;
-        ObjectInputStream ois = null;
-        for(int i=0; i<5;i++){
-            //establish socket connection to server
-            socket = new Socket(host.getHostName(), 9876);
-            //write to socket using ObjectOutputStream
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("Sending request to Socket Server");
-            if(i==4)oos.writeObject("exit");
-            else oos.writeObject(""+i);
-            //read the server response message
-            ois = new ObjectInputStream(socket.getInputStream());
-            String message = (String) ois.readObject();
-            System.out.println("Message: " + message);
-            //close resources
-            ois.close();
-            oos.close();
-            Thread.sleep(100);
-        }
+        // Connect to the server
+    try {
+        // Initiate the connection
+        socket = new Socket( host, port );
+        
+        // Create ObjectStreams
+        ois = new ObjectInputStream( socket.getInputStream() );
+        oos = new ObjectOutputStream( socket.getOutputStream() );
+        // Start a background thread for receiving messages
+        new Thread( this ).start();
+        } catch( IOException ie ) { System.out.println( ie ); }         
     }
+    
+    public void run()
+    {
+        //TODO: Communication with Battlefield to send the message
+    }
+    
+    public void sendToServer(CommunicationObjectType message)
+    {
+        try{
+        oos.writeObject(message);
+        }
+        catch(IOException ie)
+        {
+            System.out.println("Fehler beim versenden an den Server");
+            ie.printStackTrace();
+        }
+    
+    }
+    
 }

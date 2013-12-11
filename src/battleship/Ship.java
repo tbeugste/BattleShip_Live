@@ -5,14 +5,14 @@
 package battleship;
 import java.awt.*;
 import java.util.*;
-
+import java.io.*;
 
 
 /**
  *
  * @author Andreas Eugster
  */
-public class Ship {
+public class Ship implements Serializable{
     
     /**
      * MemberRegion to define Variables
