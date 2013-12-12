@@ -34,30 +34,21 @@ public class Buttonlistener implements ActionListener {
     
      public void actionPerformed(ActionEvent e){
         
-         if (e.getActionCommand().contains("Shot")) {
-                
-                String s = e.getActionCommand();
-                Point p = new Point();
-                
-                // hier wird der String in einen Point umgewandelt
-                int x = Integer.parseInt(s.substring(6,7));
-                int y = Integer.parseInt(s.substring(8,9));
-                p.setLocation(x, y);
-                
-                bGUI.shot(p, (JButton)e.getSource());
-                
-         } else {
-                switch (e.getActionCommand()) {
-                    case "newGame":
-                        // Neues Spiel starten:
-                        break;
-                    case "exit":
-                        System.exit(0);
-                        break;
-                   default:
-                       break;
-                }    
-         }
+        switch (e.getActionCommand()) {
+            case "Shot":
+                JButton jb = (JButton)e.getSource();
+                bGUI.shot(jb);
+                break;
+            case "newGame":
+                // Neues Spiel starten:
+                break;
+            case "exit":
+                System.exit(0);
+                break;
+           default:
+               break;
+        }    
+         
     }  
 }
      
