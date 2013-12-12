@@ -23,6 +23,12 @@ public class Battlefield {
         setShips();
     }
     
+    public void TestAE()
+    {
+        //Andy
+    }
+            
+
     /**
      * PB
      * Sets some ships for testing

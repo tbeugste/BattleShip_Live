@@ -6,8 +6,8 @@
 
 package battleship;
 import java.awt.*;
-import java.util.*;
 import java.io.*;
+import java.lang.String;
 /**
  *
  * @author Andy
@@ -16,44 +16,21 @@ import java.io.*;
 public class CommunicationObject implements Serializable {
     private CommunicationObjectType _type;
     private Point _shot = null;
-    private boolean _connected;
-    private boolean _initialized;
-    private boolean _hited;
-    private boolean _destroyed;
+    private boolean _connected = false;
+    private boolean _initialized = false;
+    private boolean _hited = false;
+    private boolean _destroyed = false;
+    private boolean _start = false;
+    private String _Message = null;
+    
     
     /**
      * Constructor to create a shot - Message
-     * @param shot 
+     * @param type 
      */
-    public CommunicationObject(Point shot)
+    public CommunicationObject(CommunicationObjectType type)
     {
-        _type = CommunicationObjectType.SHOT;
-        _shot = shot;
-    }
-    /**
-     * Constructor to create a reply Message from a shot
-     * @param type
-     * @param shot
-     * @param hited
-     * @param destroyed 
-     */
-    public CommunicationObject(CommunicationObjectType type, Point shot, boolean hited, boolean destroyed)
-    {
-        _type = type;
-        _hited = hited;
-        _destroyed = destroyed;
-        _shot = shot;
-    }
-    
-    /**
-     * Constructor to create a initialize object
-     * @param type
-     * @param initialized 
-     */
-    public CommunicationObject(CommunicationObjectType type, boolean initialized)
-    {
-        _type = type;
-        _initialized = initialized;
+       _type = type;
     }
     
     /**
@@ -65,10 +42,116 @@ public class CommunicationObject implements Serializable {
        return _shot;
     }
     
+    /**
+     * method to set Shot property
+     * @param shot 
+     */
+    public void setShot(Point shot)
+    {
+        _shot = shot;
+    }
+    
+    /**
+     * Method to return hit boolean
+     * @return 
+     */
+    public boolean getHit()
+    {
+        return _hited;
+    }
+    
+    /**
+     * method to return destroyed boolean
+     * @return 
+     */
+    public boolean getDestroyed()
+    {
+        return _destroyed;
+    }
+    
+    /**
+     * Method to return Object-Type
+     * @return 
+     */
+    public CommunicationObjectType getType()
+    {
+        return _type;
+    }
+        
+    public void setType(CommunicationObjectType type)
+    {
+        _type = type;
+    }
+    
+    /**
+     * method to return Initialized Object
+     * @return 
+     */
+    public boolean getInitialized()
+    {
+        return _initialized;
+    }
+    
+    public void setInitialized(boolean initialized)
+    {
+        _initialized = initialized;
+    }
+    
+    /**
+     * method to return Connected object
+     * @return 
+     */
+    public boolean getConnected()
+    {
+        return _connected;
+    }
+    
+     /**
+      * method to set connectedProperty
+      * @param connected 
+      */
+    public void setConnected(boolean connected)
+    {
+        _connected = connected;
+    }
+    
+    /**
+     * method to return Message
+     * @return 
+     */
+    public String getMessage()
+    {
+        return _Message;
+    }
+    
+    /**
+     * Method to return Message
+     * @param Message 
+     */
+    public void setMessage(String Message)
+    {
+        _Message = Message;
+    }
+    
+     /**
+     * Method to set variables if a shot hit or not
+     * @param hited
+     * @param destroyed 
+     */
     public void shotAplyed(boolean hited, boolean destroyed)
     {
         _type = CommunicationObjectType.REPLY;
         _hited = hited;
         _destroyed = destroyed;
+    }
+    
+    public void setStarted(boolean started)
+    {
+        _start = started;
+    }
+    
+    public boolean getStarted()
+    {
+        return _start;
     }
 }
