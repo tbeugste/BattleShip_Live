@@ -3,21 +3,24 @@
  * and open the template in the editor.
  */
 package battleship;
-import java.io.*;
-import java.net.*;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Random;
 
-
 /**
  *
- * @author Andreas Eugster
+ * @author Andy
  */
-public class TCPServer extends Thread implements IServer {
-    // the IP class as such
-    InetAddress TCPServer;
+public class KIServer extends Thread implements IServer{
+    
+ InetAddress TCPServer;
     // port to talk over
     int portNumber = 9999;
     // the socket for the communication to happen on
@@ -33,7 +36,7 @@ public class TCPServer extends Thread implements IServer {
     /* 
      * Setup the server socket communication 
      */
-    public TCPServer() {
+    public KIServer() {
         try{
             serverSocket = new ServerSocket(portNumber);
             System.out.println("Server created on port: "+portNumber);
@@ -241,3 +244,4 @@ public class TCPServer extends Thread implements IServer {
     }
     
 }
+

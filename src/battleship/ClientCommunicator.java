@@ -14,9 +14,9 @@ import java.util.*;
  */
 public class ClientCommunicator extends Thread{
     Socket _client;
-    TCPServer _server;
+    IServer _server;
     
-    public ClientCommunicator(TCPServer server, Socket client)
+    public ClientCommunicator(IServer server, Socket client)
     {
         _client = client;
         _server = server;
