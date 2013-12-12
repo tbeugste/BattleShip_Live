@@ -40,7 +40,36 @@ public class TCPClient implements Runnable{
     
     public void run()
     {
-        //TODO: Communication with Battlefield to send the message
+        try{
+            while(true)
+            {
+                CommunicationObject message = (CommunicationObject) ois.readObject();
+                switch(message.getType())
+                {
+                    case INITIALIZE:
+                        actionsOnInitializeMessage(message);
+                        break;
+                    case REPLY:
+                        actionsOnReplayMessage(message);
+                        break;
+                    case SHOT:
+                        actionsOnShotMessage(message);
+                        break;
+                    case START:
+                        actionsOnStartMessage(message);
+                        break;
+                }
+            }
+        }
+        catch(IOException ie)
+        {
+                System.out.println(ie);
+        }
+        catch(ClassNotFoundException cnfe)
+        {
+            System.out.println(cnfe);
+        }
+        
     }
     
     public void sendToServer(CommunicationObjectType message)
@@ -60,6 +89,35 @@ public class TCPClient implements Runnable{
         allListeners.add(iListener);
     }
     
+    public void actionsOnInitializeMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.initializeMessage(message);
+        }
+    }
     
+    public void actionsOnReplayMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.replyMessage(message);
+        }
+    }
     
+    public void actionsOnShotMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.shotMessage(message);
+        }
+    }
+    
+    public void actionsOnStartMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.startMessage(message);
+        }
+    }
 }

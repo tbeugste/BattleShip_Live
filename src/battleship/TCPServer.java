@@ -17,13 +17,13 @@ import java.util.Random;
  */
 public class TCPServer extends Thread implements IServer {
     // the IP class as such
-    InetAddress TCPServer;
+    private InetAddress TCPServer;
     // port to talk over
-    int portNumber = 9999;
+    private int portNumber = 9999;
     // the socket for the communication to happen on
-    ServerSocket serverSocket;
+    private ServerSocket serverSocket;
     //max Connections
-    int maxServerConnections = 2;
+    private int maxServerConnections = 2;
     //List of ClientConnections
     private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
         //Counter to know if both are ready to start
