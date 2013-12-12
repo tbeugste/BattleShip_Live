@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author Patrik Buholzer
  */
-public class Battlefield {
+public class Battlefield implements IListener {
     
     private int height;
     private int width;
@@ -81,5 +81,17 @@ public class Battlefield {
     public int getHeight() {
         return this.height;
     }
-   
+    
+    public void shotMessage(CommunicationObject message) {
+    }
+    
+    public void replyMessage(CommunicationObject message){
+    }
+    
+    public void startMessage(CommunicationObject message){
+    }
+    
+    public void initializeMessage(CommunicationObject message){
+    }
+    
 }

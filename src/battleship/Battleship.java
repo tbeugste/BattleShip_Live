@@ -11,8 +11,11 @@ package battleship;
 public class Battleship {
     private static final Battlefield bField = new Battlefield(10,10);
     private static final BattleGUITest bGUI = new BattleGUITest(bField);
+    private TCPServer server;// = new TCPServer();
+    private TCPClient client;// = new TCPClient("127.0.0.1", 9999);
         
     public Battleship() {
+        
         bGUI.createGUI();
     }
     

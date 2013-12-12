@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package battleship;
+import java.util.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,6 +21,7 @@ public class TCPClient implements Runnable{
     //Streams to and from the server
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private ArrayList<IListener> allListeners = new ArrayList<>();
     
     public TCPClient(String host, int port)
     {
@@ -53,5 +55,11 @@ public class TCPClient implements Runnable{
         }
     
     }
+    
+    public void addActionListener(IListener iListener) {
+        allListeners.add(iListener);
+    }
+    
+    
     
 }
