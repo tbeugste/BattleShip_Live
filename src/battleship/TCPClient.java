@@ -40,9 +40,42 @@ public class TCPClient implements Runnable{
     
     public void run()
     {
-        //TODO: Communication with Battlefield to send the message
+        try{
+            while(true)
+            {
+                CommunicationObject message = (CommunicationObject) ois.readObject();
+                switch(message.getType())
+                {
+                    case INITIALIZE:
+                        actionsOnInitializeMessage(message);
+                        break;
+                    case REPLY:
+                        actionsOnReplayMessage(message);
+                        break;
+                    case SHOT:
+                        actionsOnShotMessage(message);
+                        break;
+                    case START:
+                        actionsOnStartMessage(message);
+                        break;
+                }
+            }
+        }
+        catch(IOException ie)
+        {
+                System.out.println(ie);
+        }
+        catch(ClassNotFoundException cnfe)
+        {
+            System.out.println(cnfe);
+        }
+        
     }
     
+    /**
+     * method to send a message to the server
+     * @param message 
+     */
     public void sendToServer(CommunicationObjectType message)
     {
         try{
@@ -55,11 +88,57 @@ public class TCPClient implements Runnable{
         }
     
     }
-    
+    /**
+     * Add Listener to list
+     * @param iListener 
+     */
     public void addActionListener(IListener iListener) {
         allListeners.add(iListener);
     }
     
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
+    public void actionsOnInitializeMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.initializeMessage(message);
+        }
+    }
     
-    
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
+    public void actionsOnReplayMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.replyMessage(message);
+        }
+    }
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
+    public void actionsOnShotMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.shotMessage(message);
+        }
+    }
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
+    public void actionsOnStartMessage(CommunicationObject message)
+    {
+        for(IListener listener: allListeners)
+        {
+            listener.startMessage(message);
+        }
+    }
 }
