@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package battleship;
+package battleship.GUI;
 
+import battleship.GUI.MyButton;
+import battleship.GUI.BattleGUITest;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Point;
@@ -36,11 +38,11 @@ public class Buttonlistener implements ActionListener {
         
         switch (e.getActionCommand()) {
             case "Shot":
-                JButton jb = (JButton)e.getSource();
-                bGUI.shot(jb);
+                MyButton mb = (MyButton)e.getSource();
+                bGUI.shot(mb);
                 break;
             case "newGame":
-                // Neues Spiel starten:
+                bGUI.newGame();
                 break;
             case "exit":
                 System.exit(0);

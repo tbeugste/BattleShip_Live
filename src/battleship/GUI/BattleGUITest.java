@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package battleship;
+package battleship.GUI;
 
+import battleship.Battleship;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
@@ -14,7 +15,7 @@ import javax.swing.*;
  *
  * @author Patrik Buholzer
  */
-public class BattleGUITest extends javax.swing.JFrame {
+public class BattleGUITest extends Battleship {
     
     //private Buttonlistener bl = new Buttonlistener(this);
     private javax.swing.JMenuBar menuBar;
@@ -22,30 +23,26 @@ public class BattleGUITest extends javax.swing.JFrame {
     private static javax.swing.JPanel panelOponent;
     private javax.swing.JLabel label = new JLabel("Start");
     public Buttonlistener bl = new Buttonlistener(this);
-    private Battlefield bField;
+    private MainWindow window;
     
-    public BattleGUITest (Battlefield bField) {
-        super("Battleship");
-        this.bField = bField;
-        setPanelOponent(bField.getWidth(), bField.getHeight());
-        setPanelPlayer(bField.getWidth(), bField.getHeight());   
+    public BattleGUITest () {
+         
     }
     
     /**
      * PB
-     * Creates the Window size and Location
+     * Creates the MainWindow
      */
     public void createWindow() {
-        setSize(800,400);
-        setLocation(50,50);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window = new MainWindow();
+        window.setVisible(true);
     }
     
     /**
      * PB
      * Creates the Menubar
      */
-    public void createMenu() {
+    public void createMenuBar() {
         menuBar = new JMenuBar(); 
         JMenu game = new JMenu("Game");
         JMenuItem newGame = new JMenuItem("New Game");
@@ -58,7 +55,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         game.add(exit);
         menuBar.add(game);
         
-        super.setJMenuBar(menuBar);
+        window.setJMenuBar(menuBar);
     }
     
     /**
@@ -71,19 +68,16 @@ public class BattleGUITest extends javax.swing.JFrame {
         mainGrid.add(label);
         label.setHorizontalAlignment(JLabel.CENTER);
         mainGrid.add(panelPlayer);
-        super.setContentPane(mainGrid);
+        window.setContentPane(mainGrid);
     }
     
     /**
      * PB
      * Creates the GUI and set it visible
      */
-    public void createGUI() {
+    public void createPlayGUI() {
         createWindow();
-        createMenu();
-        createPlay();
-        
-        setVisible(true);
+        createMenuBar();
     }
     
     /**
@@ -93,12 +87,11 @@ public class BattleGUITest extends javax.swing.JFrame {
      * @param column
      * @return 
      */
-    public JButton createButton(int row, int column) {
-        JButton jbutton = new JButton();
-        jbutton.addActionListener(bl);
-        jbutton.setActionCommand("Shot");
-        jbutton.setLocation(row, column);
-        return jbutton;
+    public MyButton createButton(int row, int column) {
+        MyButton myButton = new MyButton(row, column);
+        myButton.addActionListener(bl);
+        myButton.setActionCommand("Shot");
+        return myButton;
     }
     
     /**
@@ -119,14 +112,14 @@ public class BattleGUITest extends javax.swing.JFrame {
         return panel;
     }
             
-    public void setPanelPlayer(int heigth, int width) {
-        this.panelPlayer = createPanel(heigth, width);
-        panelPlayer.setEnabled(false);
+    public void newGame() {
+        super.bField.setShips();
+        panelOponent = createPanel(super.bField.getWidth(), super.bField.getHeight());
+        panelPlayer = createPanel(super.bField.getWidth(), super.bField.getHeight());
+        createPlay();
+        createPlayGUI();
     }
-   
-    public void setPanelOponent(int heigth, int width) {
-        this.panelOponent = createPanel(heigth, width);
-    }
+        
     
     /**
      * PB
@@ -134,19 +127,24 @@ public class BattleGUITest extends javax.swing.JFrame {
      * @param pt
      * @param jb 
      */
-    public void shot(JButton jb) {
-        int i = bField.shot(jb.getLocation());
-        switchButton(jb, i);
+    public void shot(MyButton mb) {
+        int i = 1;
+        bField.shot(mb.getPoint());
+        switchButton(mb, i);
         
         // test ob auf Button zugegriffen werden kann:
         for(Component c : panelPlayer.getComponents()) {
-            if (c instanceof JButton) {
-                JButton button = (JButton)c;
-                if (button.getLocation().distance(jb.getLocation()) < 40) {
+            if (c instanceof MyButton) {
+                MyButton button = (MyButton)c;
+                if (button.getPoint().distance(mb.getPoint()) <= 1) {
                     button.setBackground(Color.red);
                 }                          
             }
         }
+    }
+    
+    public void receivedShot(Point pt) {
+        
     }
     
     /**
@@ -155,7 +153,7 @@ public class BattleGUITest extends javax.swing.JFrame {
      * @param button
      * @param status 
      */
-    private void switchButton(JButton button, int status) {
+    private void switchButton(MyButton button, int status) {
         switch (status) {
             // Daneben:
             case 0:
@@ -180,9 +178,9 @@ public class BattleGUITest extends javax.swing.JFrame {
                 button.setEnabled(false);
                 button.setBackground(new Color(255,0,0));
                 for(Component c : panelOponent.getComponents()) {
-                    if (c instanceof JButton) {
+                    if (c instanceof MyButton) {
                         if (c.isEnabled()) {
-                            switchButton((JButton)c, 0);
+                            switchButton((MyButton)c, 0);
                         }                            
                     }
                 }
@@ -191,6 +189,19 @@ public class BattleGUITest extends javax.swing.JFrame {
             default:
                 break;
         }
+    }
+    
+    private MyButton getButton(JPanel panel, Point pt) {
+        MyButton returnButton = new MyButton((int)pt.getX(), (int)pt.getY());        
+        for (Component c : panel.getComponents()) {
+            if (c instanceof MyButton) {
+                MyButton button = (MyButton)c;
+                if (button.getPoint() == pt) {
+                    returnButton = button;
+                }
+            }
+        }
+        return returnButton;
     }
        
     /**

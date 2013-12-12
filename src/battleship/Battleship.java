@@ -4,19 +4,24 @@
  */
 package battleship;
 
+import battleship.engine.Battlefield;
+import battleship.GUI.BattleGUITest;
+
 /**
  *
  * @author Andy, Patrik
  */
 public class Battleship {
-    private static final Battlefield bField = new Battlefield(10,10);
-    private static final BattleGUITest bGUI = new BattleGUITest(bField);
-    private TCPServer server;// = new TCPServer();
-    private TCPClient client;// = new TCPClient("127.0.0.1", 9999);
+    public Battlefield bField;
+    public BattleGUITest bGUI;
+    public TCPServer server;
+    public TCPClient client;
         
     public Battleship() {
-        
-        bGUI.createGUI();
+        this.bField = new Battlefield(10,10);
+        this.bGUI = new BattleGUITest();
+       
+        bGUI.createPlayGUI();
     }
     
     /**
