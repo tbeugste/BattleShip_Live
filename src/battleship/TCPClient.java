@@ -72,6 +72,10 @@ public class TCPClient implements Runnable{
         
     }
     
+    /**
+     * method to send a message to the server
+     * @param message 
+     */
     public void sendToServer(CommunicationObjectType message)
     {
         try{
@@ -84,11 +88,18 @@ public class TCPClient implements Runnable{
         }
     
     }
-    
+    /**
+     * Add Listener to list
+     * @param iListener 
+     */
     public void addActionListener(IListener iListener) {
         allListeners.add(iListener);
     }
     
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
     public void actionsOnInitializeMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
@@ -97,6 +108,10 @@ public class TCPClient implements Runnable{
         }
     }
     
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
     public void actionsOnReplayMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
@@ -104,7 +119,10 @@ public class TCPClient implements Runnable{
             listener.replyMessage(message);
         }
     }
-    
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
     public void actionsOnShotMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
@@ -112,7 +130,10 @@ public class TCPClient implements Runnable{
             listener.shotMessage(message);
         }
     }
-    
+    /**
+     * Inform all listeners and tell them the message
+     * @param message 
+     */
     public void actionsOnStartMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
