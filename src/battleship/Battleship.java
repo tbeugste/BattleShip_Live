@@ -6,6 +6,7 @@ package battleship;
 
 import battleship.engine.Battlefield;
 import battleship.GUI.BattleGUITest;
+import battleship.GUI.StartScreen;
 
 /**
  *
@@ -14,13 +15,15 @@ import battleship.GUI.BattleGUITest;
 public class Battleship {
     public static Battlefield bField;
     public BattleGUITest bGUI;
+    public StartScreen sGUI;
     public static TCPServer server;
     public static TCPClient client;
     public static KIServer kiServer;
         
     public Battleship() {
-        bField = new Battlefield(bGUI, 10, 10);
-        bGUI = new BattleGUITest();
+       bField = new Battlefield(bGUI, 10, 10);
+       //bGUI = new BattleGUITest();
+       sGUI = new StartScreen();
     }
     
     /**

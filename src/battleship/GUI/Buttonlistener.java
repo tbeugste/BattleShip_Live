@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 public class Buttonlistener implements ActionListener {
     
     private BattleGUITest _bGUI;
+    private StartScreen _sGUI;
+
     
     /**
      * Constructor
@@ -23,8 +25,15 @@ public class Buttonlistener implements ActionListener {
     
     public Buttonlistener(BattleGUITest aBGUI) {
         this._bGUI = aBGUI;
-    }
         
+    }
+    
+    public Buttonlistener(StartScreen aSGUI)
+    {
+        this._sGUI = aSGUI;
+    }
+
+    
     /**
      * PB
      * Gets the command and switch the action
@@ -37,6 +46,7 @@ public class Buttonlistener implements ActionListener {
             case "Shot":
                 MyButton mb = (MyButton)e.getSource();
                 _bGUI.shot(mb);
+                
                 //_bGUI.setLabel("" + (int)mb.getPoint().getX() + " " +(int)mb.getPoint().getY());
                 break;
             case "newGame":
@@ -45,6 +55,9 @@ public class Buttonlistener implements ActionListener {
             case "exit":
                 System.exit(0);
                 break;
+            case "singleplayer":
+                StartScreen.SinglePlayer();
+                
            default:
                break;
         }    

@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import javax.swing.*;
 
 /**
@@ -18,16 +20,17 @@ import javax.swing.*;
 public class BattleGUITest extends javax.swing.JFrame {
     
     //private Buttonlistener bl = new Buttonlistener(this);
-    private javax.swing.JPanel panelPlayer;
-    private javax.swing.JPanel panelOponent;
+    private static javax.swing.JPanel panelPlayer;
+    private static javax.swing.JPanel panelOponent;
     private javax.swing.JLabel label;
-    private Buttonlistener bl;
+    public Buttonlistener bl;
+     
     
     public BattleGUITest () {
         super("Battleship");
         bl = new Buttonlistener(this);
         createWindow();
-        
+        //createPlayGUI();
         // darstellen:
         super.setVisible(true);
     }
@@ -37,10 +40,29 @@ public class BattleGUITest extends javax.swing.JFrame {
      * Creates the MainWindow
      */
     public void createWindow() {
-        super.setSize(1200,600);
+        super.setSize(800,580);
+        super.setResizable(false);
         super.setLocation(200,100);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setJMenuBar(createMenuBar());
+        JPanel mainGrid = new JPanel (new FlowLayout());
+        mainGrid.setBackground(Color.white);
+        super.add(mainGrid);
+        label = new JLabel("Start");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        
+        JPanel panel = new JPanel (new GridLayout(2,0));
+        
+        panel.add(setShip());
+        panel.add(label);
+        
+        mainGrid.add(setPanelPlayer());
+        mainGrid.add(setPanelOpponent());
+        //mainGrid.add(setShip());
+        //mainGrid.add(label);
+        mainGrid.add(panel);
+     
+        super.setVisible(true);                 
     }
     
     /**
@@ -51,6 +73,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         JMenuBar menuBar = new JMenuBar(); 
         // Neuer Menupunkt:
         JMenu game = new JMenu("Game");
+        JMenu option = new JMenu ("Option");
         // Neue Untermenus zu Game:
             // New Game:
             JMenuItem newGame = new JMenuItem("New Game");
@@ -62,8 +85,34 @@ public class BattleGUITest extends javax.swing.JFrame {
             exit.addActionListener(bl);
             exit.setActionCommand("exit");
             game.add(exit);
+        //Neue Untermenus zu Option
+            //Mode:
+            JMenu mode = new JMenu("Mode");
+            option.add(mode);
+            //Untermenus zu Mode             
+                //SingelPlayer:
+                JCheckBoxMenuItem single = new JCheckBoxMenuItem ("SinglePlayer");
+                single.addActionListener(bl);
+                single.setActionCommand("single");
+                mode.add(single);
+                //MultiPlayer:
+                JCheckBoxMenuItem multi = new JCheckBoxMenuItem ("MulitPlayer");
+                multi.addActionListener(bl);
+                multi.setActionCommand("single");
+                mode.add(multi);
+                //ButtonGroup erstellen
+                ButtonGroup group = new ButtonGroup();
+                group.add(single);
+                group.add(multi);                         
+            //Help:
+            JMenuItem help = new JMenuItem("Help");
+            help.addActionListener(bl);
+            help.setActionCommand("help");
+            option.add(help);
+            
         // Menupunkt zu Menubar hinzufügen:
         menuBar.add(game);
+        menuBar.add(option);
         
         // Die Menubar zurück geben:
         return menuBar;
@@ -94,6 +143,8 @@ public class BattleGUITest extends javax.swing.JFrame {
         MyButton myButton = new MyButton(row, column);
         myButton.addActionListener(bl);
         myButton.setActionCommand("Shot");
+        myButton.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\Versenken\\src\\water.jpg"));
+        myButton.setBorder(null);
         return myButton;
     }
     
@@ -106,15 +157,63 @@ public class BattleGUITest extends javax.swing.JFrame {
      */
     private JPanel createPanel(int height, int width) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(height,width));
+        
+        panel.setLayout(new GridLayout(height,width,1,1));
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                panel.add(createButton(i,j));
+                panel.add(createButton(i,j));           
             }
         }
         return panel;
     }
-            
+     public JPanel setPanelPlayer ()
+    {
+        this.panelPlayer = createPanel(10,10);
+        return panelPlayer;
+    }
+
+    public JPanel setPanelOpponent () 
+    {
+        this.panelOponent = createPanel(10,10);
+        return panelOponent;
+    }   
+    
+        public JPanel setShip ()
+    {
+        JPanel ShipPanel = new JPanel (new GridLayout(2,0));   
+       
+        JButton bship = new JButton("Kreuzer");
+        
+        bship.addActionListener(bl);
+        bship.setBackground(Color.white);
+        bship.setBorder (null);
+
+        JButton cruiser = new JButton ("Schlachtschiff");
+        cruiser.setBorder (null);
+        cruiser.setBackground(Color.white);
+        
+        JButton destroyer = new JButton ("Zerstörer");
+        destroyer.setBorder (null);
+        destroyer.setBackground (Color.white);
+        
+        JButton uboot = new JButton("UBoot");
+        uboot.setBorder (null);
+        uboot.setBackground(Color.white);
+                
+        bship.setIcon (new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Kreuzer.jpg"));
+        cruiser.setIcon (new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Schlachtschiff.jpg"));
+        destroyer.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Zerstörer.jpg"));
+        uboot.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\UBoot.jpg"));
+
+        ShipPanel.add(bship);
+        ShipPanel.add(cruiser);
+        ShipPanel.add(destroyer);
+        ShipPanel.add(uboot);
+        
+  
+        return ShipPanel;      
+    }
+    
     public void newGame() {
         Battleship.bField.setShips();
         panelOponent = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
@@ -148,6 +247,10 @@ public class BattleGUITest extends javax.swing.JFrame {
         }
         */
     }
+    
+    public void SinglePlayer() {
+        BattleGUITest test = new BattleGUITest ();
+    }
         
     /**
      * PB
@@ -160,25 +263,25 @@ public class BattleGUITest extends javax.swing.JFrame {
             // Daneben:
             case 0:
                 button.setEnabled(false);
-                button.setBackground(new Color(0,0,255));
+                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 setLabel("Daneben!");
                 break;
             // Treffer:
             case 1:
                 button.setEnabled(false);
-                button.setBackground(new Color(0,255,0));
+                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 setLabel("Treffer!");
                 break;
             // Versenkt:
             case 2:
                 button.setEnabled(false);
-                button.setBackground(new Color(255,0,0));
+                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 setLabel("Versenkt!");
                 break;
             // Gameover:
             case 3:
                 button.setEnabled(false);
-                button.setBackground(new Color(255,0,0));
+                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 for(Component c : panelOponent.getComponents()) {
                     if (c instanceof MyButton) {
                         if (c.isEnabled()) {
@@ -238,5 +341,5 @@ public class BattleGUITest extends javax.swing.JFrame {
     public void setLabel(String s) {
         label.setText(s);
     }
-        
+   
 }

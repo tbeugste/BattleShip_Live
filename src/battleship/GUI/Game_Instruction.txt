@@ -1,0 +1,26 @@
+Ziel des Spieles
+
+Jeder Spieler versteckt eine kleine Flotte von Schiffen vor seinem Gegner. Derjenige, der zuerst alle Schiffe des Gegners komplett getroffen und versenkt hat, gewinnt. 
+
+Beide Flotten bestehen aus folgenden 5 Schiffen:
+1 Schlachtschiff (5 Treffer nötig zum Versenken)
+2 Kreuzer (4 Treffer nötig zum Versenken)
+3 Zerstörer(3 Treffer nötig zum Versenken)
+4 UBoot(2 Treffer nötig zum Versenken)
+
+Das Einsetzen der Schiffe
+
+Vor dem ersten Zug muss jeder seine Schiffe einsetzen. Die Schiffe müssen so eingesetzt werden, dass sie sich weder horizontal noch vertikal berühren - sie dürfen also nicht an einer Kante angrenzen, diagonales Berühren über Eck ist zulässig. 
+Wähle ein Schiff durch Anklicken, drehe es gegebenenfalls. Schiebe es über das Brett bis die Position stimmt und klicke dann, um es abzusetzen. Wenn du ein Schiff wieder entfernen willst, kannst du es durch Anklicken wieder zurücknehmen. 
+
+Auf Felder schießen
+
+Von jetzt an siehst du immer zwei Spielbretter:
+Im linken Brett kannst du deine eigenen Schüsse und deren Erfolge sehen.
+Im rechten Brett siehst du deine Schiffe und die Treffer deines Gegners.
+Feuere auf ein bestimmtes Feld, indem du im oberen Brett auf das gewünschte Feld klickst. 
+Besondere Regel auf Brettspielnetz: Wenn du triffst, bist du sofort noch einmal an der Reihe - auch mehrmals hintereinander! 
+
+Sieger
+
+Wer als erstes alle gegnerischen Schiffe versenkt hat, ist Sieger.
