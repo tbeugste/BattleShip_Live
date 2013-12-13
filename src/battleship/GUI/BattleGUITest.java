@@ -248,6 +248,15 @@ public class BattleGUITest extends javax.swing.JFrame {
         */
     }
     
+
+    
+    public void help() throws Exception
+    {
+                Runtime rt= Runtime.getRuntime();
+                String file ="C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Game_Instruction.txt";
+                Process p = rt.exec ("Notepad  "+ file);
+    } 
+    
     public void SinglePlayer() {
         BattleGUITest test = new BattleGUITest ();
     }
