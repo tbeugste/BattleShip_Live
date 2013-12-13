@@ -12,6 +12,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -40,7 +41,7 @@ public class BattleGUITest extends javax.swing.JFrame {
      * Creates the MainWindow
      */
     public void createWindow() {
-        super.setSize(800,580);
+        super.setSize(800,600);
         super.setResizable(false);
         super.setLocation(200,100);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,19 +119,6 @@ public class BattleGUITest extends javax.swing.JFrame {
         return menuBar;
     }
     
-    /**
-     * PB
-     * Creates the gamewindow with 2 panels and 1 label.
-     */
-    public void createPlayGUI() {
-        JPanel mainGrid = new JPanel(new GridLayout(1,3));
-        mainGrid.add(panelOponent);
-        label = new JLabel("Start");
-        mainGrid.add(label);
-        label.setHorizontalAlignment(JLabel.CENTER);
-        mainGrid.add(panelPlayer);
-        this.setContentPane(mainGrid);
-    }
         
     /**
      * PB 
@@ -169,12 +157,16 @@ public class BattleGUITest extends javax.swing.JFrame {
      public JPanel setPanelPlayer ()
     {
         this.panelPlayer = createPanel(10,10);
+        panelPlayer.setBorder(new TitledBorder("Home Field"));
+        panelPlayer.setBackground(Color.white);
         return panelPlayer;
     }
 
     public JPanel setPanelOpponent () 
     {
         this.panelOponent = createPanel(10,10);
+        panelOponent.setBorder(new TitledBorder("Opponent Field"));
+        panelOponent.setBackground(Color.white);
         return panelOponent;
     }   
     
@@ -218,8 +210,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         Battleship.bField.setShips();
         panelOponent = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
         panelPlayer = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
-        createPlayGUI();
-        
+                
         //test:
         Battleship.bField.initializeGame();
         Battleship.bField.setShips();
