@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  */
 public class Buttonlistener implements ActionListener {
     
-    private BattleGUITest bGUI;
+    private BattleGUITest _bGUI;
     
     /**
      * Constructor
@@ -22,7 +22,7 @@ public class Buttonlistener implements ActionListener {
      */
     
     public Buttonlistener(BattleGUITest aBGUI) {
-        this.bGUI = aBGUI;
+        this._bGUI = aBGUI;
     }
         
     /**
@@ -36,10 +36,11 @@ public class Buttonlistener implements ActionListener {
         switch (e.getActionCommand()) {
             case "Shot":
                 MyButton mb = (MyButton)e.getSource();
-                bGUI.shot(mb);
+                _bGUI.shot(mb);
+                //_bGUI.setLabel("" + (int)mb.getPoint().getX() + " " +(int)mb.getPoint().getY());
                 break;
             case "newGame":
-                bGUI.newGame();
+                _bGUI.newGame();
                 break;
             case "exit":
                 System.exit(0);

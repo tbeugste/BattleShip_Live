@@ -198,7 +198,7 @@ public class BattleGUITest extends javax.swing.JFrame {
      * finds a Button and gives it back
      * @param panel
      * @param pt
-     * @return 
+     * @return MyButton
      */
     public MyButton getButton(JPanel panel, Point pt) {
         for (Component c : panel.getComponents()) {

@@ -35,8 +35,7 @@ public class Battlefield implements IListener {
     }
     
     public void initializeGame() {
-        Battleship.kiServer = new KIServer();
-        Battleship.client = new TCPClient("127.0.0.1", 9999);
+        
     }
     
     /**
@@ -78,19 +77,19 @@ public class Battlefield implements IListener {
                     _fleet.remove(aShip);
                     if(_fleet.isEmpty()) {
                         sendReply(true, true, true);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(),pt) ,3);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,3);
                     } else {
                         sendReply(true, true, false);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(),pt) ,2);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,2);
                     }
                 } else {
                     sendReply(true, false, false);
-                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(),pt) ,1);
+                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,1);
                 }
             }
         } 
         sendReply(false, false, false);
-        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(),pt) ,0);
+        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,0);
     }
     
     /**
