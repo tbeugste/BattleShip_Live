@@ -12,16 +12,15 @@ import battleship.GUI.BattleGUITest;
  * @author Andy, Patrik
  */
 public class Battleship {
-    public Battlefield bField;
+    public static Battlefield bField;
     public BattleGUITest bGUI;
-    public TCPServer server;
-    public TCPClient client;
+    public static TCPServer server;
+    public static TCPClient client;
+    public static KIServer kiServer;
         
     public Battleship() {
-        this.bField = new Battlefield(10,10);
-        this.bGUI = new BattleGUITest();
-       
-        bGUI.createPlayGUI();
+        bField = new Battlefield(bGUI, 10, 10);
+        bGUI = new BattleGUITest();
     }
     
     /**

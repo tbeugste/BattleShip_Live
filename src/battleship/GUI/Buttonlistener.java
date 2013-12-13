@@ -4,12 +4,9 @@
  */
 package battleship.GUI;
 
-import battleship.GUI.MyButton;
-import battleship.GUI.BattleGUITest;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Point;
-import javax.swing.JButton;
+
 
 /**
  *
@@ -50,7 +47,6 @@ public class Buttonlistener implements ActionListener {
            default:
                break;
         }    
-         
     }  
 }
      

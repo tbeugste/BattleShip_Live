@@ -20,6 +20,7 @@ public class CommunicationObject implements Serializable {
     private boolean _initialized = false;
     private boolean _hited = false;
     private boolean _destroyed = false;
+    private boolean _gameover = false;
     private boolean _start = false;
     private String _Message = null;
     
@@ -67,6 +68,15 @@ public class CommunicationObject implements Serializable {
     public boolean getDestroyed()
     {
         return _destroyed;
+    }
+    
+    /**
+     * method to return gameover boolean
+     * @return 
+     */
+    public boolean getGameover()
+    {
+        return _gameover;
     }
     
     /**
@@ -138,11 +148,12 @@ public class CommunicationObject implements Serializable {
      * @param hited
      * @param destroyed 
      */
-    public void shotAplyed(boolean hited, boolean destroyed)
+    public void shotAplyed(boolean hited, boolean destroyed, boolean gameover)
     {
         _type = CommunicationObjectType.REPLY;
         _hited = hited;
         _destroyed = destroyed;
+        _gameover = gameover;
     }
     
     public void setStarted(boolean started)

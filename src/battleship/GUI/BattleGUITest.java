@@ -15,18 +15,21 @@ import javax.swing.*;
  *
  * @author Patrik Buholzer
  */
-public class BattleGUITest extends Battleship {
+public class BattleGUITest extends javax.swing.JFrame {
     
     //private Buttonlistener bl = new Buttonlistener(this);
-    private javax.swing.JMenuBar menuBar;
-    private static javax.swing.JPanel panelPlayer;
-    private static javax.swing.JPanel panelOponent;
-    private javax.swing.JLabel label = new JLabel("Start");
-    public Buttonlistener bl = new Buttonlistener(this);
-    private MainWindow window;
+    private javax.swing.JPanel panelPlayer;
+    private javax.swing.JPanel panelOponent;
+    private javax.swing.JLabel label;
+    private Buttonlistener bl;
     
     public BattleGUITest () {
-         
+        super("Battleship");
+        bl = new Buttonlistener(this);
+        createWindow();
+        
+        // darstellen:
+        super.setVisible(true);
     }
     
     /**
@@ -34,58 +37,58 @@ public class BattleGUITest extends Battleship {
      * Creates the MainWindow
      */
     public void createWindow() {
-        window = new MainWindow();
-        window.setVisible(true);
+        super.setSize(1200,600);
+        super.setLocation(200,100);
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setJMenuBar(createMenuBar());
     }
     
     /**
      * PB
      * Creates the Menubar
      */
-    public void createMenuBar() {
-        menuBar = new JMenuBar(); 
+    public JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar(); 
+        // Neuer Menupunkt:
         JMenu game = new JMenu("Game");
-        JMenuItem newGame = new JMenuItem("New Game");
-        newGame.addActionListener(bl);
-        newGame.setActionCommand("newGame");
-        game.add(newGame);
-        JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener(bl);
-        exit.setActionCommand("exit");
-        game.add(exit);
+        // Neue Untermenus zu Game:
+            // New Game:
+            JMenuItem newGame = new JMenuItem("New Game");
+            newGame.addActionListener(bl);
+            newGame.setActionCommand("newGame");
+            game.add(newGame);
+            // Exit:
+            JMenuItem exit = new JMenuItem("Exit");
+            exit.addActionListener(bl);
+            exit.setActionCommand("exit");
+            game.add(exit);
+        // Menupunkt zu Menubar hinzufügen:
         menuBar.add(game);
         
-        window.setJMenuBar(menuBar);
+        // Die Menubar zurück geben:
+        return menuBar;
     }
     
     /**
      * PB
      * Creates the gamewindow with 2 panels and 1 label.
      */
-    public void createPlay() {
+    public void createPlayGUI() {
         JPanel mainGrid = new JPanel(new GridLayout(1,3));
         mainGrid.add(panelOponent);
+        label = new JLabel("Start");
         mainGrid.add(label);
         label.setHorizontalAlignment(JLabel.CENTER);
         mainGrid.add(panelPlayer);
-        window.setContentPane(mainGrid);
+        this.setContentPane(mainGrid);
     }
-    
-    /**
-     * PB
-     * Creates the GUI and set it visible
-     */
-    public void createPlayGUI() {
-        createWindow();
-        createMenuBar();
-    }
-    
+        
     /**
      * PB 
      * Creates the buttons
      * @param row
      * @param column
-     * @return 
+     * @return MyButton
      */
     public MyButton createButton(int row, int column) {
         MyButton myButton = new MyButton(row, column);
@@ -99,7 +102,7 @@ public class BattleGUITest extends Battleship {
      * Fills the panel witch created buttons.
      * @param height
      * @param width
-     * @return 
+     * @return JPanel
      */
     private JPanel createPanel(int height, int width) {
         JPanel panel = new JPanel();
@@ -113,25 +116,27 @@ public class BattleGUITest extends Battleship {
     }
             
     public void newGame() {
-        super.bField.setShips();
-        panelOponent = createPanel(super.bField.getWidth(), super.bField.getHeight());
-        panelPlayer = createPanel(super.bField.getWidth(), super.bField.getHeight());
-        createPlay();
+        Battleship.bField.setShips();
+        panelOponent = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
+        panelPlayer = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
         createPlayGUI();
+        
+        //test:
+        Battleship.bField.initializeGame();
+        Battleship.bField.setShips();
+        
+        super.setVisible(true);
     }
         
     
     /**
      * PB
      * Gets the button and the point from the Buttonlistener and checks the shot
-     * @param pt
-     * @param jb 
+     * @param MyButton mb
      */
     public void shot(MyButton mb) {
-        int i = 1;
-        bField.shot(mb.getPoint());
-        switchButton(mb, i);
-        
+        Battleship.bField.sendPlayerShot(mb.getPoint());
+        /*
         // test ob auf Button zugegriffen werden kann:
         for(Component c : panelPlayer.getComponents()) {
             if (c instanceof MyButton) {
@@ -141,19 +146,16 @@ public class BattleGUITest extends Battleship {
                 }                          
             }
         }
+        */
     }
-    
-    public void receivedShot(Point pt) {
         
-    }
-    
     /**
      * PB
      * Changes the button to disabled and prints the status in the label
      * @param button
      * @param status 
      */
-    private void switchButton(MyButton button, int status) {
+    public void switchButton(MyButton button, int status) {
         switch (status) {
             // Daneben:
             case 0:
@@ -191,17 +193,41 @@ public class BattleGUITest extends Battleship {
         }
     }
     
-    private MyButton getButton(JPanel panel, Point pt) {
-        MyButton returnButton = new MyButton((int)pt.getX(), (int)pt.getY());        
+    /**
+     * PB
+     * finds a Button and gives it back
+     * @param panel
+     * @param pt
+     * @return 
+     */
+    public MyButton getButton(JPanel panel, Point pt) {
         for (Component c : panel.getComponents()) {
             if (c instanceof MyButton) {
                 MyButton button = (MyButton)c;
                 if (button.getPoint() == pt) {
-                    returnButton = button;
+                    return button;
                 }
             }
         }
-        return returnButton;
+        return null;
+    }
+    
+    /**
+     * PB
+     * returns the JPanel of the Player
+     * @return JPanel
+     */
+    public JPanel getPanelPlayer() {
+        return this.panelPlayer;
+    }
+    
+    /**
+     * PB
+     * returns the JPanel of the Oponent
+     * @return JPanel
+     */
+    public JPanel getPanelOponent() {
+        return this.panelOponent;
     }
        
     /**
