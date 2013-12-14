@@ -3,10 +3,12 @@
  * and open the template in the editor.
  */
 package battleship;
-
+import battleship.engine.TCPClient;
 import battleship.engine.Battlefield;
 import battleship.GUI.BattleGUITest;
 import battleship.GUI.StartScreen;
+import battleship.Server.*;
+
 
 /**
  *

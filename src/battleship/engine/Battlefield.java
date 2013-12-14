@@ -5,13 +5,9 @@
 package battleship.engine;
 
 import battleship.GUI.BattleGUITest;
-import battleship.CommunicationObject;
-import battleship.CommunicationObjectType;
-import battleship.IListener;
 import battleship.Battleship;
-import battleship.TCPServer;
-import battleship.KIServer;
-import battleship.TCPClient;
+import battleship.Server.TCPServer;
+import battleship.Server.KIServer;
 import java.awt.*;
 import java.util.*;
 

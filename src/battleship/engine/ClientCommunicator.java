@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-package battleship;
+package battleship.engine;
+import battleship.Server.IServer;
 import java.io.*; 
 import java.net.*;
 import java.util.*;

@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package battleship;
+package battleship.Server;
+import battleship.engine.CommunicationObject;
+import battleship.engine.CommunicationObjectType;
+import battleship.engine.ClientCommunicator;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
