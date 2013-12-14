@@ -46,7 +46,10 @@ public class Battlefield implements IListener {
         return validPos;
     }
     
-
+    public void setShip(Shiptypes sTyp){
+        _bGUI.removeFromCombobox(sTyp);
+    }
+    
     public void initializeGame() {
         
     }

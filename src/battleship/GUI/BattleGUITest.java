@@ -36,6 +36,7 @@ public class BattleGUITest extends javax.swing.JFrame {
     private static javax.swing.JPanel panelOponent;
     private Shiptypes ship;
     private javax.swing.JLabel label;
+    private JComboBox shipNames;
     public Buttonlistener bl;
      
     
@@ -175,6 +176,22 @@ public class BattleGUITest extends javax.swing.JFrame {
         panelPlayer.setBorder(new TitledBorder("Home Field"));
         panelPlayer.setBackground(Color.white);
         return panelPlayer;
+    }
+    public void creatJComboBox(){
+        shipNames = new JComboBox();
+        shipNames.addActionListener(bl);
+        shipNames.setActionCommand("Ship selected");
+        
+        for(Shiptypes typ : Shiptypes.values()){
+            shipNames.addItem(typ);
+        }
+    }
+    
+    public void removeFromCombobox(Shiptypes sTyp){
+        shipNames.removeItem(sTyp);
+    }
+    public void setShip(Shiptypes sTyp){
+        Battleship.bField.setShip(sTyp);
     }
 
     public JPanel setPanelOpponent () 
