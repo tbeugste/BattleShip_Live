@@ -60,7 +60,7 @@ public class KIServer extends Thread implements IServer{
         
             while(true)
             {
-                if(allCommunicators.size()<maxServerConnections && !started)
+                if(allCommunicators.size()<maxServerConnections)
                 {
                     //getClient socket
                     Socket client = serverSocket.accept();
@@ -78,10 +78,6 @@ public class KIServer extends Thread implements IServer{
                         communicationObject.setConnected(true);
                         sendToAll(communicationObject);
                     }
-                }
-                else if(allCommunicators.size()<2 && started)
-                {
-                    //TODO: RECONNECT
                 }
             }
             
