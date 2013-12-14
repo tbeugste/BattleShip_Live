@@ -28,7 +28,7 @@ public class KIServer extends Thread implements IServer{
     // the socket for the communication to happen on
     ServerSocket serverSocket;
     //max Connections
-    int maxServerConnections = 2;
+    int maxServerConnections = 1;
     //List of ClientConnections
     private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
         //Counter to know if both are ready to start
@@ -60,7 +60,7 @@ public class KIServer extends Thread implements IServer{
         
             while(true)
             {
-                if(allCommunicators.size()<2 && !started)
+                if(allCommunicators.size()<maxServerConnections && !started)
                 {
                     //getClient socket
                     Socket client = serverSocket.accept();
@@ -70,7 +70,7 @@ public class KIServer extends Thread implements IServer{
                     allCommunicators.put(client, oos);
                     //Start new Threads
                     new ClientCommunicator(this, client);
-                    if(allCommunicators.size()==2)
+                    if(allCommunicators.size()==maxServerConnections)
                     {
                         started = true;
                         //Start initializing Game

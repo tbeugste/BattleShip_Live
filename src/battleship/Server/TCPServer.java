@@ -58,7 +58,7 @@ public class TCPServer extends Thread implements IServer {
         
             while(true)
             {
-                if(allCommunicators.size()<2 && !started)
+                if(allCommunicators.size()<maxServerConnections && !started)
                 {
                     //getClient socket
                     Socket client = serverSocket.accept();
@@ -68,7 +68,7 @@ public class TCPServer extends Thread implements IServer {
                     allCommunicators.put(client, oos);
                     //Start new Threads
                     new ClientCommunicator(this, client);
-                    if(allCommunicators.size()==2)
+                    if(allCommunicators.size()==maxServerConnections)
                     {
                         started = true;
                         //Start initializing Game
@@ -77,7 +77,7 @@ public class TCPServer extends Thread implements IServer {
                         sendToAll(communicationObject);
                     }
                 }
-                else if(allCommunicators.size()<2 && started)
+                else if(allCommunicators.size()<maxServerConnections && started)
                 {
                     //TODO: RECONNECT
                 }
