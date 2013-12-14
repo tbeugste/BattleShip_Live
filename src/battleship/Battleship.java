@@ -21,7 +21,7 @@ public class Battleship {
     public static KIServer kiServer;
         
     public Battleship() {
-       bField = new Battlefield(bGUI, 10, 10);
+       //bField = new Battlefield(bGUI, 10, 10);
        //bGUI = new BattleGUITest();
        sGUI = new StartScreen();
     }

@@ -5,12 +5,23 @@
 package battleship.GUI;
 
 import battleship.Battleship;
+import battleship.engine.Shiptypes;
+import static battleship.engine.Shiptypes.BSHIP;
+import static battleship.engine.Shiptypes.CRUISER;
+import static battleship.engine.Shiptypes.DESTROYER;
+import static battleship.engine.Shiptypes.SUBMARINE;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -23,6 +34,7 @@ public class BattleGUITest extends javax.swing.JFrame {
     //private Buttonlistener bl = new Buttonlistener(this);
     private static javax.swing.JPanel panelPlayer;
     private static javax.swing.JPanel panelOponent;
+    private Shiptypes ship;
     private javax.swing.JLabel label;
     public Buttonlistener bl;
      
@@ -31,7 +43,6 @@ public class BattleGUITest extends javax.swing.JFrame {
         super("Battleship");
         bl = new Buttonlistener(this);
         createWindow();
-        //createPlayGUI();
         // darstellen:
         super.setVisible(true);
     }
@@ -49,6 +60,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         JPanel mainGrid = new JPanel (new FlowLayout());
         mainGrid.setBackground(Color.white);
         super.add(mainGrid);
+        
         label = new JLabel("Start");
         label.setHorizontalAlignment(JLabel.CENTER);
         
@@ -131,11 +143,14 @@ public class BattleGUITest extends javax.swing.JFrame {
         MyButton myButton = new MyButton(row, column);
         myButton.addActionListener(bl);
         myButton.setActionCommand("Shot");
-        myButton.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\Versenken\\src\\water.jpg"));
+        BufferedImage img = null;
+        myButton.setIcon (new ImageIcon(getClass().getResource("water.jpg")));
+        //myButton.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\Versenken\\src\\water.jpg"));
         myButton.setBorder(null);
         return myButton;
     }
     
+   
     /**
      * PB
      * Fills the panel witch created buttons.
@@ -170,17 +185,16 @@ public class BattleGUITest extends javax.swing.JFrame {
         return panelOponent;
     }   
     
-        public JPanel setShip ()
+    public JPanel setShip ()
     {
         JPanel ShipPanel = new JPanel (new GridLayout(2,0));   
        
-        JButton bship = new JButton("Kreuzer");
-        
+        JButton bship = new JButton("Schlachtschiff");
         bship.addActionListener(bl);
         bship.setBackground(Color.white);
         bship.setBorder (null);
 
-        JButton cruiser = new JButton ("Schlachtschiff");
+        JButton cruiser = new JButton ("Kreuzer");
         cruiser.setBorder (null);
         cruiser.setBackground(Color.white);
         
@@ -188,19 +202,19 @@ public class BattleGUITest extends javax.swing.JFrame {
         destroyer.setBorder (null);
         destroyer.setBackground (Color.white);
         
-        JButton uboot = new JButton("UBoot");
-        uboot.setBorder (null);
-        uboot.setBackground(Color.white);
+        JButton submarine = new JButton("UBoot");
+        submarine.setBorder (null);
+        submarine.setBackground(Color.white);
                 
-        bship.setIcon (new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Kreuzer.jpg"));
-        cruiser.setIcon (new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Schlachtschiff.jpg"));
-        destroyer.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Zerstörer.jpg"));
-        uboot.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\UBoot.jpg"));
+        bship.setIcon (new ImageIcon(getClass().getResource("BShip.jpg")));
+        cruiser.setIcon (new ImageIcon(getClass().getResource("Cruiser.jpg")));
+        destroyer.setIcon(new ImageIcon(getClass().getResource("Destroyer.jpg")));
+        submarine.setIcon(new ImageIcon(getClass().getResource("Submarine.jpg")));
 
         ShipPanel.add(bship);
         ShipPanel.add(cruiser);
         ShipPanel.add(destroyer);
-        ShipPanel.add(uboot);
+        ShipPanel.add(submarine);
         
   
         return ShipPanel;      
@@ -248,9 +262,6 @@ public class BattleGUITest extends javax.swing.JFrame {
                 Process p = rt.exec ("Notepad  "+ file);
     } 
     
-    public void SinglePlayer() {
-        BattleGUITest test = new BattleGUITest ();
-    }
         
     /**
      * PB
@@ -263,25 +274,40 @@ public class BattleGUITest extends javax.swing.JFrame {
             // Daneben:
             case 0:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
+                button.setIcon(new ImageIcon(getClass().getResource("miss.jpg")));
                 setLabel("Daneben!");
                 break;
             // Treffer:
             case 1:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
+                button.setIcon(new ImageIcon(getClass().getResource("fire.jpg")));
                 setLabel("Treffer!");
                 break;
             // Versenkt:
             case 2:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
+                if(ship == SUBMARINE)
+                {
+                    button.setIcon(new ImageIcon(getClass().getResource("Submarine.jpg")));
+                }
+                if(ship == DESTROYER)
+                {
+                    button.setIcon(new ImageIcon(getClass().getResource("Destroyer.jpg")));
+                }
+                if(ship == CRUISER)
+                {
+                    button.setIcon(new ImageIcon(getClass().getResource("Cruiser.jpg")));
+                }
+                if(ship == BSHIP)
+                {
+                    button.setIcon(new ImageIcon(getClass().getResource("BShip.jpg")));
+                }
                 setLabel("Versenkt!");
                 break;
             // Gameover:
             case 3:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
+                //button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 for(Component c : panelOponent.getComponents()) {
                     if (c instanceof MyButton) {
                         if (c.isEnabled()) {
