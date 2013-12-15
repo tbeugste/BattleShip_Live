@@ -63,11 +63,13 @@ public class BattleGUITest extends javax.swing.JFrame {
         super.add(mainGrid);
         
         label = new JLabel("Start");
+        label.setSize(200, 600);
         label.setHorizontalAlignment(JLabel.CENTER);
         
         JPanel panel = new JPanel (new GridLayout(2,0));
+        panel.setSize(50, 400);
         
-        panel.add(setShip());
+        panel.add(creatJComboBox());
         panel.add(label);
         
         mainGrid.add(setPanelPlayer());
@@ -177,7 +179,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         panelPlayer.setBackground(Color.white);
         return panelPlayer;
     }
-    public void creatJComboBox(){
+    public Container creatJComboBox(){
         shipNames = new JComboBox();
         shipNames.addActionListener(bl);
         shipNames.setActionCommand("Ship selected");
@@ -185,6 +187,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         for(Shiptypes typ : Shiptypes.values()){
             shipNames.addItem(typ);
         }
+        return shipNames;
     }
     
     public void removeFromCombobox(Shiptypes sTyp){
@@ -202,7 +205,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         return panelOponent;
     }   
     
-    public JPanel setShip ()
+    /*public JPanel setShip ()
     {
         JPanel ShipPanel = new JPanel (new GridLayout(2,0));   
        
@@ -235,7 +238,7 @@ public class BattleGUITest extends javax.swing.JFrame {
         
   
         return ShipPanel;      
-    }
+    }*/
     
     public void newGame() {
         Battleship.bField.setShips();
