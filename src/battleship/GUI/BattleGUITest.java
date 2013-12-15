@@ -185,7 +185,10 @@ public class BattleGUITest extends javax.swing.JFrame {
         shipNames.setActionCommand("Ship selected");
         
         for(Shiptypes typ : Shiptypes.values()){
-            shipNames.addItem(typ);
+            for(int i = 0; i<typ.getCount();i++)
+            {
+                shipNames.addItem(typ);
+            }
         }
         return shipNames;
     }
