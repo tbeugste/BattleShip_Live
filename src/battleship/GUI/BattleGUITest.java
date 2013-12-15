@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-/**
+/** 
  *
  * @author Patrik Buholzer
  */

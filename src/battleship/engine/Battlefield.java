@@ -31,6 +31,7 @@ public class Battlefield implements IListener {
     }
     
     public boolean enoughSpace(Shiptypes shipTypes,Point clickPosition, boolean horizontal){
+        
         boolean validPos=false;
         Point endPosition=new Point();
         if(horizontal){
