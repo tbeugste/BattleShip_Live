@@ -29,7 +29,13 @@ public class Battlefield implements IListener {
         _width = width;
         _status = new Status();
     }
-    
+    /**
+     * 
+     * @param shipTypes
+     * @param clickPosition
+     * @param horizontal
+     * @return 
+     */
     public boolean enoughSpace(Shiptypes shipTypes,Point clickPosition, boolean horizontal){
         
         boolean validPos=false;
