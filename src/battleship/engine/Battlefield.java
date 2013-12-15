@@ -29,6 +29,33 @@ public class Battlefield implements IListener {
         _width = width;
         _status = new Status();
     }
+    /**
+     * 
+     * @param shipTypes
+     * @param clickPosition
+     * @param horizontal
+     * @return 
+     */
+    public boolean enoughSpace(Shiptypes shipTypes,Point clickPosition, boolean horizontal){
+        
+        boolean validPos=false;
+        Point endPosition=new Point();
+        if(horizontal){
+            endPosition.x=9;
+            endPosition.y=clickPosition.y;
+            }else{
+            endPosition.x=clickPosition.x;
+            endPosition.y=9;
+            }
+            if(clickPosition.distance(endPosition)>=shipTypes.getValue()){
+                    validPos=true;
+            }
+        return validPos;
+    }
+    
+    public void setShip(Shiptypes sTyp){
+        _bGUI.removeFromCombobox(sTyp);
+    }
     
     public void initializeGame() {
         
