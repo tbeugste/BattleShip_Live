@@ -24,17 +24,17 @@ public class Battlefield implements IListener {
     private Status _status;
     
     private TCPClient _client;
+    private TCPServer _server;
     private KIServer _kiServer;
     
-    public Battlefield (BattleGUI bGUI, int height, int width) {
+    public Battlefield (BattleGUI bGUI, int height, int width, int gametype) {
         _bGUI = bGUI;
         _height = height;
         _width = width;
         _status = new Status();
-        
-        _client = new TCPClient("127.0.0.1", 9999);
-        _kiServer = new KIServer();
+        initializeServer(gametype);
     }
+    
     /**
      * 
      * @param shipTypes
@@ -65,6 +65,30 @@ public class Battlefield implements IListener {
     
     public void initializeGame() {
         
+    }
+    
+    /**
+     * PB
+     * this method initialize the server and client
+     * @param gametype 
+     */
+    public void initializeServer(int gametype) {
+        switch (gametype) {
+            // Singleplayer
+            case 1:
+                _kiServer = new KIServer();
+                _client = new TCPClient("127.0.0.1", 9999);
+                break;
+            // Multiplayer Host
+            case 2:
+                _server = new TCPServer();
+                _client = new TCPClient("127.0.0.1", 9999);
+                break;
+            // Multiplayer Client
+            case 3:
+                _client = new TCPClient("127.0.0.1", 9999);
+                break;
+        }
     }
     
     /**

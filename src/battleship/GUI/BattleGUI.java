@@ -268,7 +268,7 @@ public class BattleGUI extends javax.swing.JFrame {
     public void help() throws Exception
     {
                 Runtime rt= Runtime.getRuntime();
-                String file ="C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\Game_Instruction.txt";
+                String file ="battleship.GUI.Game_Instruction.txt";
                 Process p = rt.exec ("Notepad  "+ file);
     } 
     
@@ -375,7 +375,12 @@ public class BattleGUI extends javax.swing.JFrame {
      * @param panel 
      */  
     private void activatePanel(JPanel panel) {
-        
+        for (Component c : panel.getComponents()) {
+            if (c instanceof MyButton) {
+                MyButton button = (MyButton)c;
+                button.setEnabled(true);
+            }
+        }
     }
     
     /**
@@ -384,7 +389,12 @@ public class BattleGUI extends javax.swing.JFrame {
      * @param panel 
      */
     private void deactivatePanel(JPanel panel) {
-        
+        for (Component c : panel.getComponents()) {
+            if (c instanceof MyButton) {
+                MyButton button = (MyButton)c;
+                button.setEnabled(false);
+            }
+        }
     }
        
     /**

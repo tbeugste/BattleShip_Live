@@ -60,7 +60,7 @@ public StartScreen()
             public void actionPerformed(ActionEvent e)
             {    
                 Battleship.bGUI = new BattleGUI();
-                Battleship.bField = new Battlefield(Battleship.bGUI,10,10);
+                Battleship.bField = new Battlefield(Battleship.bGUI,10,10,2);
                 
                 frame.setVisible(false);
 
@@ -74,7 +74,7 @@ public StartScreen()
             public void actionPerformed(ActionEvent e)
             {           
                 Battleship.bGUI = new BattleGUI();
-                Battleship.bField = new Battlefield(Battleship.bGUI,10,10);
+                Battleship.bField = new Battlefield(Battleship.bGUI,10,10,1);
                 frame.setVisible(false);
             }
         });
