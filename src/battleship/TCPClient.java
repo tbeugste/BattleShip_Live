@@ -76,7 +76,7 @@ public class TCPClient implements Runnable{
      * method to send a message to the server
      * @param message 
      */
-    public void sendToServer(CommunicationObjectType message)
+    public void sendToServer(CommunicationObject message)
     {
         try{
         oos.writeObject(message);

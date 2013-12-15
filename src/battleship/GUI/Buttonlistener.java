@@ -37,7 +37,6 @@ public class Buttonlistener implements ActionListener {
             case "Shot":
                 MyButton mb = (MyButton)e.getSource();
                 _bGUI.shot(mb);
-                //_bGUI.setLabel("" + (int)mb.getPoint().getX() + " " +(int)mb.getPoint().getY());
                 break;
             case "newGame":
                 _bGUI.newGame();

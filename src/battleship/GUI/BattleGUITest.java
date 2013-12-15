@@ -131,22 +131,11 @@ public class BattleGUITest extends javax.swing.JFrame {
     
     /**
      * PB
-     * Gets the button and the point from the Buttonlistener and checks the shot
+     * Gets the button and the point from the Buttonlistener and send the shot
      * @param MyButton mb
      */
     public void shot(MyButton mb) {
         Battleship.bField.sendPlayerShot(mb.getPoint());
-        /*
-        // test ob auf Button zugegriffen werden kann:
-        for(Component c : panelPlayer.getComponents()) {
-            if (c instanceof MyButton) {
-                MyButton button = (MyButton)c;
-                if (button.getPoint().distance(mb.getPoint()) <= 1) {
-                    button.setBackground(Color.red);
-                }                          
-            }
-        }
-        */
     }
         
     /**

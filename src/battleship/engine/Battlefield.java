@@ -9,7 +9,6 @@ import battleship.CommunicationObject;
 import battleship.CommunicationObjectType;
 import battleship.IListener;
 import battleship.Battleship;
-import battleship.TCPServer;
 import battleship.KIServer;
 import battleship.TCPClient;
 import java.awt.*;
@@ -27,11 +26,17 @@ public class Battlefield implements IListener {
     private ArrayList<Ship> _fleet = new ArrayList<>();
     private Status _status = new Status();
     
+    private TCPClient _client;
+    private KIServer _kiServer;
+    
     public Battlefield (BattleGUITest bGUI, int height, int width) {
         _bGUI = bGUI;
         _height = height;
         _width = width;
         _status = new Status();
+        
+        _client = new TCPClient("127.0.0.1", 9999);
+        _kiServer = new KIServer();
     }
     
     public void initializeGame() {
@@ -70,26 +75,27 @@ public class Battlefield implements IListener {
      * @param Point pt
      * @return int 0 = no hit, 1 = hit, 2 = ship destroyed, 3 = gameover
      */
-    public void receiveOponentsShot(Point pt) {
+    public void receiveOponentsShot(CommunicationObject message) {
         for (Ship aShip: _fleet) {
-            if(aShip.ApplyShot(pt)) {
+            if(aShip.ApplyShot(message.getShot())) {
                 if(aShip.IsDestroyed()) {
                     _fleet.remove(aShip);
                     if(_fleet.isEmpty()) {
-                        sendReply(true, true, true);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,3);
+                        message.shotAplyed(true, true, true);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,3);
                     } else {
-                        sendReply(true, true, false);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,2);
+                        message.shotAplyed(true, true, false);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,2);
                     }
                 } else {
-                    sendReply(true, false, false);
-                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,1);
+                    message.shotAplyed(true, false, false);
+                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,1);
                 }
             }
         } 
-        sendReply(false, false, false);
-        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), pt) ,0);
+        message.shotAplyed(false, false, false);
+        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,0);
+        sendReply(message);
     }
     
     /**
@@ -123,7 +129,7 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void shotMessage(CommunicationObject message) {
-        receiveOponentsShot(message.getShot());
+        receiveOponentsShot(message);
     }
     
     /**
@@ -171,17 +177,15 @@ public class Battlefield implements IListener {
     public void sendPlayerShot(Point pt) {
         CommunicationObject cobj = new CommunicationObject(CommunicationObjectType.SHOT);
         cobj.setShot(pt);
-        //send cobj
+        _client.sendToServer(cobj);
     }
     
     /**
      * sends the resultmessage to the server
      * @param boolean isHit, boolean isDestroyed, boolean isGameover
      */
-    public void sendReply(boolean isHit, boolean isDestroyed, boolean isGameover) {
-        CommunicationObject cobj = new CommunicationObject(CommunicationObjectType.REPLY);
-        cobj.shotAplyed(isHit, isDestroyed, isGameover);
-        //send cobj
+    public void sendReply(CommunicationObject cobj) {
+        _client.sendToServer(cobj);
     }
     
 }
