@@ -39,6 +39,7 @@ public class BattleGUI extends javax.swing.JFrame {
     private JComboBox shipNames;
     public Buttonlistener bl;
     public MyMouselistener ml;
+    private boolean _horizontal;
      
     
     public BattleGUI () {
@@ -394,5 +395,7 @@ public class BattleGUI extends javax.swing.JFrame {
     public void setLabel(String s) {
         label.setText(s);
     }
+    
+    
    
 }

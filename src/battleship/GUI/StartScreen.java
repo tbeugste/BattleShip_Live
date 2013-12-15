@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import battleship.Battleship;
+import battleship.engine.Battlefield;
 
 /**
  *
@@ -56,9 +58,9 @@ public StartScreen()
         {
  
             public void actionPerformed(ActionEvent e)
-            {           
-                BattleGUI test = new BattleGUI ();
-                
+            {    
+                Battleship.bGUI = new BattleGUI();
+                Battleship.bField = new Battlefield(Battleship.bGUI,10,10);
                 
                 frame.setVisible(false);
 
@@ -71,7 +73,8 @@ public StartScreen()
         {
             public void actionPerformed(ActionEvent e)
             {           
-                BattleGUI test = new BattleGUI ();
+                Battleship.bGUI = new BattleGUI();
+                Battleship.bField = new Battlefield(Battleship.bGUI,10,10);
                 frame.setVisible(false);
             }
         });

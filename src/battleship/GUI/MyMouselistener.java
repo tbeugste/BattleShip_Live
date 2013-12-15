@@ -6,7 +6,6 @@ package battleship.GUI;
 
 import java.awt.event.*;
 import java.awt.*;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -24,6 +23,6 @@ public class MyMouselistener extends MouseAdapter {
         button.setBackground(Color.red);
         _bGUI.setLabel("R" + e.getX());
         //button.setIcon(new ImageIcon(getClass().getResource("fire.jpg")));
-        //_bGUI.checkPlaceShip();
+        //_bGUI.checkShipPlacement();
     }
 }

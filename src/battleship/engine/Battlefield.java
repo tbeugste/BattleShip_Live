@@ -21,7 +21,7 @@ public class Battlefield implements IListener {
     private int _height = 10;
     private int _width = 10;
     private ArrayList<Ship> _fleet = new ArrayList<>();
-    private Status _status = new Status();
+    private Status _status;
     
     private TCPClient _client;
     private KIServer _kiServer;
