@@ -5,22 +5,32 @@
 package battleship.engine;
 
 /**
- *
- * @author Patrik
+ * controls the playerstatus
+ * @author Patrik Buholzer
  */
 public class Status {
-    private boolean _aktiv;
+    private boolean _active;
+    private boolean _shipPlacementactive;
     
     public Status() {
-        _aktiv = false;
+        _active = false;
+        _shipPlacementactive = false;
     }
     
     public boolean getStatus(){
-        return this._aktiv;
+        return this._active;
     }
     
-    public void setStatus(boolean aktiv) {
-        this._aktiv = aktiv;
+    public void setStatus(boolean active) {
+        this._active = active;
+    }
+    
+    public boolean getShipPlacementactive() {
+        return this._shipPlacementactive;
+    }
+    
+    public void setShipPlacementactive(boolean shipPlacementactive) {
+        this._shipPlacementactive = shipPlacementactive;
     }
     
 }

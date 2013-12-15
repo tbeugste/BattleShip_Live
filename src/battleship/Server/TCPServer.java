@@ -2,31 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package battleship;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+package battleship.Server;
+import battleship.engine.CommunicationObject;
+import battleship.engine.CommunicationObjectType;
+import battleship.engine.ClientCommunicator;
+import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Random;
 
+
 /**
  *
- * @author Andy
+ * @author Andreas Eugster
  */
-public class KIServer extends Thread implements IServer{
-    
- InetAddress TCPServer;
+public class TCPServer extends Thread implements IServer {
+    // the IP class as such
+    private InetAddress TCPServer;
     // port to talk over
-    int portNumber = 9999;
+    private int portNumber = 9999;
     // the socket for the communication to happen on
-    ServerSocket serverSocket;
+    private ServerSocket serverSocket;
     //max Connections
-    int maxServerConnections = 2;
+    private int maxServerConnections = 2;
     //List of ClientConnections
     private Hashtable<Socket, ObjectOutputStream> allCommunicators = new Hashtable<Socket, ObjectOutputStream>();
         //Counter to know if both are ready to start
@@ -36,7 +36,7 @@ public class KIServer extends Thread implements IServer{
     /* 
      * Setup the server socket communication 
      */
-    public KIServer() {
+    public TCPServer() {
         try{
             serverSocket = new ServerSocket(portNumber);
             System.out.println("Server created on port: "+portNumber);
@@ -58,7 +58,7 @@ public class KIServer extends Thread implements IServer{
         
             while(true)
             {
-                if(allCommunicators.size()<2 && !started)
+                if(allCommunicators.size()<maxServerConnections && !started)
                 {
                     //getClient socket
                     Socket client = serverSocket.accept();
@@ -68,7 +68,7 @@ public class KIServer extends Thread implements IServer{
                     allCommunicators.put(client, oos);
                     //Start new Threads
                     new ClientCommunicator(this, client);
-                    if(allCommunicators.size()==2)
+                    if(allCommunicators.size()==maxServerConnections)
                     {
                         started = true;
                         //Start initializing Game
@@ -77,7 +77,7 @@ public class KIServer extends Thread implements IServer{
                         sendToAll(communicationObject);
                     }
                 }
-                else if(allCommunicators.size()<2 && started)
+                else if(allCommunicators.size()<maxServerConnections && started)
                 {
                     //TODO: RECONNECT
                 }
@@ -244,4 +244,3 @@ public class KIServer extends Thread implements IServer{
     }
     
 }
-

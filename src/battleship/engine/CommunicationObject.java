@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package battleship;
+package battleship.engine;
 import java.awt.*;
 import java.io.*;
 import java.lang.String;

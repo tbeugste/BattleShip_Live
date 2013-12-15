@@ -4,13 +4,10 @@
  */
 package battleship.engine;
 
-import battleship.GUI.BattleGUITest;
-import battleship.CommunicationObject;
-import battleship.CommunicationObjectType;
-import battleship.IListener;
+import battleship.GUI.BattleGUI;
 import battleship.Battleship;
-import battleship.KIServer;
-import battleship.TCPClient;
+import battleship.Server.TCPServer;
+import battleship.Server.KIServer;
 import java.awt.*;
 import java.util.*;
 
@@ -20,7 +17,7 @@ import java.util.*;
  */
 public class Battlefield implements IListener {
     
-    private BattleGUITest _bGUI;
+    private BattleGUI _bGUI;
     private int _height = 10;
     private int _width = 10;
     private ArrayList<Ship> _fleet = new ArrayList<>();
@@ -29,7 +26,7 @@ public class Battlefield implements IListener {
     private TCPClient _client;
     private KIServer _kiServer;
     
-    public Battlefield (BattleGUITest bGUI, int height, int width) {
+    public Battlefield (BattleGUI bGUI, int height, int width) {
         _bGUI = bGUI;
         _height = height;
         _width = width;
@@ -37,6 +34,33 @@ public class Battlefield implements IListener {
         
         _client = new TCPClient("127.0.0.1", 9999);
         _kiServer = new KIServer();
+    }
+    /**
+     * 
+     * @param shipTypes
+     * @param clickPosition
+     * @param horizontal
+     * @return 
+     */
+    public boolean enoughSpace(Shiptypes shipTypes,Point clickPosition, boolean horizontal){
+        
+        boolean validPos=false;
+        Point endPosition=new Point();
+        if(horizontal){
+            endPosition.x=9;
+            endPosition.y=clickPosition.y;
+            }else{
+            endPosition.x=clickPosition.x;
+            endPosition.y=9;
+            }
+            if(clickPosition.distance(endPosition)>=shipTypes.getValue()){
+                    validPos=true;
+            }
+        return validPos;
+    }
+    
+    public void setShip(Shiptypes sTyp){
+        _bGUI.removeFromCombobox(sTyp);
     }
     
     public void initializeGame() {
