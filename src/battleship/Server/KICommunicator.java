@@ -42,7 +42,8 @@ public class KICommunicator {
     private ArrayList<Ship> _fleet = new ArrayList<>();
     private ArrayList<Ship> _fleetOri = new ArrayList<>();
     private ArrayList<Point> _kiShots = new ArrayList<>();
-    private Point _latestHIT = new Point();
+    private ArrayList<Point> _latestHIT = new ArrayList<>();
+    private ArrayList<Point> _kiShotsLeft = new ArrayList<>();
     
     
     /**
@@ -148,7 +149,7 @@ public class KICommunicator {
         _fleet.clear();
         _fleetOri.clear();
         _kiShots.clear();
-        _latestHIT = new Point();
+        _latestHIT.clear();
     }
     
     /**
@@ -157,7 +158,23 @@ public class KICommunicator {
     public void regame()
     {
         resetLocalVariables();
+        refillArrays();
         setRandomShips();
+    }
+    
+    private void refillArrays()
+    {
+        Point hit = new Point();
+        for(int x =0;x<10;x++)
+        {
+            for( int y=0;y<10;y++)
+            {
+                hit = new Point();
+                hit.x = x;
+                hit.y = y;
+                _kiShotsLeft.add(hit);
+            }
+        }
     }
     
     /**
@@ -210,11 +227,13 @@ public class KICommunicator {
     private CommunicationObject replyMessage(CommunicationObject message)
     {
         CommunicationObject answer ;
-        if(message.getHit())
+        if(message.getHit() && !message.getGameover())
         {
             answer = new CommunicationObject(CommunicationObjectType.SHOT);
-            _latestHIT = message.getShot();
+            _latestHIT.add(message.getShot());
             answer.setShot(calculateNextShot(message));
+            
+                    
         }
         else
         {
@@ -232,14 +251,53 @@ public class KICommunicator {
     
     private Point calculateNextShot(CommunicationObject message)
     {
-        //TODO: rework this method for more intelligence
+        /*
+        //improve KI with some intelligence
         Random rand = new Random();
-        Point target = new Point();
-        do{
-            target.x = rand.nextInt(10);
-            target.y = rand.nextInt(10);
+        Point target = message.getShot();
+        Point temp = new Point();
+        if(message.getHit() && !message.getDestroyed())
+        {
+            _latestHIT.add(message.getShot());
+            if(_latestHIT.size()>1)
+            {
+                target.x = target.x + (_latestHIT.get(_latestHIT.size()-2).x-_latestHIT.get(_latestHIT.size()-1).x);
+                target.y = target.y + (_latestHIT.get(_latestHIT.size()-2).y- _latestHIT.get(_latestHIT.size()-1).y);
+            }
+            else
+            {
+                temp = _latestHIT.get(0);
+                if(temp.x<9)
+                {
+                    target.x = temp.x+1;
+                    target.y = temp.y;
+                }
+                else
+                {
+                    target.x = temp.x-1;
+                    target.y = temp.y;
+                }
+            }
         }
-        while(_kiShots.contains(target));
+        else if(message.getHit() && message.getDestroyed())
+        {
+            _latestHIT.clear();
+        }
+        else if(!_latestHIT.isEmpty())
+        {
+            
+        }
+        else
+        {
+            
+        }*/
+        //Simple way to go...
+        Random rand = new Random();
+        Point target = message.getShot();
+        
+        target = _kiShotsLeft.get(rand.nextInt(_kiShotsLeft.size()));
+        _kiShotsLeft.remove(target);
+        _kiShots.add(target);
         return target;
     }
 }
