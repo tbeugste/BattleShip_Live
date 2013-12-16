@@ -5,7 +5,8 @@
 package battleship;
 
 import battleship.engine.Battlefield;
-import battleship.GUI.BattleGUITest;
+import battleship.GUI.BattleGUI;
+import battleship.GUI.StartScreen;
 
 /**
  *
@@ -13,11 +14,13 @@ import battleship.GUI.BattleGUITest;
  */
 public class Battleship {
     public static Battlefield bField;
-    public BattleGUITest bGUI;
+    public static BattleGUI bGUI;
+    public StartScreen startScreen;
         
     public Battleship() {
-        bField = new Battlefield(bGUI, 10, 10);
-        bGUI = new BattleGUITest();
+//        bField = new Battlefield(bGUI, 10, 10);
+//        bGUI = new BattleGUI();
+        startScreen = new StartScreen();
     }
     
     /**

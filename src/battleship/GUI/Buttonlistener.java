@@ -14,14 +14,14 @@ import java.awt.event.ActionEvent;
  */
 public class Buttonlistener implements ActionListener {
     
-    private BattleGUITest _bGUI;
+    private BattleGUI _bGUI;
     
     /**
      * Constructor
      * @param BattleGUITest aBf 
      */
     
-    public Buttonlistener(BattleGUITest aBGUI) {
+    public Buttonlistener(BattleGUI aBGUI) {
         this._bGUI = aBGUI;
     }
         
