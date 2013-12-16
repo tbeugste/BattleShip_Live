@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package battleship;
-import battleship.engine.TCPClient;
+
 import battleship.engine.Battlefield;
 import battleship.GUI.BattleGUI;
 import battleship.GUI.StartScreen;
@@ -19,11 +19,7 @@ public class Battleship {
 
         
     public Battleship() {
-
-//        bField = new Battlefield(bGUI, 10, 10);
-//        bGUI = new BattleGUI();
         startScreen = new StartScreen();
-
     }
     
     /**

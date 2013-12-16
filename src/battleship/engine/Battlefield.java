@@ -5,7 +5,6 @@
 package battleship.engine;
 
 import battleship.GUI.BattleGUI;
-import battleship.Battleship;
 import battleship.Server.TCPServer;
 import battleship.Server.KIServer;
 import java.awt.*;
@@ -21,7 +20,9 @@ public class Battlefield implements IListener {
     private int _height = 10;
     private int _width = 10;
     private ArrayList<Ship> _fleet = new ArrayList<>();
-    private Status _status;
+    public Status status;
+    public Shiptypes placedShiptype;
+    public boolean horizontal;
     
     private TCPClient _client;
     private TCPServer _server;
@@ -31,7 +32,7 @@ public class Battlefield implements IListener {
         _bGUI = bGUI;
         _height = height;
         _width = width;
-        _status = new Status();
+        status = new Status();
         initializeServer(gametype);
     }
     
@@ -42,18 +43,18 @@ public class Battlefield implements IListener {
      * @param horizontal
      * @return 
      */
-    public boolean enoughSpace(Shiptypes shipTypes,Point clickPosition, boolean horizontal){
+    public boolean enoughSpace(Point clickPosition){
         
         boolean validPos=false;
         Point endPosition=new Point();
-        if(horizontal){
+        if(this.horizontal){
             endPosition.x=9;
             endPosition.y=clickPosition.y;
             }else{
             endPosition.x=clickPosition.x;
             endPosition.y=9;
             }
-            if(clickPosition.distance(endPosition)>=shipTypes.getValue()){
+            if(clickPosition.distance(endPosition)>=this.placedShiptype.getValue()){
                     validPos=true;
             }
         return validPos;
@@ -93,29 +94,29 @@ public class Battlefield implements IListener {
     
     /**
      * PB
-     * Sets some ships for testing
+     * adds a ships to the fleet
      */
-    public void setShips(ArrayList<Ship> aFleet) {
-        this._fleet = aFleet;
+    public void addShip(Ship aShip) {
+        this._fleet.add(aShip);
     }
     
-    //zum testen:
-    public void setShips() {
-        
-        ArrayList<Point> a1 = new ArrayList<>();
-        a1.add(new Point(1,1));
-        a1.add(new Point(1,2));
-        Ship s1 = new Ship(a1, Shiptypes.SUBMARINE);
-        _fleet.add(s1);
-        
-        ArrayList<Point> a2 = new ArrayList<>();
-        a2.add(new Point(3,6));
-        a2.add(new Point(3,7));
-        a2.add(new Point(3,8));
-        Ship s2 = new Ship(a2, Shiptypes.DESTROYER);
-        _fleet.add(s2);
-        
-    }
+//    //zum testen:
+//    public void setShips() {
+//        
+//        ArrayList<Point> a1 = new ArrayList<>();
+//        a1.add(new Point(1,1));
+//        a1.add(new Point(1,2));
+//        Ship s1 = new Ship(a1, Shiptypes.SUBMARINE);
+//        _fleet.add(s1);
+//        
+//        ArrayList<Point> a2 = new ArrayList<>();
+//        a2.add(new Point(3,6));
+//        a2.add(new Point(3,7));
+//        a2.add(new Point(3,8));
+//        Ship s2 = new Ship(a2, Shiptypes.DESTROYER);
+//        _fleet.add(s2);
+//        
+//    }
     
     /**
      * PB
@@ -154,23 +155,7 @@ public class Battlefield implements IListener {
     public void receivePlayersShotResult(Point pt, int status) {
         _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelOponent(), pt), status);
     }
-    
-    /**
-     * returns the width of the Battlefield
-     * @return 
-     */
-    public int getWidth() {
-        return this._width;
-    }
-    
-    /**
-     * returns the height of the Battlefield
-     * @return 
-     */
-    public int getHeight() {
-        return this._height;
-    }
-    
+        
     /**
      * PB
      * receives the shotMessage of the Oponent
@@ -234,6 +219,22 @@ public class Battlefield implements IListener {
      */
     public void sendReply(CommunicationObject cobj) {
         _client.sendToServer(cobj);
+    }
+    
+    /**
+     * returns the width of the Battlefield
+     * @return 
+     */
+    public int getWidth() {
+        return this._width;
+    }
+    
+    /**
+     * returns the height of the Battlefield
+     * @return 
+     */
+    public int getHeight() {
+        return this._height;
     }
     
 }

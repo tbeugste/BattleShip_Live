@@ -42,7 +42,7 @@ public class BattleGUITest extends javax.swing.JFrame {
     
     public BattleGUITest () {
         super("Battleship");
-        bl = new Buttonlistener(this);
+        //bl = new Buttonlistener(this);
         createWindow();
         // darstellen:
         super.setVisible(true);
@@ -244,13 +244,13 @@ public class BattleGUITest extends javax.swing.JFrame {
     }*/
     
     public void newGame() {
-        Battleship.bField.setShips();
+        //Battleship.bField.setShips();
         panelOponent = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
         panelPlayer = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
                 
         //test:
         Battleship.bField.initializeGame();
-        Battleship.bField.setShips();
+        //Battleship.bField.setShips();
         
         super.setVisible(true);
     }

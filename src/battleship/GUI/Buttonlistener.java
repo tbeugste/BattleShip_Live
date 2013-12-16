@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import battleship.Battleship;
 
 
 /**
@@ -16,10 +17,7 @@ import java.util.logging.Logger;
  */
 public class Buttonlistener implements ActionListener {
     
-
     private BattleGUI _bGUI;
-
-
 
     /**
      * Constructor
@@ -27,12 +25,8 @@ public class Buttonlistener implements ActionListener {
      */
     
     public Buttonlistener(BattleGUI aBGUI) {
-        this._bGUI = aBGUI;
-        
+        this._bGUI = aBGUI;   
     }
-    
-
-
     
     /**
      * PB
@@ -41,11 +35,13 @@ public class Buttonlistener implements ActionListener {
      */
     
      public void actionPerformed(ActionEvent e){
-        
         switch (e.getActionCommand()) {
             case "Shot":
-                MyButton mb = (MyButton)e.getSource();
-                _bGUI.shot(mb);
+                if (Battleship.bField.status.getStatus()) {
+                    _bGUI.shot((MyButton)e.getSource());
+                } else if (Battleship.bField.status.getShipPlacementactive()) {
+
+                }
                 break;
             case "newGame":
                 _bGUI.newGame();
@@ -54,17 +50,16 @@ public class Buttonlistener implements ActionListener {
                 System.exit(0);
                 break;
             case "help":
-        try {
-            _bGUI.help();
-        }
-        catch (Exception ex) {
-            Logger.getLogger(Buttonlistener.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                break;
-                
+                try {
+                    _bGUI.help();
+                }
+                catch (Exception ex) {
+                    Logger.getLogger(Buttonlistener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                        break;
            default:
                break;
-        }    
+        }   
     }  
 }
      

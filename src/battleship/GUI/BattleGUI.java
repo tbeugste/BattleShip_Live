@@ -68,6 +68,8 @@ public class BattleGUI extends javax.swing.JFrame {
         label = new JLabel("Schiffe plazieren!");
         label.setHorizontalAlignment(JLabel.CENTER);
         
+        Battleship.bField.status.setShipPlacementactive(true);
+        
         JPanel panel = new JPanel (new GridLayout(2,0));
         
         panel.add(setShip());
@@ -242,15 +244,8 @@ public class BattleGUI extends javax.swing.JFrame {
     }
     
     public void newGame() {
-        Battleship.bField.setShips();
-        panelOponent = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
-        panelPlayer = createPanel(Battleship.bField.getWidth(), Battleship.bField.getHeight());
-                
-        //test:
-        Battleship.bField.initializeGame();
-        Battleship.bField.setShips();
+        super.setVisible(false);
         
-        super.setVisible(true);
     }
         
     
@@ -326,6 +321,18 @@ public class BattleGUI extends javax.swing.JFrame {
                     }
                 }
                 setLabel("Game Over!");
+                break;
+            // marks the button with a red or green border if its possible to place to ship or not.
+            case 4:
+                if(Battleship.bField.enoughSpace(button.getLocation())) {
+                    button.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                } else {
+                    button.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+                }
+                break;
+            // removes the border from case 4.
+            case 5:
+                button.setBorder(null);           
                 break;
             default:
                 break;
