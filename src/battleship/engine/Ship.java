@@ -72,4 +72,9 @@ public class Ship implements Serializable{
     {
         return m_type;
     }
+    
+    public ArrayList<Point> getCoordinates()
+    {
+        return m_coordinates;
+    }
 }

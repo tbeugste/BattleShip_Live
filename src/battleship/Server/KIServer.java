@@ -35,6 +35,7 @@ public class KIServer extends Thread implements IServer{
     private ArrayList<Socket> readyPlayers = new ArrayList<Socket>();
     private int starterID = -1;
     private boolean started= false;
+    KICommunicator _kiCommunicator;
     /* 
      * Setup the server socket communication 
      */
@@ -60,7 +61,7 @@ public class KIServer extends Thread implements IServer{
         
             while(true)
             {
-                if(allCommunicators.size()<maxServerConnections && !started)
+                if(allCommunicators.size()<maxServerConnections)
                 {
                     //getClient socket
                     Socket client = serverSocket.accept();
@@ -77,11 +78,9 @@ public class KIServer extends Thread implements IServer{
                         CommunicationObject communicationObject = new CommunicationObject(CommunicationObjectType.INITIALIZE);
                         communicationObject.setConnected(true);
                         sendToAll(communicationObject);
+                        _kiCommunicator = KICommunicator.getInstance();
+                        _kiCommunicator.regame();
                     }
-                }
-                else if(allCommunicators.size()<2 && started)
-                {
-                    //TODO: RECONNECT
                 }
             }
             
@@ -130,7 +129,7 @@ public class KIServer extends Thread implements IServer{
     }
     
     /**
-     * method to send to oppondend
+     * method to send to opponend
      * @param message
      * @param mySocket 
      */
@@ -140,23 +139,23 @@ public class KIServer extends Thread implements IServer{
         synchronized(allCommunicators)
         {
             try{
-                //Create Enumeration with keys
-                Enumeration e = allCommunicators.keys();
-                //go threw all keys
-                while(e.hasMoreElements())
+                
+                if(mySocket != null)
                 {
-                    //if the key is not the same as the one from the sender its the opponends
-                    if(!e.nextElement().equals(mySocket))
-                    {
-                        //get opponends outputstream
-                        ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(e));
-                        //send message
-                        os.writeObject(message);
-                        //make sure its send
-                        os.flush();
-                        //stop while
-                        break;
-                    }
+                    //Send from a player so it sends to KI and get returned the message
+                    message =_kiCommunicator.sendMessage(message);
+                    //KI returnmessage get send to player
+                    //Create Enumeration with keys
+                    Enumeration e = allCommunicators.keys();
+                    //go threw all keys
+                    
+                    //get opponends outputstream
+                    ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(mySocket));
+                    //send message
+                    os.writeObject(message);
+                    //make sure its send
+                    os.flush();
+                    
                 }
             }
             catch(IOException ie)
@@ -204,7 +203,7 @@ public class KIServer extends Thread implements IServer{
     }
     
     /**
-     * Method witch returns the starting Message
+     * Method witch returns the starting Message -> Player will start every time
      * @return 
      */
     public CommunicationObject getStarted(Socket client)

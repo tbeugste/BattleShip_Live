@@ -6,6 +6,8 @@ package battleship.GUI;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -14,8 +16,11 @@ import java.awt.event.ActionEvent;
  */
 public class Buttonlistener implements ActionListener {
     
+
     private BattleGUI _bGUI;
-    
+
+
+
     /**
      * Constructor
      * @param BattleGUITest aBf 
@@ -23,8 +28,12 @@ public class Buttonlistener implements ActionListener {
     
     public Buttonlistener(BattleGUI aBGUI) {
         this._bGUI = aBGUI;
-    }
         
+    }
+    
+
+
+    
     /**
      * PB
      * Gets the command and switch the action
@@ -44,6 +53,15 @@ public class Buttonlistener implements ActionListener {
             case "exit":
                 System.exit(0);
                 break;
+            case "help":
+        try {
+            _bGUI.help();
+        }
+        catch (Exception ex) {
+            Logger.getLogger(Buttonlistener.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                break;
+                
            default:
                break;
         }    
