@@ -144,10 +144,11 @@ public class CommunicationObject implements Serializable {
     }
     
      /**
-     * Method to set variables if a shot hit or not
-     * @param hited
-     * @param destroyed 
-     */
+      * Method to set variables if a shot hit or not
+      * @param hited
+      * @param destroyed
+      * @param gameover 
+      */
     public void shotAplyed(boolean hited, boolean destroyed, boolean gameover)
     {
         _type = CommunicationObjectType.REPLY;

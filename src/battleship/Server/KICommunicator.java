@@ -40,6 +40,9 @@ public class KICommunicator {
      * local Variables ----------
      */
     private ArrayList<Ship> _fleet = new ArrayList<>();
+    private ArrayList<Ship> _fleetOri = new ArrayList<>();
+    private ArrayList<Point> _kiShots = new ArrayList<>();
+    private Point _latestHIT = new Point();
     
     
     /**
@@ -68,6 +71,7 @@ public class KICommunicator {
                 _fleet.add(ship);
             }
         }
+        _fleetOri = _fleet;
     }
      
     /**
@@ -142,6 +146,9 @@ public class KICommunicator {
     private void resetLocalVariables()
     {
         _fleet.clear();
+        _fleetOri.clear();
+        _kiShots.clear();
+        _latestHIT = new Point();
     }
     
     /**
@@ -157,11 +164,82 @@ public class KICommunicator {
      * apply Message to the KI
      * @param message 
      */
-    public CommunicationObject sendMessage(CommunicationObject message){return message;}
+    public CommunicationObject sendMessage(CommunicationObject message)
+    {
+        switch(message.getType())
+        {
+            case SHOT:
+                message = shotMessage(message);
+                break;
+            case REPLY:
+                message= replyMessage(message);
+                break;
+        }
+        return message;
+    }
     
-    private CommunicationObject shotMessage(CommunicationObject message){return message;}
+    /**
+     * Reply to a Shotmessage
+     * @param message
+     * @return 
+     */
+    private CommunicationObject shotMessage(CommunicationObject message)
+    {
+        boolean hit = false;
+        for(Ship ship:_fleet)
+        {
+            if(ship.ApplyShot(message.getShot()))
+            {
+                hit = true;
+                message.shotAplyed(hit, ship.IsDestroyed(), _fleet.isEmpty());
+                break;
+            }
+        }
+        if(!hit)
+        {
+            message.shotAplyed(hit, hit, hit);
+        }
+        return message;
+    }
     
-    private CommunicationObject replyMessage(CommunicationObject message){return message;}
+    /**
+     * Reply to a replyMessage
+     * @param message
+     * @return 
+     */
+    private CommunicationObject replyMessage(CommunicationObject message)
+    {
+        CommunicationObject answer ;
+        if(message.getHit())
+        {
+            answer = new CommunicationObject(CommunicationObjectType.SHOT);
+            _latestHIT = message.getShot();
+            answer.setShot(calculateNextShot(message));
+        }
+        else
+        {
+            answer = null;
+        }
+        return answer;
+    }
     
+    public CommunicationObject createShot()
+    {
+        CommunicationObject message = new CommunicationObject(CommunicationObjectType.SHOT);
+        message.setShot(calculateNextShot(message));
+        return message;
+    }
     
+    private Point calculateNextShot(CommunicationObject message)
+    {
+        //TODO: rework this method for more intelligence
+        Random rand = new Random();
+        Point target = new Point();
+        do{
+            target.x = rand.nextInt(10);
+            target.y = rand.nextInt(10);
+        }
+        while(_kiShots.contains(target));
+        return target;
+    }
 }
