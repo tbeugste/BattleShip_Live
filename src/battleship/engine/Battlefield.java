@@ -28,12 +28,11 @@ public class Battlefield implements IListener {
     private TCPServer _server;
     private KIServer _kiServer;
     
-    public Battlefield (BattleGUI bGUI, int height, int width, int gametype) {
+    public Battlefield (BattleGUI bGUI, int height, int width) {
         _bGUI = bGUI;
         _height = height;
         _width = width;
         status = new Status();
-        initializeServer(gametype);
     }
     
     /**
@@ -94,7 +93,7 @@ public class Battlefield implements IListener {
     
     /**
      * PB
-     * adds a ships to the fleet
+     * adds a ship to the fleet
      */
     public void addShip(Ship aShip) {
         this._fleet.add(aShip);

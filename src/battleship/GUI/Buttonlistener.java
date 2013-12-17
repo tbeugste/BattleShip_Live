@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import battleship.Battleship;
+import battleship.engine.Shiptypes;
 
 
 /**
@@ -56,8 +57,28 @@ public class Buttonlistener implements ActionListener {
                 catch (Exception ex) {
                     Logger.getLogger(Buttonlistener.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                        break;
-           default:
+                break;
+            case "Ship selected bship":
+                Battleship.bField.placedShiptype = Shiptypes.BSHIP;
+                Battleship.bField.status.setShipPlacementactive(true);
+                _bGUI.setLabel("Schiff plazieren");
+                break;
+            case "Ship selected cruiser":
+                Battleship.bField.placedShiptype = Shiptypes.CRUISER;
+                Battleship.bField.status.setShipPlacementactive(true);
+                _bGUI.setLabel("Schiff plazieren");
+                break;
+             case "Ship selected destroyer":
+                Battleship.bField.placedShiptype = Shiptypes.DESTROYER;
+                Battleship.bField.status.setShipPlacementactive(true);
+                _bGUI.setLabel("Schiff plazieren");
+                break;
+             case "Ship selected submarine":
+                Battleship.bField.placedShiptype = Shiptypes.SUBMARINE;
+                Battleship.bField.status.setShipPlacementactive(true);
+                _bGUI.setLabel("Schiff plazieren");
+                break;
+            default:
                break;
         }   
     }  

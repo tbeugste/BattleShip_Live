@@ -6,8 +6,6 @@ package battleship.GUI;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.*;
-import java.awt.*;
 import battleship.Battleship;
 
 /**
@@ -25,7 +23,6 @@ public class MyMouselistener implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if(Battleship.bField.status.getShipPlacementactive()) {
-            //_originButton = (MyButton)e.getSource();
             _bGUI.switchButton((MyButton)e.getSource(), 4);
             _bGUI.setLabel("R" + e.getX());
         }
@@ -34,10 +31,11 @@ public class MyMouselistener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         if(Battleship.bField.status.getShipPlacementactive()) {
-            //_originButton = (MyButton)e.getSource();
-            _bGUI.switchButton((MyButton)e.getSource(), 4);
+            _bGUI.switchButton((MyButton)e.getSource(), 6);
         }
     }
+    
+    
     @Override
     public void mousePressed(MouseEvent e) {
        

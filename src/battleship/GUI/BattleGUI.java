@@ -14,14 +14,14 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
+//import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+//import java.io.File;
+//import java.io.IOException;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -31,24 +31,20 @@ import javax.swing.border.TitledBorder;
  */
 public class BattleGUI extends javax.swing.JFrame {
     
-    //private Buttonlistener bl = new Buttonlistener(this);
     private static javax.swing.JPanel panelPlayer;
     private static javax.swing.JPanel panelOponent;
     private Shiptypes ship;
     private javax.swing.JLabel label;
     private JComboBox shipNames;
-    public Buttonlistener bl;
-    public MyMouselistener ml;
-    private boolean _horizontal;
+    private Buttonlistener bl;
+    private MyMouselistener ml;
+    private boolean horizontal;
      
-    
     public BattleGUI () {
         super("Battleship");
         bl = new Buttonlistener(this);
         ml = new MyMouselistener(this);
         createWindow();
-        // darstellen:
-        super.setVisible(true);
     }
     
     /**
@@ -75,13 +71,13 @@ public class BattleGUI extends javax.swing.JFrame {
         panel.add(setShip());
         panel.add(label);
         
-        mainGrid.add(setPanelPlayer());
-        mainGrid.add(setPanelOpponent());
+        setPanelPlayer();
+        mainGrid.add(panelPlayer);
+        setPanelOpponent();
+        mainGrid.add(panelOponent);
         //mainGrid.add(setShip());
         //mainGrid.add(label);
-        mainGrid.add(panel);
-     
-        super.setVisible(true);                 
+        mainGrid.add(panel);               
     }
     
     /**
@@ -136,11 +132,10 @@ public class BattleGUI extends javax.swing.JFrame {
         // Die Menubar zurück geben:
         return menuBar;
     }
-    
-        
+       
     /**
      * PB 
-     * Creates the buttons
+     * Creates a button
      * @param row
      * @param column
      * @return MyButton
@@ -157,7 +152,6 @@ public class BattleGUI extends javax.swing.JFrame {
         return myButton;
     }
     
-   
     /**
      * PB
      * Fills the panel witch created buttons.
@@ -176,37 +170,57 @@ public class BattleGUI extends javax.swing.JFrame {
         }
         return panel;
     }
-     public JPanel setPanelPlayer ()
-    {
-        this.panelPlayer = createPanel(10,10);
+     
+    /**
+     * creates the player's panel
+     * @return JPanel
+     */
+    public void setPanelPlayer () {
+        panelPlayer = createPanel(10,10);
         panelPlayer.setBorder(new TitledBorder("Home Field"));
         panelPlayer.setBackground(Color.white);
-        return panelPlayer;
     }
-    public void creatJComboBox(){
+    
+    /**
+     * creates the oponent's panel
+     * @return JPanel
+     */
+    public void setPanelOpponent () 
+    {
+        panelOponent = createPanel(10,10);
+        panelOponent.setBorder(new TitledBorder("Opponent Field"));
+        panelOponent.setBackground(Color.white);
+    } 
+    
+    /**
+     * creates the JComboBox for the shipplacement
+     * @return 
+     */
+    public JComboBox createJComboBox(){
         shipNames = new JComboBox();
         shipNames.addActionListener(bl);
         shipNames.setActionCommand("Ship selected");
         
         for(Shiptypes typ : Shiptypes.values()){
-            shipNames.addItem(typ);
+            for (int i = 0; i < (6 - typ.getValue()); i++) {
+                shipNames.addItem(typ);
+            }
         }
+        
+        return shipNames;
     }
     
+    /**
+     * removes an item from the combobox (needed after placement of the ship)
+     * @param sTyp 
+     */
     public void removeFromCombobox(Shiptypes sTyp){
         shipNames.removeItem(sTyp);
     }
+    
     public void setShip(Shiptypes sTyp){
         Battleship.bField.setShip(sTyp);
     }
-
-    public JPanel setPanelOpponent () 
-    {
-        this.panelOponent = createPanel(10,10);
-        panelOponent.setBorder(new TitledBorder("Opponent Field"));
-        panelOponent.setBackground(Color.white);
-        return panelOponent;
-    }  
     
     public JPanel setShip ()
     {
@@ -214,18 +228,25 @@ public class BattleGUI extends javax.swing.JFrame {
        
         JButton bship = new JButton("Schlachtschiff");
         bship.addActionListener(bl);
+        bship.setActionCommand("Ship selected bship");
         bship.setBackground(Color.white);
         bship.setBorder (null);
 
         JButton cruiser = new JButton ("Kreuzer");
+        cruiser.addActionListener(bl);
+        cruiser.setActionCommand("Ship selected cruiser");
         cruiser.setBorder (null);
         cruiser.setBackground(Color.white);
         
         JButton destroyer = new JButton ("Zerstörer");
+        destroyer.addActionListener(bl);
+        destroyer.setActionCommand("Ship selected destroyer");
         destroyer.setBorder (null);
         destroyer.setBackground (Color.white);
         
         JButton submarine = new JButton("UBoot");
+        submarine.addActionListener(bl);
+        submarine.setActionCommand("Ship selected submarine");
         submarine.setBorder (null);
         submarine.setBackground(Color.white);
                 
@@ -257,8 +278,6 @@ public class BattleGUI extends javax.swing.JFrame {
     public void shot(MyButton mb) {
         Battleship.bField.sendPlayerShot(mb.getPoint());
     }
-    
-
     
     public void help() throws Exception
     {
@@ -322,16 +341,16 @@ public class BattleGUI extends javax.swing.JFrame {
                 }
                 setLabel("Game Over!");
                 break;
-            // marks the button with a red or green border if its possible to place to ship or not.
+            // marks the button with a green border
             case 4:
-                if(Battleship.bField.enoughSpace(button.getLocation())) {
-                    button.setBorder(BorderFactory.createLineBorder(Color.green, 2));
-                } else {
-                    button.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-                }
+                button.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                break;
+            // marks the button with a red border
+            case 5:
+                button.setBorder(BorderFactory.createLineBorder(Color.red, 2));
                 break;
             // removes the border from case 4.
-            case 5:
+            case 6:
                 button.setBorder(null);           
                 break;
             default:
@@ -364,7 +383,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * @return JPanel
      */
     public JPanel getPanelPlayer() {
-        return this.panelPlayer;
+        return panelPlayer;
     }
     
     /**
@@ -373,7 +392,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * @return JPanel
      */
     public JPanel getPanelOponent() {
-        return this.panelOponent;
+        return panelOponent;
     }
     
     /**

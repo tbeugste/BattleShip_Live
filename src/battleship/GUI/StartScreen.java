@@ -57,11 +57,15 @@ public StartScreen()
         multiplayer.addActionListener(new ActionListener() 
         {
  
+            @Override
             public void actionPerformed(ActionEvent e)
             {    
-                Battleship.bGUI = new BattleGUI();
-                Battleship.bField = new Battlefield(Battleship.bGUI,10,10,2);
-                
+                try{
+                Battleship.bGUI.setVisible(true);
+                Battleship.bField.initializeServer(2);
+                } catch(Exception ex ) {
+                    
+                }
                 frame.setVisible(false);
 
             }
@@ -71,10 +75,15 @@ public StartScreen()
         panelButton.add (singleplayer);
         singleplayer.addActionListener(new ActionListener() 
         {
+            @Override
             public void actionPerformed(ActionEvent e)
             {           
-                Battleship.bGUI = new BattleGUI();
-                Battleship.bField = new Battlefield(Battleship.bGUI,10,10,1);
+                try{
+                Battleship.bGUI.setVisible(true);
+                Battleship.bField.initializeServer(1);
+                } catch(Exception ex ) {
+                    
+                }
                 frame.setVisible(false);
             }
         });
