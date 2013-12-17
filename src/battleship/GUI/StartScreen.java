@@ -24,7 +24,7 @@ public StartScreen()
         
         final JFrame frame = new JFrame("Battleship");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-        
+        frame.setLocation(200,100);
         frame.setResizable(false);
         
         JPanel panelHome = new JPanel (new FlowLayout(0,0,0));

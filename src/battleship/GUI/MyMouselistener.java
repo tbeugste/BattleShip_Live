@@ -24,7 +24,6 @@ public class MyMouselistener implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         if(Battleship.bField.status.getShipPlacementactive()) {
             _bGUI.switchButton((MyButton)e.getSource(), 4);
-            _bGUI.setLabel("R" + e.getX());
         }
     }
     

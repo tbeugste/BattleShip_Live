@@ -14,14 +14,8 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Component;
-//import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.IOException;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-//import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -51,23 +45,20 @@ public class BattleGUI extends javax.swing.JFrame {
      * PB
      * Creates the MainWindow
      */
-    public void createWindow() {
+    private void createWindow() {
         super.setSize(800,600);
         super.setResizable(false);
         super.setLocation(200,100);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setJMenuBar(createMenuBar());
-        JPanel mainGrid = new JPanel (new FlowLayout());
+        JPanel mainGrid = new JPanel  (new FlowLayout());
         mainGrid.setBackground(Color.white);
         super.add(mainGrid);
         
-        label = new JLabel("Schiffe plazieren!");
+        label = new JLabel("Schiff wählen!");
         label.setHorizontalAlignment(JLabel.CENTER);
-        
-        Battleship.bField.status.setShipPlacementactive(true);
-        
+                
         JPanel panel = new JPanel (new GridLayout(2,0));
-        
         panel.add(setShip());
         panel.add(label);
         
@@ -75,9 +66,13 @@ public class BattleGUI extends javax.swing.JFrame {
         mainGrid.add(panelPlayer);
         setPanelOpponent();
         mainGrid.add(panelOponent);
+
         //mainGrid.add(setShip());
         //mainGrid.add(label);
-        mainGrid.add(panel);               
+        mainGrid.add(panel);   
+                
+        Battleship.bField.status.setShipPlacementactive(false);
+        Battleship.bField.status.setStatus(false);
     }
     
     /**

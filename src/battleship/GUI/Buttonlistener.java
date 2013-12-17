@@ -61,22 +61,22 @@ public class Buttonlistener implements ActionListener {
             case "Ship selected bship":
                 Battleship.bField.placedShiptype = Shiptypes.BSHIP;
                 Battleship.bField.status.setShipPlacementactive(true);
-                _bGUI.setLabel("Schiff plazieren");
+                _bGUI.setLabel("Schiff plazieren!");
                 break;
             case "Ship selected cruiser":
                 Battleship.bField.placedShiptype = Shiptypes.CRUISER;
                 Battleship.bField.status.setShipPlacementactive(true);
-                _bGUI.setLabel("Schiff plazieren");
+                _bGUI.setLabel("Schiff plazieren!");
                 break;
              case "Ship selected destroyer":
                 Battleship.bField.placedShiptype = Shiptypes.DESTROYER;
                 Battleship.bField.status.setShipPlacementactive(true);
-                _bGUI.setLabel("Schiff plazieren");
+                _bGUI.setLabel("Schiff plazieren!");
                 break;
              case "Ship selected submarine":
                 Battleship.bField.placedShiptype = Shiptypes.SUBMARINE;
                 Battleship.bField.status.setShipPlacementactive(true);
-                _bGUI.setLabel("Schiff plazieren");
+                _bGUI.setLabel("Schiff plazieren!");
                 break;
             default:
                break;
