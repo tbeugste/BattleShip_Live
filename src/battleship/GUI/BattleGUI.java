@@ -47,7 +47,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * Creates the MainWindow
      */
     private void createWindow() {
-        super.setSize(800,600);
+        super.setSize(800,610);
         super.setResizable(false);
         super.setLocation(200,100);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
