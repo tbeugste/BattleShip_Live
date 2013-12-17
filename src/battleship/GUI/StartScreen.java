@@ -61,8 +61,9 @@ public StartScreen()
             public void actionPerformed(ActionEvent e)
             {    
                 try{
-                Battleship.bGUI.setVisible(true);
-                Battleship.bField.initializeServer(2);
+                MulitScreen.createIPWindow();
+                //Battleship.bGUI.setVisible(true);
+                //Battleship.bField.initializeServer(2);
                 } catch(Exception ex ) {
                     
                 }
