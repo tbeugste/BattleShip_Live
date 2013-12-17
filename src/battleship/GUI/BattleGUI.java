@@ -14,6 +14,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -57,8 +58,10 @@ public class BattleGUI extends javax.swing.JFrame {
         
         label = new JLabel("Schiff wählen!");
         label.setHorizontalAlignment(JLabel.CENTER);
+        
                 
         JPanel panel = new JPanel (new GridLayout(2,0));
+        //panel.setBackground(Color.white);
         panel.add(setShip());
         panel.add(label);
         
@@ -66,10 +69,7 @@ public class BattleGUI extends javax.swing.JFrame {
         mainGrid.add(panelPlayer);
         setPanelOpponent();
         mainGrid.add(panelOponent);
-
-        //mainGrid.add(setShip());
-        //mainGrid.add(label);
-        mainGrid.add(panel);   
+        mainGrid.add(panel); 
                 
         Battleship.bField.status.setShipPlacementactive(false);
         Battleship.bField.status.setStatus(false);
@@ -156,6 +156,7 @@ public class BattleGUI extends javax.swing.JFrame {
      */
     private JPanel createPanel(int height, int width) {
         JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(392,392));
         
         panel.setLayout(new GridLayout(height,width,1,1));
         for (int i = 0; i < height; i++) {
