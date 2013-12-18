@@ -15,6 +15,8 @@ import java.net.Socket;
 /**
  *
  * @author Andy
+ * Interface to declare functions of the Server. 
+ * Standard between ClientCommunicator and each type of Server
  */
 public interface IServer {
     public boolean isStarted();   

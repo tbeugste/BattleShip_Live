@@ -12,6 +12,8 @@ import java.util.*;
 /**
  *
  * @author Andy
+ * This Class is responsible to interact with TCPClient and the GameServer
+ * 
  */
 public class ClientCommunicator extends Thread{
     Socket _client;

@@ -17,6 +17,8 @@ import java.util.Random;
 /**
  *
  * @author Andreas Eugster
+ * This class is responsible for all actions based on Communication between players.
+ * ClientCommunicator <> KI Server <> ClientCommunicator
  */
 public class TCPServer extends Thread implements IServer {
     // the IP class as such

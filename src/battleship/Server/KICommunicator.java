@@ -10,7 +10,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 /**
- * This class is responsible to interact with the player. It moves and acts like one.
+ * This class is responsible to interact with the Server. It moves and acts like one.
+ * Communication between TCPClient (Data recieved) and Server (Data send)
  * @author Andy
  */
 public class KICommunicator {

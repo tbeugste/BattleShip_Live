@@ -19,6 +19,8 @@ import java.util.Random;
 /**
  *
  * @author Andy
+ * This class is responsible for all actions based on Communication between player and KI.
+ * KICommunicator <> KI Server <> ClientCommunicator
  */
 public class KIServer extends Thread implements IServer{
     
@@ -80,6 +82,7 @@ public class KIServer extends Thread implements IServer{
                         sendToAll(communicationObject);
                         _kiCommunicator = KICommunicator.getInstance();
                         _kiCommunicator.regame();
+                        System.out.println("Initialized");
                     }
                 }
             }

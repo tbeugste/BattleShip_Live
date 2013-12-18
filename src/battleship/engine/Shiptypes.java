@@ -8,6 +8,7 @@ import java.io.*;
 /**
  *
  * @author Andreas Eugster
+ * Defines all Shiptypes
  */
 public enum Shiptypes implements Serializable{
     SUBMARINE(2,4, null), DESTROYER(3,3, null), CRUISER(4,2, null), BSHIP(5,1, null);
