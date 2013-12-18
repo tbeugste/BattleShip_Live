@@ -19,11 +19,14 @@ import java.util.*;
 public class ClientCommunicator extends Thread{
     Socket _client;
     IServer _server;
+    ObjectOutputStream _oos;
     
-    public ClientCommunicator(IServer server, Socket client)
+    public ClientCommunicator(IServer server, Socket client, ObjectOutputStream oos)
     {
         _client = client;
         _server = server;
+        _oos = oos;
+        super.setName("TCPCommunicator " + client.getInetAddress().toString());
         start();
     }
     
@@ -92,9 +95,8 @@ public class ClientCommunicator extends Thread{
                 if(cco!=null)
                 {
                     try{
-                    ObjectOutputStream oos = new ObjectOutputStream(_client.getOutputStream());
-                    oos.writeObject(cco);
-                    oos.flush();
+                    _oos.writeObject(cco);
+                    _oos.flush();
                     }
                     catch(IOException ie)
                     {

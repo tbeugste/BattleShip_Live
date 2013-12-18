@@ -46,6 +46,7 @@ public class TCPServer extends Thread implements IServer {
         {
             System.out.println("Error creating server on socket: "+ExecIO.getMessage());
         }
+        super.setName("TCPServer");
         start();
     }
 
@@ -68,7 +69,7 @@ public class TCPServer extends Thread implements IServer {
                     //Store both informations
                     allCommunicators.put(client, oos);
                     //Start new Threads
-                    new ClientCommunicator(this, client);
+                    new ClientCommunicator(this, client, oos);
                     if(allCommunicators.size()==maxServerConnections)
                     {
                         started = true;

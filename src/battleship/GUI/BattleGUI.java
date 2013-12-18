@@ -16,8 +16,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.*;
@@ -82,7 +80,7 @@ public class BattleGUI extends javax.swing.JFrame {
         setPanelOpponent();
         mainGrid.add(panelOponent);
         mainGrid.add(panel); 
-                
+             
         Battleship.bField.status.setShipPlacementactive(false);
         Battleship.bField.status.setStatus(false);
         
@@ -431,7 +429,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * deactivates all buttons in a panel
      * @param panel 
      */
-    private void deactivatePanel(JPanel panel) {
+    public void deactivatePanel(JPanel panel) {
         for (Component c : panel.getComponents()) {
             if (c instanceof MyButton) {
                 c.setEnabled(false);

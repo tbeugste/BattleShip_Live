@@ -37,7 +37,9 @@ public class TCPClient implements Runnable{
         ois = new ObjectInputStream( socket.getInputStream() );
         oos = new ObjectOutputStream( socket.getOutputStream() );
         // Start a background thread for receiving messages
-        new Thread( this ).start();
+        Thread client = new Thread( this );
+        client.setName("TCPClient");
+        client.start();
         } catch( IOException ie ) { System.out.println( ie ); }         
     }
     

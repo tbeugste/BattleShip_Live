@@ -93,7 +93,13 @@ public class Buttonlistener implements ActionListener {
                 _bGUI.setLabel("Schiff plazieren!");
                 break;
              case "GameReady":
-                 _bGUI.setLabel(Battleship.bField.getReadyResponse());
+                 String message = Battleship.bField.getReadyResponse();
+                 _bGUI.setLabel(message);
+                 if(message.indexOf("Warte auf")!=-1)
+                 {
+                    _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
+                    _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+                 }
                  break;
             default:
                break;

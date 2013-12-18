@@ -130,18 +130,18 @@ public class Battlefield implements IListener {
                 _kiServer = new KIServer();
                 _client = new TCPClient("127.0.0.1", 9999);
                 _client.addActionListener(this);
-                new Thread(_client);
                 break;
             // Multiplayer Host
             case 2:
                 _server = new TCPServer();
                 _client = new TCPClient("127.0.0.1", 9999);
                 _client.addActionListener(this);
-                new Thread(_client);
+                _client.addActionListener(this);
                 break;
             // Multiplayer Client
             case 3:
                 _client = new TCPClient(serverIP, 9999);
+                _client.addActionListener(this);
                 break;
         }
     }
@@ -249,7 +249,8 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void startMessage(CommunicationObject message){
-       //Method to start the game and let the user do a shot 
+       _bGUI.activatePanel(_bGUI.getPanelOponent());
+       _bGUI.setLabel("Ihr Zug!");
     }
     
     /**
@@ -354,6 +355,7 @@ public class Battlefield implements IListener {
            message.setInitialized(true);
            _client.sendToServer(message);
            response ="Warte auf antwort des Servers.";
+           
        }
        
        
