@@ -8,6 +8,10 @@ import battleship.GUI.BattleGUI;
 import battleship.GUI.MyButton;
 import battleship.Server.TCPServer;
 import battleship.Server.KIServer;
+import static battleship.engine.Shiptypes.CRUISER;
+import static battleship.engine.Shiptypes.DESTROYER;
+import static battleship.engine.Shiptypes.SUBMARINE;
+import javax.swing.JButton;
 import java.awt.*;
 import java.util.*;
 
@@ -26,6 +30,7 @@ public class Battlefield implements IListener {
     public Ship placedShip = new Ship(null, null);
     public boolean horizontal = true;
     public MyButton[][] buttonArray;
+    public JButton[][] guiButtons;
     
     private TCPClient _client;
     private TCPServer _server;
@@ -38,10 +43,11 @@ public class Battlefield implements IListener {
         _width = width;
         status = new Status();
         buttonArray = new MyButton[height][width];
+        guiButtons = new JButton[3][2];
     }
     
     /**
-     * 
+     * checks if there is enough space between the clickposition and the border or any ship already placed
      * @param shipTypes
      * @param clickPosition
      * @param horizontal
@@ -84,7 +90,6 @@ public class Battlefield implements IListener {
                 }
             }
         }
-
         return result;
     }
          
@@ -112,10 +117,6 @@ public class Battlefield implements IListener {
     
     public void joinGame() {
         
-    }
-    
-    public void setShip(Shiptypes sTyp){
-        _bGUI.removeFromCombobox(sTyp);
     }
     
     /**
@@ -154,25 +155,7 @@ public class Battlefield implements IListener {
     public void addShip(Ship aShip) {
         this._fleet.add(aShip);
     }
-    
-//    //zum testen:
-//    public void setShips() {
-//        
-//        ArrayList<Point> a1 = new ArrayList<>();
-//        a1.add(new Point(1,1));
-//        a1.add(new Point(1,2));
-//        Ship s1 = new Ship(a1, Shiptypes.SUBMARINE);
-//        _fleet.add(s1);
-//        
-//        ArrayList<Point> a2 = new ArrayList<>();
-//        a2.add(new Point(3,6));
-//        a2.add(new Point(3,7));
-//        a2.add(new Point(3,8));
-//        Ship s2 = new Ship(a2, Shiptypes.DESTROYER);
-//        _fleet.add(s2);
-//        
-//    }
-    
+
     /**
      * PB
      * decides if a shot is a hit or not and sends the answer to the oponent
@@ -228,6 +211,7 @@ public class Battlefield implements IListener {
      * receives the shotMessage of the Oponent
      * @param message 
      */
+    @Override
     public void shotMessage(CommunicationObject message) {
         receiveOponentsShot(message);
     }
@@ -236,6 +220,7 @@ public class Battlefield implements IListener {
      * receives the answer of the shot done before
      * @param message 
      */
+    @Override
     public void replyMessage(CommunicationObject message){
         if (message.getHit()) {
             if (message.getDestroyed()) {
@@ -257,6 +242,7 @@ public class Battlefield implements IListener {
      * receives a startmessage after generating the Server
      * @param message 
      */
+    @Override
     public void startMessage(CommunicationObject message){
         status.setStatus(true);
        _bGUI.activatePanel(_bGUI.getPanelOponent());
@@ -268,6 +254,7 @@ public class Battlefield implements IListener {
      * receives the initialized Message from the server
      * @param message 
      */
+    @Override
     public void initializeMessage(CommunicationObject message){
         _bGUI.createWindow();
         _bGUI.setVisible(true);
@@ -327,15 +314,27 @@ public class Battlefield implements IListener {
            {
                case BSHIP:
                    bShipCount++;
+                   if(bShipCount==Shiptypes.BSHIP.getCount()) {
+                       this.guiButtons[0][0].setEnabled(false);
+                   }
                    break;
                case CRUISER:
                    cruiserCount++;
+                   if(cruiserCount==Shiptypes.CRUISER.getCount()) {
+                       this.guiButtons[0][1].setEnabled(false);
+                   }
                    break;
                case DESTROYER:
                    destroyerCount++;
+                   if(destroyerCount==Shiptypes.DESTROYER.getCount()) {
+                       this.guiButtons[1][0].setEnabled(false);
+                   }
                    break;
                case SUBMARINE:
                    submarineCount++;
+                   if(submarineCount==Shiptypes.SUBMARINE.getCount()) {
+                       this.guiButtons[1][1].setEnabled(false);
+                   }
                    break;
                default:
                    break;

@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 import battleship.Battleship;
 import battleship.engine.Shiptypes;
 import battleship.engine.Ship;
+import java.awt.Color;
 import java.awt.Point;
+import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 
@@ -55,6 +57,7 @@ public class Buttonlistener implements ActionListener {
                             _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
                         }
                         Battleship.bField.status.setShipPlacementactive(false);
+                        Battleship.bField.getReadyResponse ();
                     }
                 }
                 break;
@@ -99,7 +102,18 @@ public class Buttonlistener implements ActionListener {
                  {
                     _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
                     _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+                    _bGUI.actionPanel.remove(_bGUI.setShipPanel);
                  }
+                 break;
+             case "horizontal":
+                     Battleship.bField.horizontal = true;
+                     Battleship.bField.guiButtons[2][0].setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                     Battleship.bField.guiButtons[2][1].setBorder(null);
+                 break;
+             case "vertical":
+                     Battleship.bField.horizontal = false;
+                     Battleship.bField.guiButtons[2][0].setBorder(null);
+                     Battleship.bField.guiButtons[2][1].setBorder(BorderFactory.createLineBorder(Color.green, 2));
                  break;
             default:
                break;
