@@ -81,7 +81,7 @@ public StartScreen()
             public void actionPerformed(ActionEvent e)
             {           
                 try{
-                Battleship.bGUI.setVisible(true);
+                //Battleship.bGUI.setVisible(true);
                 Battleship.bField.initializeServer(1);
                 } catch(Exception ex ) {
                     
