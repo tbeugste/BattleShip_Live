@@ -196,6 +196,7 @@ public class BattleGUI extends javax.swing.JFrame {
         panelOponent = createPanel(10,10);
         panelOponent.setBorder(new TitledBorder("Opponent Field"));
         panelOponent.setBackground(Color.white);
+        //deactivatePanel(panelOponent);
     } 
     
     /**
@@ -406,11 +407,10 @@ public class BattleGUI extends javax.swing.JFrame {
      * activates all buttons in a panel
      * @param panel 
      */  
-    private void activatePanel(JPanel panel) {
+    public void activatePanel(JPanel panel) {
         for (Component c : panel.getComponents()) {
             if (c instanceof MyButton) {
-                MyButton button = (MyButton)c;
-                button.setEnabled(true);
+                c.setEnabled(true);
             }
         }
     }
@@ -423,8 +423,7 @@ public class BattleGUI extends javax.swing.JFrame {
     private void deactivatePanel(JPanel panel) {
         for (Component c : panel.getComponents()) {
             if (c instanceof MyButton) {
-                MyButton button = (MyButton)c;
-                button.setEnabled(false);
+                c.setEnabled(false);
             }
         }
     }
