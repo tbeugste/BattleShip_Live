@@ -6,10 +6,13 @@
 
 package battleship.GUI;
 
+import battleship.Battleship;
 import java.awt.Color;
 import java.awt.TextArea;
 import static java.awt.TextArea.SCROLLBARS_NONE;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +26,7 @@ public class MulitScreen {
     
      public static void createWindow()
     {
-        JFrame frame = new JFrame ();
+        final JFrame frame = new JFrame ();
         frame.setSize(400,250);
        
         JPanel panel = new JPanel ();
@@ -34,13 +37,28 @@ public class MulitScreen {
         TextArea area = new TextArea ("",5,50, SCROLLBARS_NONE);
         JButton button = new JButton ("Verbinden");
         
+        JButton buttonServ = new JButton ("Eigenen Server erstellen");
+        buttonServ.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 try{
+                //Battleship.bGUI.setVisible(true);
+                Battleship.bField.initializeServer(2);
+                } catch(Exception ex ) {
+                    
+                }
+                frame.setVisible(false);
+            }
+        });
+        
         frame.add(panel);
         
         panel.add(label);
         panel.add(ipadresse);
         panel.add(area);
         panel.add(button);
-        
+        panel.add(buttonServ);
         frame.setResizable(false);
         frame.setVisible (true);   
     }

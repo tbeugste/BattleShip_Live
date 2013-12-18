@@ -137,7 +137,6 @@ public class Battlefield implements IListener {
                 _server = new TCPServer();
                 _client = new TCPClient("127.0.0.1", 9999);
                 _client.addActionListener(this);
-                _client.addActionListener(this);
                 break;
             // Multiplayer Client
             case 3:
