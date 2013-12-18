@@ -246,9 +246,8 @@ public class KICommunicator {
         return answer;
     }
     
-    public CommunicationObject createShot()
+    public CommunicationObject createShot(CommunicationObject message)
     {
-        CommunicationObject message = new CommunicationObject(CommunicationObjectType.SHOT);
         message.setShot(calculateNextShot(message));
         return message;
     }

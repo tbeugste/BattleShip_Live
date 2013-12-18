@@ -106,27 +106,23 @@ public class KIServer extends Thread implements IServer{
      * method to send a Message to all Clients
      * @param message 
      */
-    public void sendToAll(CommunicationObject message)
+    public synchronized void sendToAll(CommunicationObject message)
     {
-        //lock to one access per Thread
-        synchronized(allCommunicators)
-        {
-            try{
-                //Iterate threw all Objects
-                for(Enumeration e=getOutputStreams(); e.hasMoreElements();)
-                {
-                    //get Outputstream
-                    ObjectOutputStream os = (ObjectOutputStream)e.nextElement();
-                    //send Object
-                    os.writeObject(message);
-                    //make sure it sends
-                    os.flush();
-                }
-            }
-            catch(IOException ie)
+        try{
+            //Iterate threw all Objects
+            for(Enumeration e=getOutputStreams(); e.hasMoreElements();)
             {
-                ie.printStackTrace();
+                //get Outputstream
+                ObjectOutputStream os = (ObjectOutputStream)e.nextElement();
+                //send Object
+                os.writeObject(message);
+                //make sure it sends
+                os.flush();
             }
+        }
+        catch(IOException ie)
+        {
+            ie.printStackTrace();
         }
     }
     
@@ -135,11 +131,10 @@ public class KIServer extends Thread implements IServer{
      * @param message
      * @param mySocket 
      */
-    public void sendToOpponend(CommunicationObject message, Socket mySocket)
+    public synchronized void sendToOpponend(CommunicationObject message, Socket mySocket)
     {
         //make sure no problems with Multithreading
-        synchronized(allCommunicators)
-        {
+        
             try{
                 
                 if(mySocket != null)
@@ -148,15 +143,23 @@ public class KIServer extends Thread implements IServer{
                     message =_kiCommunicator.sendMessage(message);
                     //KI returnmessage get send to player
                     //Create Enumeration with keys
-                    Enumeration e = allCommunicators.keys();
-                    //go threw all keys
-                    
                     //get opponends outputstream
-                    ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(mySocket));
-                    //send message
-                    os.writeObject(message);
-                    //make sure its send
-                    os.flush();
+                    if(message!=null)
+                    {
+                        ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(mySocket));
+                        //send message
+                        os.writeObject(message);
+                        //make sure its send
+                        os.flush();
+
+                        if(!message.getHit())
+                        {
+                            message = new CommunicationObject(CommunicationObjectType.SHOT);
+                            message = _kiCommunicator.createShot(message);
+                            os.writeObject(message);
+                            os.flush();
+                        }
+                    }
                     
                 }
             }
@@ -164,7 +167,7 @@ public class KIServer extends Thread implements IServer{
             {
                 ie.printStackTrace();
             }
-        }
+        
     }
     
     /**

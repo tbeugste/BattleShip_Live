@@ -85,6 +85,7 @@ public class TCPClient implements Runnable{
     {
         try{
         oos.writeObject(message);
+        oos.flush();
         }
         catch(IOException ie)
         {

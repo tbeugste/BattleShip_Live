@@ -200,9 +200,11 @@ public class Battlefield implements IListener {
         message.shotAplyed(false, false, false);
         _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,0);
         sendReply(message);
-        if(message.getHit())
+        if(!message.getHit())
         {
-            //Add Method that we can start to apply a shot
+            status.setStatus(true);
+            _bGUI.setLabel("Dein Zug!");
+            _bGUI.activatePanel(_bGUI.getPanelOponent());
         }
     }
     
@@ -213,6 +215,12 @@ public class Battlefield implements IListener {
      */
     public void receivePlayersShotResult(Point pt, int status) {
         _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelOponent(), pt), status);
+        if(status ==1 || status == 2)
+        {
+            this.status.setStatus(true);
+            _bGUI.activatePanel(_bGUI.getPanelOponent());
+        }
+        
     }
         
     /**
@@ -250,6 +258,7 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void startMessage(CommunicationObject message){
+        status.setStatus(true);
        _bGUI.activatePanel(_bGUI.getPanelOponent());
        _bGUI.setLabel("Ihr Zug!");
     }
@@ -269,6 +278,8 @@ public class Battlefield implements IListener {
      * @param Point pt 
      */
     public void sendPlayerShot(Point pt) {
+        status.setStatus(false);
+        _bGUI.deactivatePanel(_bGUI.getPanelOponent());
         CommunicationObject cobj = new CommunicationObject(CommunicationObjectType.SHOT);
         cobj.setShot(pt);
         _client.sendToServer(cobj);
@@ -357,7 +368,7 @@ public class Battlefield implements IListener {
            message.setInitialized(true);
            _client.sendToServer(message);
            response ="Warte auf antwort des Servers.";
-           
+           status.setShipPlacementactive(false);
        }
        
        

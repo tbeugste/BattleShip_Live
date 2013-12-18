@@ -316,13 +316,13 @@ public class BattleGUI extends javax.swing.JFrame {
             case 0:
                 button.setEnabled(false);
                 button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"miss.jpg")));
-                setLabel("Daneben!");
+                setLabel("Daneben! Warte auf Gegenspieler!");
                 break;
             // Treffer:
             case 1:
                 button.setEnabled(false);
                 button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"fire.jpg")));
-                setLabel("Treffer!");
+                setLabel("Treffer! Ihr Zug!");
                 break;
             // Versenkt:
             case 2:
@@ -385,7 +385,7 @@ public class BattleGUI extends javax.swing.JFrame {
         for (Component c : panel.getComponents()) {
             if (c instanceof MyButton) {
                 MyButton button = (MyButton)c;
-                if (button.getPoint() == pt) {
+                if (button.getPoint().x == pt.x && button.getPoint().y == pt.y) {
                     return (MyButton)c;
                 }
             }

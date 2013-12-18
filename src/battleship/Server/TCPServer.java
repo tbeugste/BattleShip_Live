@@ -105,28 +105,27 @@ public class TCPServer extends Thread implements IServer {
      * method to send a Message to all Clients
      * @param message 
      */
-    public void sendToAll(CommunicationObject message)
+    public synchronized void sendToAll(CommunicationObject message)
     {
-        //lock to one access per Thread
-        synchronized(allCommunicators)
-        {
-            try{
-                //Iterate threw all Objects
-                for(Enumeration e=getOutputStreams(); e.hasMoreElements();)
-                {
-                    //get Outputstream
-                    ObjectOutputStream os = (ObjectOutputStream)e.nextElement();
-                    //send Object
-                    os.writeObject(message);
-                    //make sure it sends
-                    os.flush();
-                }
-            }
-            catch(IOException ie)
+        
+        
+        try{
+            //Iterate threw all Objects
+            for(Enumeration e=getOutputStreams(); e.hasMoreElements();)
             {
-                ie.printStackTrace();
+                //get Outputstream
+                ObjectOutputStream os = (ObjectOutputStream)e.nextElement();
+                //send Object
+                os.writeObject(message);
+                //make sure it sends
+                os.flush();
             }
         }
+        catch(IOException ie)
+        {
+            ie.printStackTrace();
+        }
+        
     }
     
     /**
@@ -134,11 +133,10 @@ public class TCPServer extends Thread implements IServer {
      * @param message
      * @param mySocket 
      */
-    public void sendToOpponend(CommunicationObject message, Socket mySocket)
+    public synchronized void sendToOpponend(CommunicationObject message, Socket mySocket)
     {
         //make sure no problems with Multithreading
-        synchronized(allCommunicators)
-        {
+        
             try{
                 //Create Enumeration with keys
                 Enumeration e = allCommunicators.keys();
@@ -163,7 +161,7 @@ public class TCPServer extends Thread implements IServer {
             {
                 ie.printStackTrace();
             }
-        }
+        
     }
     
     /**
