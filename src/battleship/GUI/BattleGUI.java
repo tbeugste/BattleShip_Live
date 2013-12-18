@@ -245,25 +245,25 @@ public class BattleGUI extends javax.swing.JFrame {
     {
         JPanel ShipPanel = new JPanel (new GridLayout(2,0));   
        
-        JButton bship = new JButton("Schlachtschiff");
+        JButton bship = new JButton("Battleship");
         bship.addActionListener(bl);
         bship.setActionCommand("Ship selected bship");
         bship.setBackground(Color.white);
         bship.setBorder (null);
 
-        JButton cruiser = new JButton ("Kreuzer");
+        JButton cruiser = new JButton ("Cruiser");
         cruiser.addActionListener(bl);
         cruiser.setActionCommand("Ship selected cruiser");
         cruiser.setBorder (null);
         cruiser.setBackground(Color.white);
         
-        JButton destroyer = new JButton ("Zerstörer");
+        JButton destroyer = new JButton ("Destroyer");
         destroyer.addActionListener(bl);
         destroyer.setActionCommand("Ship selected destroyer");
         destroyer.setBorder (null);
         destroyer.setBackground (Color.white);
         
-        JButton submarine = new JButton("UBoot");
+        JButton submarine = new JButton("Submarine");
         submarine.addActionListener(bl);
         submarine.setActionCommand("Ship selected submarine");
         submarine.setBorder (null);

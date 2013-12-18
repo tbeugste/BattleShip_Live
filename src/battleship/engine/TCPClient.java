@@ -28,6 +28,8 @@ public class TCPClient implements Runnable{
     {
         // Connect to the server
     try {
+        
+          
         // Initiate the connection
         socket = new Socket( host, port );
         

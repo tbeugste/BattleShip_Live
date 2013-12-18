@@ -34,7 +34,7 @@ public StartScreen()
        
         JLabel title = new JLabel (new ImageIcon(getClass().getResource("pictures"+File.separator+"Title.jpg")));
         
-        JPanel panelButton = new JPanel (new GridLayout(3,1,1,10));
+        JPanel panelButton = new JPanel (new GridLayout(2,1,1,10));
         panelButton.setBackground(Color.white);
         JPanel panelLabel = new JPanel (new GridLayout (2,1,1,50));
         panelLabel.setBackground(Color.white);    
@@ -48,11 +48,11 @@ public StartScreen()
         JButton multiplayer = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"MultiIcon.jpg"))); 
         multiplayer.setBackground(Color.WHITE);
         JButton singleplayer = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"SingleIcon.jpg"))); 
-        
         singleplayer.setBackground(Color.WHITE);
-        JButton options = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"OptionIcon.jpg"))); 
+        
+        //JButton options = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"OptionIcon.jpg"))); 
 
-        options.setBackground(Color.WHITE);
+        //options.setBackground(Color.WHITE);
  
         panelButton.add(multiplayer); 
         multiplayer.addActionListener(new ActionListener() 
@@ -91,7 +91,7 @@ public StartScreen()
         });
         singleplayer.setActionCommand("singleplayer");
         
-        panelButton.add (options);
+        //panelButton.add (options);
         panelHome.add(title);
         panelHome.add (panel);
         
@@ -100,7 +100,7 @@ public StartScreen()
 
         frame.add(panelHome);   
         frame.pack();         
-        frame.setSize(748,425);
+        frame.setSize(748,430);
         frame.setVisible(true);  
  } 
 
