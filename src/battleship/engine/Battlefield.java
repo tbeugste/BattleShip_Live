@@ -199,6 +199,10 @@ public class Battlefield implements IListener {
         message.shotAplyed(false, false, false);
         _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,0);
         sendReply(message);
+        if(message.getHit())
+        {
+            //Add Method that we can start to apply a shot
+        }
     }
     
     /**
