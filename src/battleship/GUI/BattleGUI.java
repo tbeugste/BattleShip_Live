@@ -42,7 +42,7 @@ public class BattleGUI extends javax.swing.JFrame {
         bl = new Buttonlistener(this);
         ml = new MyMouselistener(this);
         //entfernt, da dies erst erstellt werden soll, wenn die Verbindung zum Server aufgebaut wurde
-        createWindow();
+        //createWindow();
     }
     
     /**

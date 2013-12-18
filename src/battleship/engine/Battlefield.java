@@ -34,8 +34,8 @@ public class Battlefield implements IListener {
     private KIServer _kiServer;
     public String serverIP;
     
-    public Battlefield (BattleGUI bGUI, int height, int width) {
-        _bGUI = bGUI;
+    public Battlefield (int height, int width) {
+        _bGUI = new BattleGUI();
         _height = height;
         _width = width;
         status = new Status();
@@ -142,6 +142,7 @@ public class Battlefield implements IListener {
                 _client.addActionListener(this);
                 break;
         }
+        _bGUI.setVisible(true);
     }
     
     /**
@@ -243,7 +244,8 @@ public class Battlefield implements IListener {
      */
     @Override
     public void initializeMessage(CommunicationObject message){
-        //_bGUI.createWindow();
+        _bGUI.createWindow();
+        _bGUI.setVisible(true);
     }
     
     /**
@@ -347,4 +349,8 @@ public class Battlefield implements IListener {
        return response;
     }
     
+    public BattleGUI getBGUI()
+    {
+        return _bGUI;
+    }
 }
