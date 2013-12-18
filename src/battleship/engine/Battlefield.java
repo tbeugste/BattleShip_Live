@@ -257,9 +257,17 @@ public class Battlefield implements IListener {
      */
     @Override
     public void startMessage(CommunicationObject message){
-        status.setStatus(true);
-       _bGUI.activatePanel(_bGUI.getPanelOponent());
-       _bGUI.setLabel("Ihr Zug!");
+        if(message.getStarted())
+        {
+            status.setStatus(true);
+           _bGUI.activatePanel(_bGUI.getPanelOponent());
+           _bGUI.setLabel("Ihr Zug!");
+        }
+        else
+        {
+            status.setStatus(false);
+           _bGUI.setLabel("Warte auf Server!");
+        }
     }
     
     /**

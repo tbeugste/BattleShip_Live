@@ -205,7 +205,7 @@ public class TCPServer extends Thread implements IServer {
      * Method witch returns the starting Message
      * @return 
      */
-    public CommunicationObject getStarted(Socket client)
+    public synchronized CommunicationObject getStarted(Socket client)
     {
         CommunicationObject message = null;
         if(readyPlayers.size() == maxServerConnections)
@@ -217,7 +217,7 @@ public class TCPServer extends Thread implements IServer {
                 
             }
             
-            for(int i=0; i<=readyPlayers.size();i++ )
+            for(int i=0; i<readyPlayers.size();i++ )
             {
                 if(readyPlayers.get(i).equals(client))
                 {
@@ -238,7 +238,7 @@ public class TCPServer extends Thread implements IServer {
         return message;
     }
     
-    public boolean isStarted()
+    public synchronized boolean isStarted()
     {
         return (readyPlayers.size()==maxServerConnections);
     }
