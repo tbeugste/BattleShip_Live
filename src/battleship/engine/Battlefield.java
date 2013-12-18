@@ -8,6 +8,9 @@ import battleship.GUI.BattleGUI;
 import battleship.GUI.MyButton;
 import battleship.Server.TCPServer;
 import battleship.Server.KIServer;
+import static battleship.engine.Shiptypes.CRUISER;
+import static battleship.engine.Shiptypes.DESTROYER;
+import static battleship.engine.Shiptypes.SUBMARINE;
 import javax.swing.JButton;
 import java.awt.*;
 import java.util.*;
@@ -300,15 +303,27 @@ public class Battlefield implements IListener {
            {
                case BSHIP:
                    bShipCount++;
+                   if(bShipCount==Shiptypes.BSHIP.getCount()) {
+                       this.guiButtons[0][0].setEnabled(false);
+                   }
                    break;
                case CRUISER:
                    cruiserCount++;
+                   if(cruiserCount==Shiptypes.CRUISER.getCount()) {
+                       this.guiButtons[0][1].setEnabled(false);
+                   }
                    break;
                case DESTROYER:
                    destroyerCount++;
+                   if(destroyerCount==Shiptypes.DESTROYER.getCount()) {
+                       this.guiButtons[1][0].setEnabled(false);
+                   }
                    break;
                case SUBMARINE:
                    submarineCount++;
+                   if(submarineCount==Shiptypes.SUBMARINE.getCount()) {
+                       this.guiButtons[1][1].setEnabled(false);
+                   }
                    break;
                default:
                    break;

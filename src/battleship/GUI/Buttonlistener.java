@@ -57,6 +57,7 @@ public class Buttonlistener implements ActionListener {
                             _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
                         }
                         Battleship.bField.status.setShipPlacementactive(false);
+                        Battleship.bField.getReadyResponse ();
                     }
                 }
                 break;
@@ -101,6 +102,7 @@ public class Buttonlistener implements ActionListener {
                  {
                     _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
                     _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+                    _bGUI.actionPanel.remove(_bGUI.setShipPanel);
                  }
                  break;
              case "horizontal":

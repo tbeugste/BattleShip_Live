@@ -36,6 +36,8 @@ public class BattleGUI extends javax.swing.JFrame {
     private MyMouselistener ml;
     private boolean horizontal;
     private boolean panelPlayerSet = false;
+    public JPanel actionPanel;
+    public JPanel setShipPanel;
      
     public BattleGUI () {
         super("Battleship");
@@ -63,23 +65,24 @@ public class BattleGUI extends javax.swing.JFrame {
         label.setHorizontalAlignment(JLabel.CENTER);
         
         
-        JButton button = new JButton ("ready");
-        button.addActionListener(bl);
-        button.setActionCommand("GameReady");
+//        JButton readyButton = new JButton ("ready");
+//        readyButton.addActionListener(bl);
+//        readyButton.setActionCommand("GameReady");
         
                 
-        JPanel panel = new JPanel (new GridLayout(3,0));
+        actionPanel = new JPanel (new GridLayout(3,0));
         //panel.setBackground(Color.white);
-        panel.add(setShip());
-        panel.add(button);
-        panel.add(label);
+        setShipPanel = setShip();
+        actionPanel.add(setShipPanel);
+        //panel.add(readyButton);
+        actionPanel.add(label);
         
         
         setPanelPlayer();
         mainGrid.add(panelPlayer);
         setPanelOpponent();
         mainGrid.add(panelOponent);
-        mainGrid.add(panel); 
+        mainGrid.add(actionPanel); 
              
         Battleship.bField.status.setShipPlacementactive(false);
         Battleship.bField.status.setStatus(false);
@@ -237,7 +240,7 @@ public class BattleGUI extends javax.swing.JFrame {
     
     public JPanel setShip ()
     {
-        JPanel ShipPanel = new JPanel (new GridLayout(3,0));   
+        JPanel ShipPanel = new JPanel (new GridLayout(4,0));   
        
         JButton bship = new JButton("Battleship");
         bship.addActionListener(bl);
@@ -280,6 +283,12 @@ public class BattleGUI extends javax.swing.JFrame {
         verticalBut.setBackground(Color.white);
         verticalBut.setBorder (null);
         Battleship.bField.guiButtons[2][1] = verticalBut;
+        
+        JButton readyButton = new JButton ("ready");
+        readyButton.addActionListener(bl);
+        readyButton.setActionCommand("GameReady");
+        readyButton.setBackground(Color.white);
+        readyButton.setBorder (BorderFactory.createLineBorder(Color.black, 2));
                 
         bship.setIcon (new ImageIcon(getClass().getResource("pictures"+File.separator+"BShip.jpg")));
         cruiser.setIcon (new ImageIcon(getClass().getResource("pictures"+File.separator+"Cruiser.jpg")));
@@ -292,6 +301,7 @@ public class BattleGUI extends javax.swing.JFrame {
         ShipPanel.add(submarine);
         ShipPanel.add(horizontalBut);
         ShipPanel.add(verticalBut);
+        ShipPanel.add(readyButton);
         
         return ShipPanel;      
     }
