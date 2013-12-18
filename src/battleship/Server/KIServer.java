@@ -5,7 +5,6 @@
 package battleship.Server;
 import battleship.engine.CommunicationObject;
 import battleship.engine.CommunicationObjectType;
-import battleship.engine.ClientCommunicator;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -82,7 +81,6 @@ public class KIServer extends Thread implements IServer{
                         sendToAll(communicationObject);
                         _kiCommunicator = KICommunicator.getInstance();
                         _kiCommunicator.regame();
-                        System.out.println("Initialized");
                     }
                 }
             }

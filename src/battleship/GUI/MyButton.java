@@ -13,6 +13,7 @@ import java.awt.Point;
 public class MyButton extends JButton {
     private Point battlePoint;
     
+    
     public MyButton(int height, int width) {
         super();
         battlePoint = new Point(width, height);

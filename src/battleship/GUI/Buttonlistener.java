@@ -12,6 +12,7 @@ import battleship.Battleship;
 import battleship.engine.Shiptypes;
 import battleship.engine.Ship;
 import java.awt.Point;
+import javax.swing.border.Border;
 
 
 /**
@@ -42,16 +43,19 @@ public class Buttonlistener implements ActionListener {
             case "Shot":
                 if (Battleship.bField.status.getStatus()) {
                     _bGUI.shot((MyButton)e.getSource());
-                } else if (Battleship.bField.status.getShipPlacementactive()) {
+                } else if (Battleship.bField.status.getShipPlacementactive()){
                     MyButton but = (MyButton)e.getSource();
-                    Ship ship = Battleship.bField.createPlacedShip(but.getPoint());
-                    Battleship.bField.addShip(ship);
-                    _bGUI.ship = ship.GetShipType();
-                    for(Point point : ship.getCoordinates()) {
-                        _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 2);
-                        _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
+                    if(Battleship.bField.enoughSpace(but.getPoint()))
+                    {
+                        Ship ship = Battleship.bField.createPlacedShip(but.getPoint());
+                        Battleship.bField.addShip(ship);
+                        _bGUI.ship = ship.GetShipType();
+                        for(Point point : ship.getCoordinates()) {
+                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 2);
+                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
+                        }
+                        Battleship.bField.status.setShipPlacementactive(false);
                     }
-                    Battleship.bField.status.setShipPlacementactive(false);
                 }
                 break;
             case "newGame":

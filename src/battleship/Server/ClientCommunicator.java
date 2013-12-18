@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package battleship.engine;
+package battleship.Server;
 import battleship.Server.IServer;
+import battleship.engine.CommunicationObject;
 import java.io.*; 
 import java.net.*;
 import java.util.*;

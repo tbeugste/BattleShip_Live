@@ -5,7 +5,6 @@
 package battleship.Server;
 import battleship.engine.CommunicationObject;
 import battleship.engine.CommunicationObjectType;
-import battleship.engine.ClientCommunicator;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
