@@ -17,6 +17,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -150,7 +151,7 @@ public class BattleGUI extends javax.swing.JFrame {
             myButton.setRolloverEnabled(true);
         }
         BufferedImage img = null;
-        myButton.setIcon (new ImageIcon(getClass().getResource("water.jpg")));
+        myButton.setIcon (new ImageIcon(getClass().getResource("pictures"+File.separator+"water.jpg")));
         myButton.setBorder(null);
         return myButton;
     }
@@ -262,10 +263,10 @@ public class BattleGUI extends javax.swing.JFrame {
         submarine.setBorder (null);
         submarine.setBackground(Color.white);
                 
-        bship.setIcon (new ImageIcon(getClass().getResource("BShip.jpg")));
-        cruiser.setIcon (new ImageIcon(getClass().getResource("Cruiser.jpg")));
-        destroyer.setIcon(new ImageIcon(getClass().getResource("Destroyer.jpg")));
-        submarine.setIcon(new ImageIcon(getClass().getResource("Submarine.jpg")));
+        bship.setIcon (new ImageIcon(getClass().getResource("pictures"+File.separator+"BShip.jpg")));
+        cruiser.setIcon (new ImageIcon(getClass().getResource("pictures"+File.separator+"Cruiser.jpg")));
+        destroyer.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"Destroyer.jpg")));
+        submarine.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"Submarine.jpg")));
 
         ShipPanel.add(bship);
         ShipPanel.add(cruiser);
@@ -310,13 +311,13 @@ public class BattleGUI extends javax.swing.JFrame {
             // Daneben:
             case 0:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon(getClass().getResource("miss.jpg")));
+                button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"miss.jpg")));
                 setLabel("Daneben!");
                 break;
             // Treffer:
             case 1:
                 button.setEnabled(false);
-                button.setIcon(new ImageIcon(getClass().getResource("fire.jpg")));
+                button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"fire.jpg")));
                 setLabel("Treffer!");
                 break;
             // Versenkt:
@@ -324,26 +325,25 @@ public class BattleGUI extends javax.swing.JFrame {
                 button.setEnabled(false);
                 if(ship == SUBMARINE)
                 {
-                    button.setIcon(new ImageIcon(getClass().getResource("Submarine.jpg")));
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"Submarine.jpg")));
                 }
                 if(ship == DESTROYER)
                 {
-                    button.setIcon(new ImageIcon(getClass().getResource("Destroyer.jpg")));
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"Destroyer.jpg")));
                 }
                 if(ship == CRUISER)
                 {
-                    button.setIcon(new ImageIcon(getClass().getResource("Cruiser.jpg")));
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"Cruiser.jpg")));
                 }
                 if(ship == BSHIP)
                 {
-                    button.setIcon(new ImageIcon(getClass().getResource("BShip.jpg")));
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"BShip.jpg")));
                 }
                 setLabel("Versenkt!");
                 break;
             // Gameover:
             case 3:
                 button.setEnabled(false);
-                //button.setIcon(new ImageIcon("C:\\Loana\\Schule\\TA.BA_PRG2.H1301\\BattleGui\\src\\fire.jpg"));
                 for(Component c : panelOponent.getComponents()) {
                     if (c instanceof MyButton) {
                         if (c.isEnabled()) {

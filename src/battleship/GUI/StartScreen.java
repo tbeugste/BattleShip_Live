@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import battleship.Battleship;
 import battleship.engine.Battlefield;
+import java.io.File;
 
 /**
  *
@@ -31,25 +32,25 @@ public StartScreen()
  
         JPanel panel = new JPanel (new GridLayout (1,2));
        
-        JLabel title = new JLabel (new ImageIcon(getClass().getResource("Title.jpg")));
+        JLabel title = new JLabel (new ImageIcon(getClass().getResource("pictures"+File.separator+"Title.jpg")));
         
         JPanel panelButton = new JPanel (new GridLayout(3,1,1,10));
         panelButton.setBackground(Color.white);
         JPanel panelLabel = new JPanel (new GridLayout (2,1,1,50));
         panelLabel.setBackground(Color.white);    
                 
-        JLabel imageLabel = new JLabel(new ImageIcon(getClass().getResource("TitleImage.jpg")));
+        JLabel imageLabel = new JLabel(new ImageIcon(getClass().getResource("pictures"+File.separator+"TitleImage.jpg")));
         JLabel label = new JLabel ("Loana Albisser, Patrik Buholzer, Sascha Herger, Andreas Eugster");           
                      
         panelLabel.add(imageLabel);
         panelLabel.add(label);
                   
-        JButton multiplayer = new JButton(new ImageIcon(getClass().getResource("MultiIcon.jpg"))); 
+        JButton multiplayer = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"MultiIcon.jpg"))); 
         multiplayer.setBackground(Color.WHITE);
-        JButton singleplayer = new JButton(new ImageIcon(getClass().getResource("SingleIcon.jpg"))); 
+        JButton singleplayer = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"SingleIcon.jpg"))); 
         
         singleplayer.setBackground(Color.WHITE);
-        JButton options = new JButton(new ImageIcon(getClass().getResource("OptionIcon.jpg"))); 
+        JButton options = new JButton(new ImageIcon(getClass().getResource("pictures"+File.separator+"OptionIcon.jpg"))); 
 
         options.setBackground(Color.WHITE);
  
@@ -61,7 +62,7 @@ public StartScreen()
             public void actionPerformed(ActionEvent e)
             {    
                 try{
-                MulitScreen.createIPWindow();
+                MulitScreen.createWindow();
                 //Battleship.bGUI.setVisible(true);
                 //Battleship.bField.initializeServer(2);
                 } catch(Exception ex ) {
