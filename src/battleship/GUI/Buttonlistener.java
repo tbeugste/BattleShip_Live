@@ -53,8 +53,8 @@ public class Buttonlistener implements ActionListener {
                         Battleship.bField.addShip(ship);
                         _bGUI.ship = ship.GetShipType();
                         for(Point point : ship.getCoordinates()) {
-                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 2);
-                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
+                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 2, true);
+                            _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6, true);
                         }
                         Battleship.bField.status.setShipPlacementactive(false);
                         Battleship.bField.getReadyResponse (false);

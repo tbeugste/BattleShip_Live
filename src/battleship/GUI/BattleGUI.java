@@ -335,19 +335,37 @@ public class BattleGUI extends javax.swing.JFrame {
      * @param button
      * @param status 
      */
-    public void switchButton(MyButton button, int status) {
+    public void switchButton(MyButton button, int status, boolean myShot) {
         switch (status) {
             // Daneben:
             case 0:
-                button.setEnabled(false);
-                button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"miss.jpg")));
-                setLabel("Daneben! Warte auf Gegenspieler!");
+                if(myShot)
+                {
+                    button.setEnabled(false);
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"miss.jpg")));
+                    setLabel("Daneben! Warte auf Gegenspieler!");
+                }
+                else
+                {
+                    button.setEnabled(false);
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"miss.jpg")));
+                    setLabel("Daneben! Du bis am Zug!");
+                }
                 break;
             // Treffer:
             case 1:
-                button.setEnabled(false);
-                button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"fire.jpg")));
-                setLabel("Treffer! Ihr Zug!");
+                if(myShot)
+                {
+                    button.setEnabled(false);
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"fire.jpg")));
+                    setLabel("Treffer! Ihr Zug!");
+                }
+                else
+                {
+                    button.setEnabled(false);
+                    button.setIcon(new ImageIcon(getClass().getResource("pictures"+File.separator+"fire.jpg")));
+                    setLabel("Treffer! Der Gegner ist am Zug!");
+                }
                 break;
             // Versenkt:
             case 2:
@@ -376,7 +394,7 @@ public class BattleGUI extends javax.swing.JFrame {
                 for(Component c : panelOponent.getComponents()) {
                     if (c instanceof MyButton) {
                         if (c.isEnabled()) {
-                            switchButton((MyButton)c, 0);
+                            switchButton((MyButton)c, 0, false);
                         }                            
                     }
                 }

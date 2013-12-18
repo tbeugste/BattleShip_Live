@@ -27,10 +27,10 @@ public class MyMouselistener implements MouseListener {
             MyButton but = (MyButton)e.getSource(); 
             if(Battleship.bField.enoughSpace(but.getPoint())) {
                 for(Point point : Battleship.bField.createPlacedShip(but.getPoint()).getCoordinates()) {
-                    _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 4);
+                    _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 4, true);
                 }
             } else {
-                _bGUI.switchButton((MyButton)e.getSource(), 5);
+                _bGUI.switchButton((MyButton)e.getSource(), 5, true);
             }
         }
     }
@@ -41,10 +41,10 @@ public class MyMouselistener implements MouseListener {
             MyButton but = (MyButton)e.getSource(); 
             if(Battleship.bField.enoughSpace(but.getPoint())) {
                 for(Point point : Battleship.bField.createPlacedShip(but.getPoint()).getCoordinates()) {
-                    _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
+                    _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6,true);
                 }
             } else {
-                _bGUI.switchButton((MyButton)e.getSource(), 6);
+                _bGUI.switchButton((MyButton)e.getSource(), 6,true);
             }
         }
     }

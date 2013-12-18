@@ -10,7 +10,9 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -139,15 +141,17 @@ public class TCPServer extends Thread implements IServer {
         
             try{
                 //Create Enumeration with keys
-                Enumeration e = allCommunicators.keys();
+                Iterator e = allCommunicators.keySet().iterator();
+                
                 //go threw all keys
-                while(e.hasMoreElements())
+                while(e.hasNext())
                 {
+                    Socket s = (Socket)e.next();
                     //if the key is not the same as the one from the sender its the opponends
-                    if(!e.nextElement().equals(mySocket))
+                    if(!s.equals(mySocket))
                     {
                         //get opponends outputstream
-                        ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(e));
+                        ObjectOutputStream os = (ObjectOutputStream)(allCommunicators.get(s));
                         //send message
                         os.writeObject(message);
                         //make sure its send

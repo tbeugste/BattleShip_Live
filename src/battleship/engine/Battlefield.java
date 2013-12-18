@@ -162,27 +162,37 @@ public class Battlefield implements IListener {
      * @return int 0 = no hit, 1 = hit, 2 = ship destroyed, 3 = gameover
      */
     public void receiveOponentsShot(CommunicationObject message) {
+        boolean hit = false;
         for (Ship aShip: _fleet) {
             if(aShip.ApplyShot(message.getShot())) {
                 if(aShip.IsDestroyed()) {
                     _fleet.remove(aShip);
                     if(_fleet.isEmpty()) {
                         message.shotAplyed(true, true, true);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,3);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,3,false);
+                        hit = true;
+                        break;
                     } else {
                         message.shotAplyed(true, true, false);
-                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,2);
+                        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,2,false);
+                        hit = true;
+                        break;
                     }
                 } else {
                     message.shotAplyed(true, false, false);
-                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,1);
+                    _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,1,false);
+                    hit = true;
+                    break;
                 }
             }
         } 
-        message.shotAplyed(false, false, false);
-        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,0);
+        if(!hit)
+        {
+            message.shotAplyed(false, false, false);
+            _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelPlayer(), message.getShot()) ,0,false);
+        }
         sendReply(message);
-        if(!message.getHit())
+        if(!hit)
         {
             status.setStatus(true);
             _bGUI.setLabel("Dein Zug!");
@@ -203,7 +213,7 @@ public class Battlefield implements IListener {
      * @param status 
      */
     public void receivePlayersShotResult(Point pt, int status) {
-        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelOponent(), pt), status);
+        _bGUI.switchButton(_bGUI.getButton(_bGUI.getPanelOponent(), pt), status, true);
         if(status ==1 || status == 2)
         {
             this.status.setStatus(true);
