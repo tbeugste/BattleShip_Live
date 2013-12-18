@@ -5,6 +5,7 @@
 package battleship.engine;
 
 import battleship.GUI.BattleGUI;
+import battleship.GUI.MyButton;
 import battleship.Server.TCPServer;
 import battleship.Server.KIServer;
 import java.awt.*;
@@ -22,17 +23,21 @@ public class Battlefield implements IListener {
     private ArrayList<Ship> _fleet = new ArrayList<>();
     public Status status;
     public Shiptypes placedShiptype;
-    public boolean horizontal;
+    public Ship placedShip = new Ship(null, null);
+    public boolean horizontal = true;
+    public MyButton[][] buttonArray;
     
     private TCPClient _client;
     private TCPServer _server;
     private KIServer _kiServer;
+    public String serverIP;
     
     public Battlefield (BattleGUI bGUI, int height, int width) {
         _bGUI = bGUI;
         _height = height;
         _width = width;
         status = new Status();
+        buttonArray = new MyButton[height][width];
     }
     
     /**
@@ -53,18 +58,64 @@ public class Battlefield implements IListener {
             endPosition.x=clickPosition.x;
             endPosition.y=9;
             }
-            if(clickPosition.distance(endPosition)>=this.placedShiptype.getValue()){
+            if(clickPosition.distance(endPosition) > (placedShiptype.getValue()-2)){
+                //check if a ship ist to close:    
+                if(!shipToClose(clickPosition)){
                     validPos=true;
+                }
             }
         return validPos;
     }
     
-    public void setShip(Shiptypes sTyp){
-        _bGUI.removeFromCombobox(sTyp);
+    /**
+     * checks if a Ship in the fleet is to close to a point
+     * @param point
+     * @return 
+     */
+    public boolean shipToClose(Point point) {
+        boolean result = false;
+
+        for(Ship aShip : _fleet) {
+            for(Point aPoint : aShip.getCoordinates()) {
+                for(Point bPoint : createPlacedShip(point).getCoordinates()) {
+                    if(aPoint.distance(bPoint) <= 1) {
+                        result = true;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+         
+    /**
+     * creates a ship of a point and the selected shiptype in the GUI
+     * @param point
+     * @return 
+     */
+    public Ship createPlacedShip(Point point) {
+        ArrayList<Point> al = new ArrayList<>();
+        if(horizontal) {
+            for(int i = point.x; i < (point.x + placedShiptype.getValue()); i++) {
+                Point p = new Point(i, point.y);
+                al.add(p);
+            }
+        } else {
+            for(int i = point.y; i < (point.y + placedShiptype.getValue()); i++) {
+                Point p = new Point(point.x, i);
+                al.add(p);
+            }
+        }
+        Ship ship = new Ship(al, placedShiptype);
+        return ship;
     }
     
-    public void initializeGame() {
+    public void joinGame() {
         
+    }
+    
+    public void setShip(Shiptypes sTyp){
+        _bGUI.removeFromCombobox(sTyp);
     }
     
     /**
@@ -86,7 +137,7 @@ public class Battlefield implements IListener {
                 break;
             // Multiplayer Client
             case 3:
-                _client = new TCPClient("127.0.0.1", 9999);
+                _client = new TCPClient(serverIP, 9999);
                 break;
         }
     }
@@ -199,7 +250,7 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void initializeMessage(CommunicationObject message){
-        initializeGame();
+        //initializeGame();
     }
     
     /**

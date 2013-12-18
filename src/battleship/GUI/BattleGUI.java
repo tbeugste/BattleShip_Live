@@ -28,12 +28,13 @@ public class BattleGUI extends javax.swing.JFrame {
     
     private static javax.swing.JPanel panelPlayer;
     private static javax.swing.JPanel panelOponent;
-    private Shiptypes ship;
+    public Shiptypes ship;
     private javax.swing.JLabel label;
     private JComboBox shipNames;
     private Buttonlistener bl;
     private MyMouselistener ml;
     private boolean horizontal;
+    private boolean panelPlayerSet = false;
      
     public BattleGUI () {
         super("Battleship");
@@ -139,8 +140,10 @@ public class BattleGUI extends javax.swing.JFrame {
         MyButton myButton = new MyButton(row, column);
         myButton.addActionListener(bl);
         myButton.setActionCommand("Shot");
-        myButton.addMouseListener(ml);
-        myButton.setRolloverEnabled(true);
+        if(panelPlayerSet) {
+            myButton.addMouseListener(ml);
+            myButton.setRolloverEnabled(true);
+        }
         BufferedImage img = null;
         myButton.setIcon (new ImageIcon(getClass().getResource("water.jpg")));
         myButton.setBorder(null);
@@ -161,7 +164,12 @@ public class BattleGUI extends javax.swing.JFrame {
         panel.setLayout(new GridLayout(height,width,1,1));
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                panel.add(createButton(i,j));           
+                if(panelPlayerSet){
+                    Battleship.bField.buttonArray[j][i] = createButton(i,j);
+                    panel.add(Battleship.bField.buttonArray[j][i]);           
+                } else {
+                    panel.add(createButton(i,j));
+                }
             }
         }
         return panel;
@@ -172,9 +180,11 @@ public class BattleGUI extends javax.swing.JFrame {
      * @return JPanel
      */
     public void setPanelPlayer () {
+        panelPlayerSet = true;
         panelPlayer = createPanel(10,10);
         panelPlayer.setBorder(new TitledBorder("Home Field"));
         panelPlayer.setBackground(Color.white);
+        panelPlayerSet = false;
     }
     
     /**
@@ -366,7 +376,7 @@ public class BattleGUI extends javax.swing.JFrame {
             if (c instanceof MyButton) {
                 MyButton button = (MyButton)c;
                 if (button.getPoint() == pt) {
-                    return button;
+                    return (MyButton)c;
                 }
             }
         }

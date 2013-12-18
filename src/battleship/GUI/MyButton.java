@@ -15,7 +15,7 @@ public class MyButton extends JButton {
     
     public MyButton(int height, int width) {
         super();
-        battlePoint = new Point(height, width);
+        battlePoint = new Point(width, height);
     }
         
     public Point getPoint() {
