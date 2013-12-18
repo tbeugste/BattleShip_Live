@@ -35,7 +35,7 @@ public class Battlefield implements IListener {
     private TCPClient _client;
     private TCPServer _server;
     private KIServer _kiServer;
-    public String serverIP;
+    private String serverIP;
     
     public Battlefield (int height, int width) {
         _bGUI = new BattleGUI();
@@ -188,6 +188,13 @@ public class Battlefield implements IListener {
             _bGUI.setLabel("Dein Zug!");
             _bGUI.activatePanel(_bGUI.getPanelOponent());
         }
+        else if(message.getGameover())
+        {
+            status.setStatus(false);
+            _bGUI.setLabel("GAME OVER! YOU HAVE LOST!!!");
+            _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+            _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
+        }
     }
     
     /**
@@ -201,6 +208,13 @@ public class Battlefield implements IListener {
         {
             this.status.setStatus(true);
             _bGUI.activatePanel(_bGUI.getPanelOponent());
+        }
+        else if(status ==3)
+        {
+            this.status.setStatus(false);
+            _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+            _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
+            _bGUI.setLabel("GAME OVER! YOU WON!!!");
         }
         
     }
@@ -378,5 +392,10 @@ public class Battlefield implements IListener {
     public BattleGUI getBGUI()
     {
         return _bGUI;
+    }
+    
+    public void setServerIP(String IPAdress)
+    {
+        serverIP = IPAdress;
     }
 }

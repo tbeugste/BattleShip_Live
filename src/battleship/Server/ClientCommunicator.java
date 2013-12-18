@@ -46,15 +46,19 @@ public class ClientCommunicator extends Thread{
                         {
                             case INITIALIZE:
                                 actionsOnInitializeMessage(message);
+                                System.out.println(message.getType());
                                 break;
                             case REPLY:
                                 actionsOnReplayMessage(message);
+                                System.out.println(message.getType());
                                 break;
                             case SHOT:
                                 actionsOnShotMessage(message);
+                                System.out.println(message.getType());
                                 break;
                             case START:
                                 actionsOnStartMessage(message);
+                                System.out.println(message.getType());
                                 break;
                         }
                     }

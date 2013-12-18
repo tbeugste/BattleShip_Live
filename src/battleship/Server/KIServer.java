@@ -82,6 +82,7 @@ public class KIServer extends Thread implements IServer{
                         sendToAll(communicationObject);
                         _kiCommunicator = KICommunicator.getInstance();
                         _kiCommunicator.regame();
+                        
                     }
                 }
             }

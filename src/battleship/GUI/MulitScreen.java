@@ -33,10 +33,17 @@ public class MulitScreen {
         panel.setBackground(Color.white);
         
         JLabel label = new JLabel ("Bitte IP- Adresse eingeben:");
-        TextField ipadresse = new TextField (20);
+        final TextField ipadresse = new TextField (20);
         TextArea area = new TextArea ("",5,50, SCROLLBARS_NONE);
         JButton button = new JButton ("Verbinden");
-        
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               Battleship.bField.setServerIP(ipadresse.getText());
+               Battleship.bField.initializeServer(3);
+            }
+        });
         JButton buttonServ = new JButton ("Eigenen Server erstellen");
         buttonServ.addActionListener(new ActionListener() {
 
