@@ -13,8 +13,9 @@ import battleship.GUI.StartScreen;
  * @author Andy, Patrik
  */
 public class Battleship {
+    
     public static Battlefield bField = new Battlefield(Battleship.bGUI,10,10);;
-    public static BattleGUI bGUI = new BattleGUI();;
+    public static BattleGUI bGUI = new BattleGUI();
     public StartScreen startScreen;
 
         

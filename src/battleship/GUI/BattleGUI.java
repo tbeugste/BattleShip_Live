@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.*;
@@ -41,6 +43,7 @@ public class BattleGUI extends javax.swing.JFrame {
         super("Battleship");
         bl = new Buttonlistener(this);
         ml = new MyMouselistener(this);
+        //entfernt, da dies erst erstellt werden soll, wenn die Verbindung zum Server aufgebaut wurde
         createWindow();
     }
     
@@ -48,7 +51,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * PB
      * Creates the MainWindow
      */
-    private void createWindow() {
+    public void createWindow() {
         super.setSize(800,675);
         super.setResizable(false);
         super.setLocation(200,100);
@@ -61,8 +64,10 @@ public class BattleGUI extends javax.swing.JFrame {
         label = new JLabel("Schiff wählen!");
         label.setHorizontalAlignment(JLabel.CENTER);
         
-        JButton button = new JButton ("ready");
         
+        JButton button = new JButton ("ready");
+        button.addActionListener(bl);
+        button.setActionCommand("GameReady");
         
                 
         JPanel panel = new JPanel (new GridLayout(3,0));
@@ -80,6 +85,7 @@ public class BattleGUI extends javax.swing.JFrame {
                 
         Battleship.bField.status.setShipPlacementactive(false);
         Battleship.bField.status.setStatus(false);
+        
     }
     
     /**

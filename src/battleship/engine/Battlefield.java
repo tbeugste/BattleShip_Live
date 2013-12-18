@@ -129,11 +129,15 @@ public class Battlefield implements IListener {
             case 1:
                 _kiServer = new KIServer();
                 _client = new TCPClient("127.0.0.1", 9999);
+                _client.addActionListener(this);
+                new Thread(_client);
                 break;
             // Multiplayer Host
             case 2:
                 _server = new TCPServer();
                 _client = new TCPClient("127.0.0.1", 9999);
+                _client.addActionListener(this);
+                new Thread(_client);
                 break;
             // Multiplayer Client
             case 3:
@@ -241,7 +245,7 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void startMessage(CommunicationObject message){
-        
+       //Method to start the game and let the user do a shot 
     }
     
     /**
@@ -250,7 +254,7 @@ public class Battlefield implements IListener {
      * @param message 
      */
     public void initializeMessage(CommunicationObject message){
-        //initializeGame();
+        //_bGUI.createWindow();
     }
     
     /**
@@ -285,6 +289,72 @@ public class Battlefield implements IListener {
      */
     public int getHeight() {
         return this._height;
+    }
+    
+    /**
+     * Method to check all placed Ships and send message to server
+     * @return 
+     */
+    public String getReadyResponse ()
+    {
+       String response ="";
+       int bShipCount = 0;
+       int cruiserCount = 0;
+       int destroyerCount = 0;
+       int submarineCount = 0;
+       
+       for(Ship ship: _fleet)
+       {
+           switch(ship.GetShipType())
+           {
+               case BSHIP:
+                   bShipCount++;
+                   break;
+               case CRUISER:
+                   cruiserCount++;
+                   break;
+               case DESTROYER:
+                   destroyerCount++;
+                   break;
+               case SUBMARINE:
+                   submarineCount++;
+                   break;
+               default:
+                   break;
+           }
+       }
+       
+       if(Shiptypes.BSHIP.getCount()!=bShipCount)
+       {
+           response += "Es müssen noch "+String.valueOf(Shiptypes.BSHIP.getCount()-bShipCount)+" Schiffe vom Typ "+Shiptypes.BSHIP.name()+" gesetzt werden.<br>";
+       }
+       
+       if(Shiptypes.CRUISER.getCount()!=cruiserCount)
+       {
+           response += "Es müssen noch "+String.valueOf(Shiptypes.CRUISER.getCount()-cruiserCount)+" Schiffe vom Typ "+Shiptypes.CRUISER.name()+" gesetzt werden.<br>";
+       }
+       
+       if(Shiptypes.DESTROYER.getCount()!=destroyerCount)
+       {
+           response += "Es müssen noch "+String.valueOf(Shiptypes.DESTROYER.getCount()-destroyerCount)+" Schiffe vom Typ "+Shiptypes.DESTROYER.name()+" gesetzt werden.<br>";
+       }
+       
+       if(Shiptypes.SUBMARINE.getCount()!=submarineCount)
+       {
+           response += "Es müssen noch "+String.valueOf(Shiptypes.SUBMARINE.getCount()-submarineCount)+" Schiffe vom Typ "+Shiptypes.SUBMARINE.name()+" gesetzt werden.<br>";
+       }
+       
+       if(response.isEmpty())
+       {
+           CommunicationObject message = new CommunicationObject(CommunicationObjectType.INITIALIZE);
+           message.setInitialized(true);
+           _client.sendToServer(message);
+           response ="Warte auf antwort des Servers.";
+       }
+       
+       
+       response = "<html>" + response +"</html>";
+       return response;
     }
     
 }

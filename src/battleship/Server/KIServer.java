@@ -219,7 +219,7 @@ public class KIServer extends Thread implements IServer{
                 
             }
             
-            for(int i=0; i<=readyPlayers.size();i++ )
+            for(int i=0; i<readyPlayers.size();i++ )
             {
                 if(readyPlayers.get(i).equals(client))
                 {
@@ -233,6 +233,7 @@ public class KIServer extends Thread implements IServer{
                     {
                         message.setStarted(false);
                     }
+                    break;
                 }
             }
 

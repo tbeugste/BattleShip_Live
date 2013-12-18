@@ -92,6 +92,9 @@ public class Buttonlistener implements ActionListener {
                 Battleship.bField.status.setShipPlacementactive(true);
                 _bGUI.setLabel("Schiff plazieren!");
                 break;
+             case "GameReady":
+                 _bGUI.setLabel(Battleship.bField.getReadyResponse());
+                 break;
             default:
                break;
         }   
