@@ -258,6 +258,7 @@ public class Battlefield implements IListener {
     public void initializeMessage(CommunicationObject message){
         _bGUI.createWindow();
         _bGUI.setVisible(true);
+        _bGUI.deactivatePanel(_bGUI.getPanelOponent());
     }
     
     /**
@@ -300,7 +301,7 @@ public class Battlefield implements IListener {
      * Method to check all placed Ships and send message to server
      * @return 
      */
-    public String getReadyResponse ()
+    public String getReadyResponse (boolean pressedButton)
     {
        String response ="";
        int bShipCount = 0;
@@ -361,7 +362,7 @@ public class Battlefield implements IListener {
            response += "Es müssen noch "+String.valueOf(Shiptypes.SUBMARINE.getCount()-submarineCount)+" Schiffe vom Typ "+Shiptypes.SUBMARINE.name()+" gesetzt werden.<br>";
        }
        
-       if(response.isEmpty())
+       if(response.isEmpty()&&pressedButton)
        {
            CommunicationObject message = new CommunicationObject(CommunicationObjectType.INITIALIZE);
            message.setInitialized(true);

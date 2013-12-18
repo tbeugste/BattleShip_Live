@@ -57,7 +57,7 @@ public class Buttonlistener implements ActionListener {
                             _bGUI.switchButton(Battleship.bField.buttonArray[point.x][point.y], 6);
                         }
                         Battleship.bField.status.setShipPlacementactive(false);
-                        Battleship.bField.getReadyResponse ();
+                        Battleship.bField.getReadyResponse (false);
                     }
                 }
                 break;
@@ -96,7 +96,7 @@ public class Buttonlistener implements ActionListener {
                 _bGUI.setLabel("Schiff plazieren!");
                 break;
              case "GameReady":
-                 String message = Battleship.bField.getReadyResponse();
+                 String message = Battleship.bField.getReadyResponse(true);
                  _bGUI.setLabel(message);
                  if(message.indexOf("Warte auf")!=-1)
                  {
