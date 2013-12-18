@@ -46,7 +46,7 @@ public class ClientCommunicator extends Thread{
                         {
                             case INITIALIZE:
                                 actionsOnInitializeMessage(message);
-                                System.out.println(message.getType());
+                                System.out.println(message.getType() + " "+String.valueOf(message.getInitialized()));
                                 break;
                             case REPLY:
                                 actionsOnReplayMessage(message);
@@ -69,6 +69,10 @@ public class ClientCommunicator extends Thread{
                     System.out.println("Incorect Object recived");
                     cnfe.printStackTrace();
                 }
+                try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex){}
             }
         
         }
@@ -87,7 +91,7 @@ public class ClientCommunicator extends Thread{
     /**
      * Method with all Actions to do if a InitializeMessage appears
      */
-    private void actionsOnInitializeMessage(CommunicationObject message)
+    private synchronized void actionsOnInitializeMessage(CommunicationObject message)
     {
         if(!_server.isStarted() && message.getInitialized())
         {
@@ -109,27 +113,31 @@ public class ClientCommunicator extends Thread{
                     }
                     break;
                 }
+                try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex){}
             }
         }
     }
     /**
      * Method with all Actions to do if a ReplayMessage appears
      */
-    private void actionsOnReplayMessage(CommunicationObject message)
+    private synchronized void actionsOnReplayMessage(CommunicationObject message)
     {
         _server.sendToOpponend(message, _client);
     }
     /**
      * Method with all Actions to do if a ShotMessage appears
      */
-    private void actionsOnShotMessage(CommunicationObject message)
+    private synchronized void actionsOnShotMessage(CommunicationObject message)
     {
         _server.sendToOpponend(message, _client);
     }
     /**
      * Method with all Actions to do if a StartMessage appears
      */
-    private void actionsOnStartMessage(CommunicationObject message)
+    private synchronized void actionsOnStartMessage(CommunicationObject message)
     {
       //at the moment wount be send from a client   
     }

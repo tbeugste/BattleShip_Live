@@ -68,6 +68,10 @@ public class KICommunicator {
                 horizontal = rand.nextBoolean();
                 shipPos = getShipPos(type, horizontal);
                 ship = new Ship(shipPos, type);
+                try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex){}
                 }
                 while(!correctPlacement(ship));
                 _fleet.add(ship);

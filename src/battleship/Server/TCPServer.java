@@ -85,6 +85,10 @@ public class TCPServer extends Thread implements IServer {
                 {
                     //TODO: RECONNECT
                 }
+                try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex){}
             }
             
         }
@@ -159,6 +163,10 @@ public class TCPServer extends Thread implements IServer {
                         //stop while
                         break;
                     }
+                    try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex){}
                 }
             }
             catch(IOException ie)

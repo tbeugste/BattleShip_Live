@@ -64,6 +64,13 @@ public class TCPClient implements Runnable{
                         actionsOnStartMessage(message);
                         break;
                 }
+                try{
+                Thread.sleep(10);
+                }
+                catch(Exception ex)
+                {
+                    ex.printStackTrace();
+                }
             }
         }
         catch(IOException ie)
@@ -81,11 +88,11 @@ public class TCPClient implements Runnable{
      * method to send a message to the server
      * @param message 
      */
-    public void sendToServer(CommunicationObject message)
+    public synchronized void sendToServer(CommunicationObject message)
     {
         try{
-        oos.writeObject(message);
-        oos.flush();
+            oos.writeObject(message);
+            oos.flush();
         }
         catch(IOException ie)
         {
@@ -106,7 +113,7 @@ public class TCPClient implements Runnable{
      * Inform all listeners and tell them the message
      * @param message 
      */
-    public void actionsOnInitializeMessage(CommunicationObject message)
+    public synchronized void actionsOnInitializeMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
         {
@@ -118,7 +125,7 @@ public class TCPClient implements Runnable{
      * Inform all listeners and tell them the message
      * @param message 
      */
-    public void actionsOnReplayMessage(CommunicationObject message)
+    public synchronized void actionsOnReplayMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
         {
@@ -129,7 +136,7 @@ public class TCPClient implements Runnable{
      * Inform all listeners and tell them the message
      * @param message 
      */
-    public void actionsOnShotMessage(CommunicationObject message)
+    public synchronized void actionsOnShotMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
         {
@@ -140,7 +147,7 @@ public class TCPClient implements Runnable{
      * Inform all listeners and tell them the message
      * @param message 
      */
-    public void actionsOnStartMessage(CommunicationObject message)
+    public synchronized void actionsOnStartMessage(CommunicationObject message)
     {
         for(IListener listener: allListeners)
         {
