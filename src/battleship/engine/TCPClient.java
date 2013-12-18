@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
 /**
  *
  * @author Andreas Eugster
+ * This class interact with BusinessLogic and GameServer
  */
 public class TCPClient implements Runnable{
     //Server Connection

@@ -10,7 +10,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 /**
- * This class is responsible to interact with the player. It moves and acts like one.
+ * This class is responsible to interact with the Server. It moves and acts like one.
+ * Communication between TCPClient (Data recieved) and Server (Data send)
  * @author Andy
  */
 public class KICommunicator {
@@ -88,12 +89,14 @@ public class KICommunicator {
         Random rand = new Random();
         if(horizontal)
         {
+            
             pos.x = rand.nextInt(10-type.getValue());
             pos.y = rand.nextInt(10);
             allPos.add(pos);
-            for(int i =0;i<type.getCount();i++)
+            for(int i =0;i<type.getValue()-1;i++)
             {
-                pos.x=allPos.get(i).x+i;
+                pos = new Point();
+                pos.x=allPos.get(i).x+1;
                 pos.y=allPos.get(i).y;
                 allPos.add(pos);
             }
@@ -103,10 +106,11 @@ public class KICommunicator {
             pos.x = rand.nextInt(10);
             pos.y = rand.nextInt(10-type.getValue());
             allPos.add(pos);
-            for(int i =0;i<type.getCount();i++)
+            for(int i =0;i<type.getValue()-1;i++)
             {
+                pos = new Point();
                 pos.x=allPos.get(i).x;
-                pos.y=allPos.get(i).y+i;
+                pos.y=allPos.get(i).y+1;
                 allPos.add(pos);
             }
         }

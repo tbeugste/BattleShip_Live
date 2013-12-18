@@ -48,7 +48,7 @@ public class BattleGUI extends javax.swing.JFrame {
      * Creates the MainWindow
      */
     private void createWindow() {
-        super.setSize(800,610);
+        super.setSize(800,675);
         super.setResizable(false);
         super.setLocation(200,100);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,11 +60,16 @@ public class BattleGUI extends javax.swing.JFrame {
         label = new JLabel("Schiff wählen!");
         label.setHorizontalAlignment(JLabel.CENTER);
         
+        JButton button = new JButton ("ready");
+        
+        
                 
-        JPanel panel = new JPanel (new GridLayout(2,0));
+        JPanel panel = new JPanel (new GridLayout(3,0));
         //panel.setBackground(Color.white);
         panel.add(setShip());
+        panel.add(button);
         panel.add(label);
+        
         
         setPanelPlayer();
         mainGrid.add(panelPlayer);

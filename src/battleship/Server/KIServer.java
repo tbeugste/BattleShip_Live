@@ -5,7 +5,6 @@
 package battleship.Server;
 import battleship.engine.CommunicationObject;
 import battleship.engine.CommunicationObjectType;
-import battleship.engine.ClientCommunicator;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -19,6 +18,8 @@ import java.util.Random;
 /**
  *
  * @author Andy
+ * This class is responsible for all actions based on Communication between player and KI.
+ * KICommunicator <> KI Server <> ClientCommunicator
  */
 public class KIServer extends Thread implements IServer{
     

@@ -4,14 +4,17 @@
  * and open the template in the editor.
  */
 
-package battleship.engine;
+package battleship.Server;
 import battleship.Server.IServer;
+import battleship.engine.CommunicationObject;
 import java.io.*; 
 import java.net.*;
 import java.util.*;
 /**
  *
  * @author Andy
+ * This Class is responsible to interact with TCPClient and the GameServer
+ * 
  */
 public class ClientCommunicator extends Thread{
     Socket _client;

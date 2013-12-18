@@ -5,7 +5,6 @@
 package battleship.Server;
 import battleship.engine.CommunicationObject;
 import battleship.engine.CommunicationObjectType;
-import battleship.engine.ClientCommunicator;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -17,6 +16,8 @@ import java.util.Random;
 /**
  *
  * @author Andreas Eugster
+ * This class is responsible for all actions based on Communication between players.
+ * ClientCommunicator <> KI Server <> ClientCommunicator
  */
 public class TCPServer extends Thread implements IServer {
     // the IP class as such

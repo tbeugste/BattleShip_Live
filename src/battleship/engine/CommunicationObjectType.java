@@ -9,6 +9,7 @@ package battleship.engine;
 /**
  *
  * @author Andy
+ * Enum to define specific function of the CommunicationObject
  */
 public enum CommunicationObjectType {
     INITIALIZE(1), SHOT(2), REPLY(3), START(4);

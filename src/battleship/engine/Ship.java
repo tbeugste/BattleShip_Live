@@ -11,6 +11,7 @@ import java.io.*;
 /**
  *
  * @author Andreas Eugster
+ * Shipclass to store informations about each ship
  */
 public class Ship implements Serializable{
     
