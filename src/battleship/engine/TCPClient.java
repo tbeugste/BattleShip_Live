@@ -61,7 +61,9 @@ public class TCPClient implements Runnable{
                         actionsOnShotMessage(message);
                         break;
                     case START:
+                        System.out.println("MEssage Started " +message.getStarted());
                         actionsOnStartMessage(message);
+                        
                         break;
                 }
                 try{

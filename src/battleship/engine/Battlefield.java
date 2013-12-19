@@ -267,16 +267,18 @@ public class Battlefield implements IListener {
      */
     @Override
     public void startMessage(CommunicationObject message){
+        System.out.println("Message started 2" + message.getStarted());
         if(message.getStarted())
         {
             status.setStatus(true);
            _bGUI.activatePanel(_bGUI.getPanelOponent());
+           System.out.println("Message started 2" + message.getStarted());
            _bGUI.setLabel("Ihr Zug!");
         }
         else
         {
             status.setStatus(false);
-           _bGUI.setLabel("Warte auf Server!");
+           _bGUI.setLabel("Gegner beginnt!");
         }
     }
     
@@ -395,11 +397,19 @@ public class Battlefield implements IListener {
        
        if(response.isEmpty()&&pressedButton)
        {
+                      
+           status.setShipPlacementactive(false);
+
+
+            _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
+            _bGUI.deactivatePanel(_bGUI.getPanelOponent());
+            //_bGUI.actionPanel.remove(_bGUI.setShipPanel);
+                 
+           
            CommunicationObject message = new CommunicationObject(CommunicationObjectType.INITIALIZE);
            message.setInitialized(true);
            _client.sendToServer(message);
            response ="Warte auf antwort des Servers.";
-           status.setShipPlacementactive(false);
        }
        
        

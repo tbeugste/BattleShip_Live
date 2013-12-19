@@ -460,10 +460,16 @@ public class BattleGUI extends javax.swing.JFrame {
      * @param panel 
      */  
     public void activatePanel(JPanel panel) {
-        for (Component c : panel.getComponents()) {
-            if (c instanceof MyButton) {
-                c.setEnabled(true);
+        try{
+            for (Component c : panel.getComponents()) {
+                if (c instanceof MyButton) {
+                    c.setEnabled(true);
+                }
             }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
         }
     }
     

@@ -97,13 +97,7 @@ public class Buttonlistener implements ActionListener {
                 break;
              case "GameReady":
                  String message = Battleship.bField.getReadyResponse(true);
-                 _bGUI.setLabel(message);
-                 if(message.indexOf("Warte auf")!=-1)
-                 {
-                    _bGUI.deactivatePanel(_bGUI.getPanelPlayer());
-                    _bGUI.deactivatePanel(_bGUI.getPanelOponent());
-                    _bGUI.actionPanel.remove(_bGUI.setShipPanel);
-                 }
+                 
                  break;
              case "horizontal":
                      Battleship.bField.horizontal = true;
