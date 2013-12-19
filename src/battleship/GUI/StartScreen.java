@@ -32,7 +32,7 @@ public StartScreen()
  
         JPanel panel = new JPanel (new GridLayout (1,2));
        
-        JLabel title = new JLabel (new ImageIcon(getClass().getResource("pictures"+File.separator+"Title.jpg")));
+        JLabel title = new JLabel (new ImageIcon(getClass().getResource("pictures"+File.separator+"Title.JPG")));
         
         JPanel panelButton = new JPanel (new GridLayout(2,1,1,10));
         panelButton.setBackground(Color.white);
